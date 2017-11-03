@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="homePage.Controller">
    <opaqueInsets>
       <Insets left="30.0" />
    </opaqueInsets>
@@ -21,6 +23,7 @@
                       <Menu mnemonicParsing="false" text="File">
                         <items>
                           <MenuItem mnemonicParsing="false" text="Save" />
+                              <MenuItem id="openFile" mnemonicParsing="false" onAction="#openAction" text="Open" />
                               <MenuItem mnemonicParsing="false" text="Close" />
                         </items>
                       </Menu>
@@ -41,7 +44,19 @@
                   </MenuBar>
                </children>
             </AnchorPane>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                <children>
+                    <SplitPane dividerPositions="0.35" layoutX="260.0" layoutY="363.0" prefHeight="755.0" prefWidth="798.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <items>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="753.0" prefWidth="318.0">
+                           <children>
+                              <TextField fx:id="directoryTextField" editable="false" layoutY="1.0" />
+                              <Button layoutX="161.0" layoutY="1.0" mnemonicParsing="false" text="Import" />
+                           </children></AnchorPane>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="753.0" prefWidth="398.0" />
+                        </items>
+                    </SplitPane>
+                </children></AnchorPane>
         </items>
       </SplitPane>
    </children>
