@@ -20,8 +20,16 @@ public class Controller {
     void openAction(ActionEvent event) {
         handleOpenClick();
     }
+    @FXML
+    void closeAction(ActionEvent event) {
+        handleClose();
+    }
 
-    public void handleOpenClick() {
+    private void handleClose() {
+        System.exit(0);
+    }
+
+    private void handleOpenClick() {
         System.out.print("Fuck you... STFU");
 
         //openFile.setOnAction(new EventHandler<ActionEvent>());
