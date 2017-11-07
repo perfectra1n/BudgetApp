@@ -1,10 +1,12 @@
 package mainPage;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.stage.FileChooser;
 import java.io.File;
-
+import convertExcel.convertXLSXtoCSV;
+import static convertExcel.convertXLSXtoCSV.createNewDatabase;
 
 
 public class Controller {
@@ -26,21 +28,35 @@ public class Controller {
 
 
     @FXML
-    private void handleOpenClick() {
+    private void handleOpenClick()
+    {
 
         //Browse function
         FileChooser fileChooser = new FileChooser();
 
         fileChooser.setTitle("Open Excel File");
-        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Excel Files \"*.xlsx or\", \"*.xls\"", "*.xlsx", "*.xls"));
+        //Here is where we define what extensions we accept
+        fileChooser.getExtensionFilters().addAll(new FileChooser.ExtensionFilter("Excel Files", "*.x*"));
 
+        //New object chosenExcelDocs is defined
         File chosenExcelDocs = fileChooser.showOpenDialog(null);
 
         //check to see if chosenExcelDocs is populated or not
-        if (chosenExcelDocs != null) {
+        if (chosenExcelDocs != null)
+        {
+            File outputFile = new File("C:/output/output.csv");
+            File inputFile = new File(chosenExcelDocs.getPath());
+
            directoryTextField.setText(chosenExcelDocs.getPath());
+           createNewDatabase("bap.db");
+           convertXLSXtoCSV.xlsx(inputFile, outputFile);
         }
+
+
     }
+
+
+
 
 
 
