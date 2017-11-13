@@ -28,7 +28,7 @@ public class convertXLSXtoCSV
             FileOutputStream fos = new FileOutputStream(outputFile);
 
             //Get the workbook object for XLSX file
-            XSSFWorkbook wBook = new XSSFWorkbook(new FileInputStream(inputFile));
+            XSSFWorkbook wBook = new XSSFWorkbook(new FileInputStream(inputFile.getPath()));
 
             //Get first sheet from the workbook
             XSSFSheet sheet = wBook.getSheetAt(0);
@@ -47,21 +47,21 @@ public class convertXLSXtoCSV
                 {
                     cell = cellIterator.next();
 
-                    switch (cell.getCellType())
+                    switch (cell.getCellTypeEnum())
                     {
-                        case Cell.CELL_TYPE_BOOLEAN:
+                        case BOOLEAN:
                             data.append(cell.getBooleanCellValue() + ",");
                             break;
 
-                        case Cell.CELL_TYPE_NUMERIC:
+                        case NUMERIC:
                             data.append(cell.getNumericCellValue() + ",");
                             break;
 
-                        case Cell.CELL_TYPE_STRING:
+                        case STRING:
                             data.append(cell.getStringCellValue() + ",");
                             break;
 
-                        case Cell.CELL_TYPE_BLANK:
+                        case BLANK:
                             data.append("" + ",");
                             break;
 

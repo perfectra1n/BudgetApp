@@ -40,12 +40,13 @@ public class Controller {
 
         //New object chosenExcelDocs is defined
         File chosenExcelDocs = fileChooser.showOpenDialog(null);
+        String filePath = chosenExcelDocs.getPath();
 
         //check to see if chosenExcelDocs is populated or not
         if (chosenExcelDocs != null)
         {
             File outputFile = new File("C:/output/output.csv");
-            File inputFile = new File(chosenExcelDocs.getPath());
+           File inputFile = new File(filePath);
 
            directoryTextField.setText(chosenExcelDocs.getPath());
            createNewDatabase("bap.db");
