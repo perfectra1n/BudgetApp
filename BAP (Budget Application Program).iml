@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/sqlite-jdbc-3.20.0.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/poi-3.17/poi-scratchpad-3.17.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/poi-3.17/poi-ooxml-schemas-3.17.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/poi-3.17/poi-ooxml-3.17.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/poi-3.17/poi-excelant-3.17.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/poi-3.17/poi-examples-3.17.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/poi-3.17/poi-3.17.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/poi-3.17/lib/log4j-1.2.17.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/poi-3.17/lib/junit-4.12.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/poi-3.17/lib/commons-logging-1.2.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/poi-3.17/lib/commons-collections4-4.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/poi-3.17/lib/commons-codec-1.10.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/poi-3.17/ooxml-lib/xmlbeans-2.6.0.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/poi-3.17/ooxml-lib/curvesapi-1.04.jar!/" />
+          <root url="file://$MODULE_DIR$" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="file://$MODULE_DIR$/lib/poi-3.17/docs/apidocs" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/src" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+  </component>
+</module>
