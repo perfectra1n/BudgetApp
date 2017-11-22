@@ -13,7 +13,10 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.text.*;
 import javafx.stage.*;
+
+import javax.management.timer.TimerMBean;
 import java.io.File;
+import java.time.LocalTime;
 
 public class testScene {
 
@@ -83,7 +86,11 @@ public class testScene {
         });
 
         // Temp change scene button
-        tempBut.setOnAction(e -> Interconnector.changeScene(LoginScreen.open()));
+        tempBut.setOnAction(e -> {
+            Interconnector.changeScene(LoginScreen.open());
+            //DBHandle.test(null);
+
+        });
 
         // Exit Button
         ExitBut.setOnAction(e -> Interconnector.closeWindow());

@@ -26,17 +26,15 @@ import javafx.stage.Stage;
 public class Interconnector {
     private static Stage MainWindow;
 
-    public static void receiveMain(Stage MainStage) {
-        MainWindow = MainStage; // Main stage passed from Main class
-    }
+    public static void receiveMain(Stage MainStage) { MainWindow = MainStage; } // Main stage passed from Main class
 
-    public static void changeScene(Scene scene) {
-        MainWindow.setScene(scene); // called by Scene classes
+    public static void changeScene(Scene scene) { // called by Scene classes
+        MainWindow.setScene(scene);
+
     }
 
     public static void closeWindow() {
         DBHandle.closeConnectionToDB(); // Prevent memory leaks
         MainWindow.close();
-
     }
 }
