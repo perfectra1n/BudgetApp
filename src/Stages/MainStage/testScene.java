@@ -89,7 +89,6 @@ public class testScene {
         tempBut.setOnAction(e -> {
             Interconnector.changeScene(LoginScreen.open());
             //DBHandle.test(null);
-
         });
 
         // Exit Button

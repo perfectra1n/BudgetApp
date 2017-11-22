@@ -30,7 +30,6 @@ public class Interconnector {
 
     public static void changeScene(Scene scene) { // called by Scene classes
         MainWindow.setScene(scene);
-
     }
 
     public static void closeWindow() {

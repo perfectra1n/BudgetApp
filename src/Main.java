@@ -11,6 +11,8 @@
 // Handles creation of Main Window.
 //
 
+import Stages.MainStage.GraphScene;
+import Stages.MainStage.homeScene;
 import database.DBHandle;
 import Stages.Interconnector;
 import Stages.MainStage.testScene;
@@ -26,7 +28,7 @@ public class Main extends Application {
     public void start(Stage window) throws Exception {
         window.setTitle("Budget Application Program");
         window.setOnCloseRequest(e -> DBHandle.closeConnectionToDB());
-        window.setScene(testScene.open()); //currently initiates with test scene. Must be changed later.
+        window.setScene(GraphScene.open()); //currently initiates with test scene. Must be changed later.
         window.show(); Interconnector.receiveMain(window); }
 //--------------------------------------------------------------------------------------
 }
