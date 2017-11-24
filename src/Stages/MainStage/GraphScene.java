@@ -20,37 +20,44 @@ public class GraphScene {
         }
         return scene;
     }
-    //\\\DROP BOX FOR X Y PLANE\\\//
     private static void create() {
-        ComboBox comboBoxX = new ComboBox();
-        ComboBox comboBoxY = new ComboBox();
-        anchor.getChildren().addAll(comboBoxX, comboBoxY);
-
 
 //-----------------------------------------------------------------//
         //-------------- DROP BOX "X" -----------------------//
+        ComboBox comboBoxX = new ComboBox();
         comboBoxX.setPrefSize(150.0, 40.0);   //Sets the default drop list size
         AnchorPane.setTopAnchor(comboBoxX, 50.0);           //Sets the positioning of the dropbox
         AnchorPane.setLeftAnchor(comboBoxX, 50.0);          // ^
-
-
         //----------------POPULATE X OPTIONS-----------------//
         comboBoxX.setPromptText("Select X Axis");                                       //Populates the dropbox with a prompt so user know what to do
         comboBoxX.getItems().addAll("option 1","option 2","option 3");        //Populates the actual drop down menu
 //-----------------------------------------------------------------//
 
-
-
-
 //-----------------------------------------------------------------//
         //-------------- DROP BOX "Y" -----------------------//
+        ComboBox comboBoxY = new ComboBox();
         comboBoxY.setPrefSize(150.0, 40.0);  //Sets the default drop list size
         AnchorPane.setTopAnchor(comboBoxY, 50.0);          //Sets the positioning of the dropbox
         AnchorPane.setRightAnchor(comboBoxY, 50.0);        //^
-
         //----------------POPULATE Y OPTIONS-----------------//
         comboBoxY.setPromptText("Select Y Axis");                                      //Populates the dropbox with a prompt so user know what to do
         comboBoxY.getItems().addAll("option 1","option 2","option 3");       //Populates the actual drop down menu
 //-----------------------------------------------------------------//
+
+//-----------------------------------------------------------------//
+        //------------------- GRAPH BUTTON ------------------//
+        Button Graph = new Button("GRAPH");             //Creates Graph Button
+        AnchorPane.setBottomAnchor(Graph, 50.0);       //Sets the positioning of the button
+        AnchorPane.setRightAnchor(Graph, 50.0);        //^
+//-----------------------------------------------------------------//
+
+        //------------------- BACK BUTTON -------------------//
+        Button Back = new Button("BACK");               //Creates Back Button
+        AnchorPane.setBottomAnchor(Back, 50.0);        //Sets the positioning of the button
+        AnchorPane.setLeftAnchor(Back, 50.0);          //^
+//-----------------------------------------------------------------//
+
+        anchor.getChildren().addAll(comboBoxX, comboBoxY);
+        anchor.getChildren().addAll(Graph, Back);
     }
 }
