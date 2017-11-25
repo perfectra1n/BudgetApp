@@ -4,6 +4,7 @@
 
 package database;
 
+import logger.log.*;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.*;
@@ -97,6 +98,11 @@ public class DBHandle {
         }
         // Format and create the query
         String query = format("INSERT INTO '%s' %s\nVALUES (%s);", tableName, ColumnList, valueList);
+        try {
+            logger.log.insert(query);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         // return the query as a String
         return query;
     }
@@ -109,6 +115,7 @@ public class DBHandle {
 
         try (Statement sql = conn.createStatement()){
             // First delete previously imported tables (if any)
+            sendQuery("CREATE TABLE IF NOT EXISTS importedTables ('TBL_NAME' STRING);");
             ResultSet res = queryReturnResult("SELECT TBL_NAME FROM importedTables;");
             List<String> tblNames = new ArrayList<>();
             res.next(); // start from first imported table name
