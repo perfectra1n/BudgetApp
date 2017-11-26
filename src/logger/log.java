@@ -22,7 +22,7 @@ public class log {
         }catch (IOException e){
             logr.log(Level.SEVERE, "File Logger failed" ,e);
         }*/
- public static void insert(String dataInserted) throws IOException {
+    public static void insert(String dataInserted) throws IOException {
 
      LogManager.getLogManager().reset();
      logr.setLevel(Level.ALL);
@@ -35,6 +35,6 @@ public class log {
          logr.info(dataInserted);
      }catch (IOException e){
          logr.log(Level.SEVERE, "File Logger failed" ,e);
+        }
      }
- }
 }
