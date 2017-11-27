@@ -19,7 +19,7 @@ public class log {
             fh.setFormatter(new SimpleFormatter());
             logr.addHandler(fh);
             logr.info("Inserted data to table");
-        }catch (IOException e){
+        }catch (IOException e){\
             logr.log(Level.SEVERE, "File Logger failed" ,e);
         }*/
     public static void insert(String dataInserted) throws IOException {

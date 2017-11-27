@@ -103,7 +103,7 @@ public class DBHandle {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        // return the query as a String
+        // return the query as a String.
         return query;
     }
 

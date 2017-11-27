@@ -53,7 +53,7 @@ public class loggerScene {
        /* logTest.setOnAction(e -> {
             try {
                 log.test();
-            } catch (IOException e1) {
+            } catch (IOException e1a) {
                 e1.printStackTrace();
             }
         });*/
