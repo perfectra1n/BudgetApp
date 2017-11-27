@@ -1,0 +1,45 @@
+Changelog
+11/10/2017:     Added Interconnector class. (a.a)
+                Changed homeScene to testScene. (a.a)
+                Commented out certain calls for sendQuery in DBHandle. (a.a)
+                PROGRESS:
+                    Cleaned up Main class to only create Main Stage and pass to Interconnector.
+                    testScene now to be used for testing. Home scene must be created.
+11/6/2017:      Added/Optimized DBHandle.connectToDB method. (a.a)
+                Added/Optimized DBHandle.closeConnectionToDB method. (a.a)
+                Added/Optimized DBHandle.createNewTable method. (a.a)
+                Added/Optimized DBHandle.dropTable method. (a.a)
+                Added/Optimized DBHandle.sendQuery method. (a.a)
+                Added/Optimized DBHandle.insertData method. (a.a)
+                Added/Optimized DBHandle.loadExcelToDB method. (a.a)
+11/5/2017:      Added Excel support dependencies. (a.a)
+                Renamed InitScene class to homeScene. (a.a)
+                Renamed GUI package to Scenes. (a.a)
+                Added empty LoginScreen class. (a.a)
+                Combined Main and MainGUI classes. (a.a)
+                Working on DBHandle class to load excel data to database. (a.a)
+                PROGRESS:
+                    homeScene Upload button now calls to DBHandle class.
+                    Must later switch all outputs currently going to console instead to UI.
+                    Dependencies not linked as intended. RESOLVED
+                    homeScene goals:
+                        Basic user interface. COMPLETED
+                        Prompts for Excel file selection. COMPLETED
+                        Ability to select file. COMPLETED
+                        Upload file contents to local database. COMPLETED 11/7
+                        Showcase database access.
+                        Close window on request. COMPLETED
+11/4/2017:      Added application changelog. (a.a)
+                Created commented descriptions at beginning of class files. (a.a)
+                Removed import statements unnecessary at this time. (a.a)
+                PROGRESS:
+                    Main class calls MainGUI class for Window creation.
+                    MainGUI class creates Main Window and is ready to handle multiple scenes.
+                    DBHandle code removed. Will rewrite.
+                    InitScene goals:
+                        Basic user interface. COMPLETED
+                        Prompts for Excel file selection. COMPLETED
+                        Ability to select file. COMPLETED
+                        Upload file contents to local database.
+                        Showcase database access.
+                        Close window on request. COMPLETED
