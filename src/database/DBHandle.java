@@ -98,9 +98,9 @@ public class DBHandle {
         }
         // Format and create the query
         String query = format("INSERT INTO '%s' %s\nVALUES (%s);", tableName, ColumnList, valueList);
-
+        String logMSG = format("Data inserted into table '%s' %s\n          Data added (%s);\n", tableName, ColumnList, valueList);
         // Edited by Allen
-        logger.log.insert(query);
+        logger.log.insert(logMSG);
 
         // return the query as a String.
         return query;

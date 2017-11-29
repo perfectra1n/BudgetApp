@@ -31,6 +31,14 @@ public class Interconnector {
         testScene.open();
     }
 
+    public static double getStageWidth(){
+        return MainWindow.getWidth();
+    }
+
+    public static double getStageHeight(){
+        return MainWindow.getHeight();
+    }
+
     // Changes to passed scene and retains size of window
     public static void changeScene(Scene scene) {
         // before setting new scene, retrieve window size

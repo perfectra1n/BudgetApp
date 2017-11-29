@@ -27,7 +27,6 @@ public class loggerScene {
         Interconnector.changeScene(scene);
     }
 
-    // Scene layout and events
     private static void create() {
         /*
         From Allen : Sorry, removed the exception throws from your functions, not sure why you had that
@@ -43,7 +42,7 @@ public class loggerScene {
         try {
             TextArea text = new TextArea();
             text.setEditable(false);
-            text.setPrefSize(800, 600);
+            text.setPrefSize(Interconnector.getStageWidth(), Interconnector.getStageHeight());
 
 
             //textarea reads bapLog.txt
