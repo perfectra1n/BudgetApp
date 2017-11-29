@@ -21,10 +21,15 @@ public class loggerScene {
     private static Scene scene = null;
 
     // Opens this scene
-    public static void open() {
+    public static void open(){
         // If scene not created yet, create it
-        if (scene == null) {create();}
-        Interconnector.changeScene(scene);
+        if (scene == null) {create();
+        }
+        //Interconnector.changeScene(scene);
+        Stage logWindow = new Stage();
+        logWindow.setTitle("Budget Application Program Log");
+        logWindow.setScene(scene);
+        logWindow.show();
     }
 
     private static void create() {
