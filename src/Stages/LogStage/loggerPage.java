@@ -11,16 +11,19 @@ import javafx.stage.*;
 import java.io.IOException;
 
 public class loggerPage {
+    private static Stage logWindow = null;
     private static AnchorPane anchor = null;
 
     // Opens this scene
     public static void open() {
         // Layout not created until first call
-        Stage logWindow = new Stage();
-        logWindow.setTitle("Budget Application Project Log");
-
-        if (anchor == null) { anchor = new AnchorPane(); }
-        PageConnector.changeRoot(anchor);
+        if (logWindow == null) {
+            logWindow = new Stage();
+            logWindow.setTitle("Budget Application Project Log");
+            anchor = new AnchorPane();
+            logWindow.setScene(new Scene(anchor));
+        }
+        logWindow.show();
         create();
     }
 
@@ -33,7 +36,7 @@ public class loggerPage {
 
 
             //textarea reads bapLog.txt
-            FileReader in = new FileReader("bapLog.txt");
+            FileReader in = new FileReader("src/logger/bapLog.txt");
             BufferedReader br = new BufferedReader(in);
 
             String s;
