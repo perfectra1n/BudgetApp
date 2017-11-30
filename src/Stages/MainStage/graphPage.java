@@ -6,8 +6,11 @@ import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 
+import javax.xml.transform.Result;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import static java.lang.String.format;
 
 public class graphPage {
     private static AnchorPane anchor = null;
@@ -81,52 +84,50 @@ public class graphPage {
         anchor.getChildren().addAll(comboBoxX, comboBoxY);
         anchor.getChildren().addAll(Graph, Back, checkboxes);
 
-        Graph.setOnAction(e -> {
-            CategoryAxis xAxis = new CategoryAxis();
-            NumberAxis yAxis = new NumberAxis();
-            BarChart<String, Number> bc = new BarChart<String, Number>(xAxis, yAxis);
-            bc.setTitle("Total Purchase Cost");
-            xAxis.setLabel("Department");
-            yAxis.setLabel("Purchase Cost");
-            XYChart.Series series = new XYChart.Series<>();
-            try {
-            ResultSet res = DBHandle.queryReturnResult("SELECT \"Purchase Cost\" FROM '8-152';");
-            ResultSet dep = DBHandle.queryReturnResult("SELECT \"Dept ID - Dept Description\" FROM \"College of E&CS\"");
-                double sum = 0.0;
-              //  dep.next();
-               // res.next();
-                while (dep.next()) {
-                    series.getData().add(new XYChart.Data<>(dep.getString(1), getTotalCost(res.getString(1))));
-                    //res.next();
-                   // dep.next();
-                }
-                bc.getData().add(series);
-            } catch (SQLException e1) {
-                e1.printStackTrace();
+        Graph.setOnAction(e -> createGraph());
+    }
+
+    private static void createGraph() {
+        CategoryAxis xAxis = new CategoryAxis();                        // X-Axis
+        NumberAxis yAxis = new NumberAxis();                            // Y-Axis
+        BarChart<String, Number> bc = new BarChart<>(xAxis, yAxis);     // Create Bar Chart
+        bc.setTitle("Total Purchase Cost");                             // Title of Chart
+        xAxis.setLabel("Department");                                   // Title of X-Axis
+        yAxis.setLabel("Purchase Cost");                                // Title of Y-Axis
+        XYChart.Series series = new XYChart.Series<>();                 // The "Bars"
+
+        ResultSet depts = DBHandle.queryReturnResult("SELECT \"TBL_NAME\" FROM 'importedTables';");
+        try {
+            depts.next();
+            String str = format("SELECT \"Dept ID - Dept Description\" FROM '%s';", depts.getString(1));
+            ResultSet names = DBHandle.queryReturnResult(str);
+            depts.next(); names.next();
+            while (!depts.isClosed()) {
+                str = format("SELECT \"Purchase Cost\" FROM '%s';", depts.getString(1));
+                ResultSet costs = DBHandle.queryReturnResult(str);
+                double totalCost = getTotalCost(costs);
+                String deptName = names.getString(1);
+                deptName = deptName.substring(deptName.indexOf('-') + 2, deptName.length());
+                series.getData().add(new XYChart.Data<>(deptName, totalCost));
+                depts.next(); names.next();
             }
+            bc.getData().add(series);
 
             AnchorPane.setTopAnchor(bc, 150.0);
             AnchorPane.setRightAnchor(bc, 300.0);
             anchor.getChildren().addAll(bc);
-        });
+        } catch (SQLException e) { e.printStackTrace(); }
     }
 
-    private static double getTotalCost(String query) {
-        double sum = 0;
+    private static double getTotalCost(ResultSet costs) {
+        double sum = 0.0;
         try {
-
-            ResultSet res = DBHandle.queryReturnResult("SELECT \"Purchase Cost\" FROM '8-152';");
-            sum = 0.0;
-            res.next();
-            while (!res.isClosed()) {
-                sum += res.getDouble(1);
-                res.next();
+            costs.next();
+            while (!costs.isClosed()) {
+                sum += costs.getDouble(1);
+                costs.next();
             }
-            System.out.println(sum);
-
-        } catch (SQLException e1) {
-            e1.printStackTrace();
-        }
+        } catch (SQLException e) { e.printStackTrace(); }
         return sum;
     }
 }

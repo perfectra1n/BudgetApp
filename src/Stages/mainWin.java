@@ -56,7 +56,7 @@ public class mainWin {
     private static void createMainWindowLayout() {
         border = new BorderPane();
         main.setScene(new Scene(border));
-        main.setHeight(600); main.setWidth(1000);
+        main.setHeight(700); main.setWidth(1000);
 
         // Menu creation
         MenuBar menuBar = new MenuBar();                       // Menu Bar
