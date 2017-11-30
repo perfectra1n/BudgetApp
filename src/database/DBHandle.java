@@ -23,13 +23,13 @@ public class DBHandle {
     public static void connectToDB() {
         String url = "jdbc:sqlite:src/database/BAPDB.db";
         // creates database file if nonexistent
-        try {conn = DriverManager.getConnection(url);}
-        catch (SQLException e) {e.printStackTrace();}
+        try { conn = DriverManager.getConnection(url); }
+        catch (SQLException e) { e.printStackTrace(); }
     }
 
     // Close connection to database
     public static void closeConnectionToDB() {
-        try {conn.close();}
+        try { conn.close(); System.out.println("Connection closed."); }
         catch (SQLException e) {e.printStackTrace();}
     }
 

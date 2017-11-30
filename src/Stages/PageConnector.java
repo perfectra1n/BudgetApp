@@ -18,42 +18,34 @@
 package Stages;
 
 import database.DBHandle;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import Stages.MainStage.*;
 
-public class Interconnector {
-    private static Stage MainWindow;
+public class PageConnector {
+    private static Stage main;
 
     // Main stage passed from Main class
-    public static void receiveMain(Stage MainStage) {
-        MainWindow = MainStage;
-        testScene.open();
-    }
-
-    public static double getStageWidth(){
-        return MainWindow.getWidth();
-    }
-
-    public static double getStageHeight(){
-        return MainWindow.getHeight();
+    public static void passMain(Stage window) {
+        main = window;
+        main.setTitle("Budget Application Program");
+        main.setOnCloseRequest(e -> DBHandle.closeConnectionToDB());
+        testPage.open();
+        window.show();
     }
 
     // Changes to passed scene and retains size of window
-    public static void changeScene(Scene scene) {
-        // before setting new scene, retrieve window size
-        double width = MainWindow.getWidth(),
-               height = MainWindow.getHeight();
-        // set new scene
-        MainWindow.setScene(scene);
-        // set width and height to previous values
-        MainWindow.setWidth(width);
-        MainWindow.setHeight(height);
+    public static void changeRoot(Parent root) {
+        // Only null on startup
+        if (main.getScene() == null) { main.setScene(new Scene(root)); }
+        // For every other call, set new root of scene
+        else { main.getScene().setRoot(root); }
     }
 
     // Close the Main Window
     public static void closeWindow() {
         DBHandle.closeConnectionToDB(); // Prevent memory leaks
-        MainWindow.close();
+        main.close();
     }
 }

@@ -1,37 +1,32 @@
 package Stages.MainStage;
 
-import Stages.Interconnector;
-import javafx.collections.ObservableList;
+import Stages.PageConnector;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 
-public class GraphScene {
-    // Scene (not created until first instance)
-    private static Scene scene = null;
+public class graphPage {
+    private static AnchorPane anchor = null;
 
     // Opens this scene
     public static void open() {
-        // If scene not created yet, create it
-        if (scene == null) {create();}
-        Interconnector.changeScene(scene);
+        // Layout not created until first call
+        if (anchor == null) { anchor = new AnchorPane(); }
+        PageConnector.changeRoot(anchor);
+        create();
     }
 
     // Scene layout and events
     private static void create() {
-        AnchorPane anchor = new AnchorPane(); // Chosen javafx layout for this scene
-        scene = new Scene(anchor);
-
-        //----Placed by Allen-----
         // Test Scene
         Button But1 = new Button("Test Scene");
         But1.setMinSize(120.0, 25.0);
         But1.setPrefHeight(25.0);
         AnchorPane.setLeftAnchor(But1, 10.0);
         AnchorPane.setBottomAnchor(But1, 10.0);
-        But1.setOnAction(e -> testScene.open());
+        But1.setOnAction(e -> testPage.open());
         //------------------------
 
 //-----------------------------------------------------------------//

@@ -6,29 +6,27 @@
 package Stages.MainStage;
 
 import Stages.*;
+import Stages.LogStage.loggerPage;
 import database.DBHandle;
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 import java.io.File;
 
-public class testScene {
-    // Scene (not created until first instance)
-    private static Scene scene = null;
+public class testPage {
+    private static GridPane grid = null;
 
     // Opens this scene
     public static void open() {
-        // If scene not created yet, create it
-        if (scene == null) {create();}
-        Interconnector.changeScene(scene);
+        // Layout not created until first call
+        if (grid == null) { grid = new GridPane(); }
+        PageConnector.changeRoot(grid);
+        create();
     }
 
     // Scene layout and events
     private static void create() {
-        GridPane grid = new GridPane(); // Chosen javafx layout for this scene
-        scene = new Scene(grid);
 
         // grid.setAlignment(Pos.CENTER);
         grid.setHgap(10); grid.setVgap(10);
@@ -66,47 +64,47 @@ public class testScene {
 
         //---------------------------------- TEST BUTTONS ----------------------------------------
         // Graph Scene
-        Button But1 = new Button("Graph Scene");
+        Button But1 = new Button("Graph Page");
         But1.setMinSize(120.0, 25.0);
         But1.setPrefHeight(25.0);
         grid.add(But1, 0, 2);
-        But1.setOnAction(e -> GraphScene.open());
+        But1.setOnAction(e -> graphPage.open());
 
         // Log Scene
-        Button But2 = new Button("Log Scene");
-        But1.setMinSize(120.0, 25.0);
-        But1.setPrefHeight(25.0);
+        Button But2 = new Button("Log Page");
+        But2.setMinSize(120.0, 25.0);
+        But2.setPrefHeight(25.0);
         grid.add(But2, 0, 3);
-        But2.setOnAction(e -> Stages.LogStage.loggerScene.open());
+        But2.setOnAction(e -> loggerPage.open());
 
         //
         Button But3 = new Button("NULL");
-        But1.setMinSize(120.0, 25.0);
-        But1.setPrefHeight(25.0);
+        But3.setMinSize(120.0, 25.0);
+        But3.setPrefHeight(25.0);
         grid.add(But3, 0, 4);
 
         //
         Button But4 = new Button("NULL");
-        But1.setMinSize(120.0, 25.0);
-        But1.setPrefHeight(25.0);
+        But4.setMinSize(120.0, 25.0);
+        But4.setPrefHeight(25.0);
         grid.add(But4, 0, 5);
 
         //
         Button But5 = new Button("NULL");
-        But1.setMinSize(120.0, 25.0);
-        But1.setPrefHeight(25.0);
+        But5.setMinSize(120.0, 25.0);
+        But5.setPrefHeight(25.0);
         grid.add(But5, 0, 6);
 
         //
         Button But6 = new Button("NULL");
-        But1.setMinSize(120.0, 25.0);
-        But1.setPrefHeight(25.0);
+        But6.setMinSize(120.0, 25.0);
+        But6.setPrefHeight(25.0);
         grid.add(But6, 0, 7);
 
         //
         Button But7 = new Button("NULL");
-        But1.setMinSize(120.0, 25.0);
-        But1.setPrefHeight(25.0);
+        But7.setMinSize(120.0, 25.0);
+        But7.setPrefHeight(25.0);
         grid.add(But7, 0, 8);
         //----------------------------------------------------------------------------------------
 
@@ -131,7 +129,7 @@ public class testScene {
         });
 
         // Exit Button
-        ExitBut.setOnAction(e -> Interconnector.closeWindow());
+        ExitBut.setOnAction(e -> PageConnector.closeWindow());
         //----------------------------------------------------------------------------
     }
 }

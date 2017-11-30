@@ -11,9 +11,8 @@
 // Handles creation of Main Window.
 //
 
+import Stages.PageConnector;
 import database.DBHandle;
-import Stages.Interconnector;
-import Stages.MainStage.*;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -23,10 +22,6 @@ public class Main extends Application {
     public static void main(String [] args) { DBHandle.connectToDB(); launch(args); }
     // Initiate Main Window (Stage) and pass window
     @Override
-    public void start(Stage window) throws Exception {
-        window.setTitle("Budget Application Program");
-        window.setOnCloseRequest(e -> DBHandle.closeConnectionToDB());
-        window.show(); Interconnector.receiveMain(window);
-    }
+    public void start(Stage window) throws Exception { PageConnector.passMain(window); }
 //--------------------------------------------------------------------------------------
 }
