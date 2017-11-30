@@ -3,11 +3,8 @@ package Stages.MainStage;
 import database.DBHandle;
 import Stages.mainWin;
 import javafx.scene.chart.*;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,14 +22,6 @@ public class graphPage {
 
     // Scene layout and events
     private static void create() {
-        // Test Scene
-        Button But1 = new Button("Test Scene");
-        But1.setMinSize(120.0, 25.0);
-        But1.setPrefHeight(25.0);
-        AnchorPane.setLeftAnchor(But1, 10.0);
-        AnchorPane.setBottomAnchor(But1, 10.0);
-        But1.setOnAction(e -> testPage.open());
-        //------------------------
 
 //-----------------------------------------------------------------//
         //-------------- DROP BOX "X" -----------------------//
@@ -57,55 +46,22 @@ public class graphPage {
 //-----------------------------------------------------------------//
         //----------------CHECK BOXES-----------------//
         // This is the list of the checkboxes and their formatting.//
-        
-        CheckBox box1 = new CheckBox("CECS");
-            AnchorPane.setTopAnchor(box1, 15.0);
-            AnchorPane.setLeftAnchor(box1, 10.0);
-        CheckBox box2 = new CheckBox("CC");
-            AnchorPane.setTopAnchor(box2, 35.0);
-            AnchorPane.setLeftAnchor(box2, 10.0);
-        CheckBox box3 = new CheckBox("ECS Tech Shop");
-            AnchorPane.setTopAnchor(box3, 55.0);
-            AnchorPane.setLeftAnchor(box3, 10.0);
-        CheckBox box4 = new CheckBox("ECS CAD Center");
-            AnchorPane.setTopAnchor(box4, 75.0);
-            AnchorPane.setLeftAnchor(box4, 10.0);
-        CheckBox box5 = new CheckBox("MESA E.P.");
-            AnchorPane.setTopAnchor(box5, 95.0);
-            AnchorPane.setLeftAnchor(box5, 10.0);
-        CheckBox box6 = new CheckBox("MESA Center");
-            AnchorPane.setTopAnchor(box6, 115.0);
-            AnchorPane.setLeftAnchor(box6, 10.0);
-        CheckBox box7 = new CheckBox("CSc");
-            AnchorPane.setTopAnchor(box7, 135.0);
-            AnchorPane.setLeftAnchor(box7, 10.0);
-        CheckBox box8 = new CheckBox("CE");
-            AnchorPane.setTopAnchor(box8, 155.0);
-            AnchorPane.setLeftAnchor(box8, 10.0);
-        CheckBox box9 = new CheckBox("ECS Campaign Dev.");
-            AnchorPane.setTopAnchor(box9, 175.0);
-            AnchorPane.setLeftAnchor(box9, 10.0);
-        CheckBox box10 = new CheckBox("EE");
-            AnchorPane.setTopAnchor(box10, 195.0);
-            AnchorPane.setLeftAnchor(box10, 10.0);
-        CheckBox box11 = new CheckBox("ME");
-            AnchorPane.setTopAnchor(box11, 215.0);
-            AnchorPane.setLeftAnchor(box11, 10.0);
-        CheckBox box12 = new CheckBox("CpE");
-            AnchorPane.setTopAnchor(box12, 235.0);
-            AnchorPane.setLeftAnchor(box12, 10.0);
-        CheckBox box13 = new CheckBox("CM");
-            AnchorPane.setTopAnchor(box13, 255.0);
-            AnchorPane.setLeftAnchor(box13, 10.0);
-        CheckBox box14 = new CheckBox("ECS Dean's Office");
-            AnchorPane.setTopAnchor(box14, 275.0);
-            AnchorPane.setLeftAnchor(box14, 10.0);
-        CheckBox box15 = new CheckBox("S.A.C");
-            AnchorPane.setTopAnchor(box15, 295.0);
-            AnchorPane.setLeftAnchor(box15, 10.0);
-        CheckBox box16 = new CheckBox("STORC");
-            AnchorPane.setTopAnchor(box16, 315.0);
-            AnchorPane.setLeftAnchor(box16, 10.0);
+
+        VBox checkboxes = new VBox();
+        AnchorPane.setLeftAnchor(checkboxes, 10.0);
+        AnchorPane.setTopAnchor(checkboxes, 10.0);
+        ResultSet r = DBHandle.queryReturnResult("SELECT \"Dept ID - Dept Description\" FROM 'College of E&CS';");
+        try {
+            r.next();
+            while (!r.isClosed()) {
+                String str = r.getString(1);
+                str = str.substring(str.indexOf('-') + 2, str.length());
+                CheckBox box = new CheckBox(str);
+                box.setSelected(true);
+                checkboxes.getChildren().add(box);
+                r.next();
+            }
+        } catch (SQLException e) { e.printStackTrace(); }
 
 //-----------------------------------------------------------------//
 
@@ -123,8 +79,7 @@ public class graphPage {
 //-----------------------------------------------------------------//
 
         anchor.getChildren().addAll(comboBoxX, comboBoxY);
-        anchor.getChildren().addAll(Graph, Back, But1);
-        anchor.getChildren().addAll(box1, box2, box3, box4, box5, box6, box7, box8, box9, box10, box11, box12, box13, box14, box15, box16);
+        anchor.getChildren().addAll(Graph, Back, checkboxes);
 
         Graph.setOnAction(e -> {
             CategoryAxis xAxis = new CategoryAxis();
