@@ -1,11 +1,15 @@
 package Stages.MainStage;
 
+
 import Stages.PageConnector;
+import javafx.scene.chart.*;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
+
+import java.sql.ResultSet;
 
 public class graphPage {
     private static AnchorPane anchor = null;
@@ -120,5 +124,21 @@ public class graphPage {
         anchor.getChildren().addAll(comboBoxX, comboBoxY);
         anchor.getChildren().addAll(Graph, Back, But1);
         anchor.getChildren().addAll(box1, box2, box3, box4, box5, box6, box7, box8, box9, box10, box11, box12, box13, box14, box15, box16);
+
+        Graph.setOnAction(e -> {
+            CategoryAxis xAxis = new CategoryAxis();
+            NumberAxis yAxis = new NumberAxis();
+            BarChart<String, Number> bc = new BarChart<String, Number>(xAxis, yAxis);
+            bc.setTitle("Total Purchase Cost");
+            xAxis.setLabel("Department");
+            yAxis.setLabel("Purchase Cost");
+
+            XYChart.Series<String, Double> series = new XYChart.Series<>();
+            
+
+            AnchorPane.setTopAnchor(bc, 150.0);
+            AnchorPane.setRightAnchor(bc, 300.0);
+            anchor.getChildren().addAll(bc);
+        });
     }
 }
