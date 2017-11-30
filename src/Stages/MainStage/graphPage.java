@@ -135,12 +135,15 @@ public class graphPage {
             yAxis.setLabel("Purchase Cost");
             XYChart.Series series = new XYChart.Series<>();
             try {
-            ResultSet res = database.DBHandle.queryReturnResult("SELECT \"Purchase Cost\" FROM '8-152';");
+            ResultSet res = DBHandle.queryReturnResult("SELECT \"Purchase Cost\" FROM '8-152';");
+            ResultSet dep = DBHandle.queryReturnResult("SELECT \"Dept ID - Dept Description\" FROM \"College of E&CS\"");
                 double sum = 0.0;
-                res.next();
-                while (!res.isClosed()) {
-                    series.getData().add(new XYChart.Data<>(res.getString(1), res.getInt(1)));
-                    res.next();
+              //  dep.next();
+               // res.next();
+                while (dep.next()) {
+                    series.getData().add(new XYChart.Data<>(dep.getString(1), getTotalCost(res.getString(1))));
+                    //res.next();
+                   // dep.next();
                 }
                 bc.getData().add(series);
             } catch (SQLException e1) {
@@ -172,3 +175,4 @@ public class graphPage {
         return sum;
     }
 }
+
