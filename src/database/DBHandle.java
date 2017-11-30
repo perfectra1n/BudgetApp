@@ -42,7 +42,7 @@ public class DBHandle {
     }
 
     // Send a query and return ResultSet
-    private static ResultSet queryReturnResult(String query) {
+    public static ResultSet queryReturnResult(String query) {
         ResultSet result = null;
         try {
             Statement sql = conn.createStatement();

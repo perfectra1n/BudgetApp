@@ -1,11 +1,16 @@
 package Stages.MainStage;
 
+import database.DBHandle;
 import Stages.PageConnector;
+import javafx.scene.chart.*;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class graphPage {
     private static AnchorPane anchor = null;
@@ -120,5 +125,31 @@ public class graphPage {
         anchor.getChildren().addAll(comboBoxX, comboBoxY);
         anchor.getChildren().addAll(Graph, Back, But1);
         anchor.getChildren().addAll(box1, box2, box3, box4, box5, box6, box7, box8, box9, box10, box11, box12, box13, box14, box15, box16);
+
+        Graph.setOnAction(e -> {
+            CategoryAxis xAxis = new CategoryAxis();
+            NumberAxis yAxis = new NumberAxis();
+            BarChart<String, Number> bc = new BarChart<String, Number>(xAxis, yAxis);
+            bc.setTitle("Total Purchase Cost");
+            xAxis.setLabel("Department");
+            yAxis.setLabel("Purchase Cost");
+            XYChart.Series series = new XYChart.Series<>();
+            try {
+            ResultSet res = database.DBHandle.queryReturnResult("SELECT \"Purchase Cost\" FROM '8-152';");
+                double sum = 0.0;
+                res.next();
+                while (!res.isClosed()) {
+                    series.getData().add(new XYChart.Data<>(res.getString(1), res.getInt(1)));
+                    res.next();
+                }
+                bc.getData().add(series);
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+
+            AnchorPane.setTopAnchor(bc, 150.0);
+            AnchorPane.setRightAnchor(bc, 300.0);
+            anchor.getChildren().addAll(bc);
+        });
     }
 }
