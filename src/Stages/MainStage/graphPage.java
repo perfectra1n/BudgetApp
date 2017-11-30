@@ -1,6 +1,10 @@
 package Stages.MainStage;
 
+<<<<<<< HEAD
 import database.DBHandle;
+=======
+
+>>>>>>> Al
 import Stages.PageConnector;
 import javafx.scene.chart.*;
 import javafx.scene.Scene;
@@ -10,7 +14,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.layout.AnchorPane;
 
 import java.sql.ResultSet;
+<<<<<<< HEAD
 import java.sql.SQLException;
+=======
+>>>>>>> Al
 
 public class graphPage {
     private static AnchorPane anchor = null;
@@ -133,6 +140,7 @@ public class graphPage {
             bc.setTitle("Total Purchase Cost");
             xAxis.setLabel("Department");
             yAxis.setLabel("Purchase Cost");
+<<<<<<< HEAD
             XYChart.Series series = new XYChart.Series<>();
             try {
             ResultSet res = database.DBHandle.queryReturnResult("SELECT \"Purchase Cost\" FROM '8-152';");
@@ -146,6 +154,11 @@ public class graphPage {
             } catch (SQLException e1) {
                 e1.printStackTrace();
             }
+=======
+
+            XYChart.Series<String, Double> series = new XYChart.Series<>();
+            
+>>>>>>> Al
 
             AnchorPane.setTopAnchor(bc, 150.0);
             AnchorPane.setRightAnchor(bc, 300.0);
