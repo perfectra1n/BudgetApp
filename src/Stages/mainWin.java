@@ -24,7 +24,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 public class mainWin {
@@ -82,16 +81,9 @@ public class mainWin {
 
         // Add menu bar to top of window
         border.setTop(menuBar);
+        border.getTop().setStyle("-fx-background-color: lightgrey");
 
         //--------------------------------------EVENTS--------------------------------------
-        //
-        Popup shh = new Popup();
-        Label text = new Label("Gotcha Bitch");
-        shh.getContent().add(text);
-        itemSecret.setOnAction(e -> {
-            if (shh.isShowing()) {shh.hide();}
-            else {shh.show(main);}
-        });
 
         // Menu Item "Test Page"
         itemTest.setOnAction(e -> testPage.open());
