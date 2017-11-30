@@ -2,58 +2,66 @@ package Stages.MainStage;
 
 import database.DBHandle;
 import Stages.mainWin;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.chart.*;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-
-import javax.xml.transform.Result;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.String.format;
 
 public class graphPage {
-    private static AnchorPane anchor = null;
+    private static BorderPane graphLayout = null;
 
     // Opens this scene
     public static void open() {
         // Layout not created until first call
-        if (anchor == null) { anchor = new AnchorPane(); }
-        mainWin.changeCenter(anchor);
+        if (graphLayout == null) {
+            graphLayout = new BorderPane();
+        }
+        mainWin.changeCenter(graphLayout);
         create();
     }
 
     // Scene layout and events
     private static void create() {
 
+        VBox leftPane = new VBox();
+        leftPane.setPadding(new Insets(10.0, 10.0, 10.0, 10.0));
+        leftPane.setSpacing(100.0);
+
 //-----------------------------------------------------------------//
         //-------------- DROP BOX "X" -----------------------//
-        ComboBox comboBoxX = new ComboBox();
-        comboBoxX.setPrefSize(100.0, 40.0);   //Sets the default drop list size
-        AnchorPane.setTopAnchor(comboBoxX, 50.0);           //Sets the positioning of the dropbox
-        AnchorPane.setLeftAnchor(comboBoxX, 500.0);          // ^
+        ComboBox<String> comboBoxX = new ComboBox<>();
+        comboBoxX.setPrefSize(150.0, 25.0); //Sets the default drop list size
+        
         //----------------POPULATE X OPTIONS-----------------//
-        comboBoxX.setPromptText("Select X Axis");                                       //Populates the dropbox with a prompt so user know what to do
-        comboBoxX.getItems().addAll("option 1","option 2","option 3");        //Populates the actual drop down menu
+        comboBoxX.getItems().addAll("Bar Graph", "Pie Graph"); //Populates the actual drop down menu
+        comboBoxX.setValue("Bar Graph");
 //-----------------------------------------------------------------//
 
 //-----------------------------------------------------------------//
         //-------------- DROP BOX "Y" -----------------------//
-        ComboBox comboBoxY = new ComboBox();
-        comboBoxY.setPrefSize(100.0, 40.0);  //Sets the default drop list size
-        AnchorPane.setTopAnchor(comboBoxY, 50.0);          //Sets the positioning of the dropbox
-        AnchorPane.setRightAnchor(comboBoxY, 50.0);        //^
+        ComboBox<String> comboBoxY = new ComboBox<>();
+        comboBoxY.setPrefSize(150.0, 25.0);                   //Sets the default drop list size
         //----------------POPULATE Y OPTIONS-----------------//
-        comboBoxY.setPromptText("Select Y Axis");                                      //Populates the dropbox with a prompt so user know what to do
-        comboBoxY.getItems().addAll("option 1","option 2","option 3");       //Populates the actual drop down menu
+        comboBoxY.getItems().addAll("Vertical", "Horizontal"); // Populates the actual drop down menu
+        comboBoxY.setValue("Vertical");
+
 //-----------------------------------------------------------------//
         //----------------CHECK BOXES-----------------//
-        // This is the list of the checkboxes and their formatting.//
+        // This is the list of the boxlist and their formatting.//
 
-        VBox checkboxes = new VBox();
-        AnchorPane.setLeftAnchor(checkboxes, 10.0);
-        AnchorPane.setTopAnchor(checkboxes, 10.0);
+        VBox boxlist = new VBox();
         ResultSet r = DBHandle.queryReturnResult("SELECT \"Dept ID - Dept Description\" FROM 'College of E&CS';");
+        List<CheckBox> checkBoxList = new ArrayList<>();
         try {
             r.next();
             while (!r.isClosed()) {
@@ -61,40 +69,56 @@ public class graphPage {
                 str = str.substring(str.indexOf('-') + 2, str.length());
                 CheckBox box = new CheckBox(str);
                 box.setSelected(true);
-                checkboxes.getChildren().add(box);
+                checkBoxList.add(box);
+                boxlist.getChildren().add(box);
                 r.next();
             }
         } catch (SQLException e) { e.printStackTrace(); }
 
-//-----------------------------------------------------------------//
+        createVerticalGraph();
+        leftPane.getChildren().addAll(comboBoxX, comboBoxY, boxlist);
+        graphLayout.setLeft(leftPane);
 
-//-----------------------------------------------------------------//
-        //------------------- GRAPH BUTTON ------------------//
-        Button Graph = new Button("GRAPH");             //Creates Graph Button
-        AnchorPane.setBottomAnchor(Graph, 75.0);       //Sets the positioning of the button
-        AnchorPane.setRightAnchor(Graph, 50.0);        //^
-//-----------------------------------------------------------------//
 
-        //------------------- BACK BUTTON -------------------//
-        Button Back = new Button("BACK");               //Creates Back Button
-        AnchorPane.setBottomAnchor(Back, 75.0);        //Sets the positioning of the button
-        AnchorPane.setLeftAnchor(Back, 585.0);          //^
-//-----------------------------------------------------------------//
+        //--------------------------- EVENTS ---------------------------
+        comboBoxX.setOnAction(e -> {
+            if (comboBoxX.getValue().equals("Bar Graph")) {
+                leftPane.getChildren().addAll(comboBoxY, boxlist);
+                graphLayout.setCenter(null);
+                if (comboBoxY.getValue().equals("Vertical")) {
+                    createVerticalGraph();
+                }
+                else if (comboBoxY.getValue().equals("Horizontal")) {
+                    createHorizontalGraph();
+                }
+            }
+            else if (comboBoxX.getValue().equals("Pie Graph")) {
+                leftPane.getChildren().removeAll(comboBoxY, boxlist);
+                graphLayout.setCenter(null);
+                createPieGraph();
+            }
+        });
 
-        anchor.getChildren().addAll(comboBoxX, comboBoxY);
-        anchor.getChildren().addAll(Graph, Back, checkboxes);
-
-        Graph.setOnAction(e -> createGraph());
+        comboBoxY.setOnAction(e -> {
+            if (comboBoxY.getValue().equals("Vertical")) {
+                createVerticalGraph();
+            }
+            else if (comboBoxY.getValue().equals("Horizontal")) {
+                createHorizontalGraph();
+            }
+        });
+        //--------------------------------------------------------------
     }
 
-    private static void createGraph() {
+    // Creates a vertical bar graph
+    private static void createVerticalGraph() {
         CategoryAxis xAxis = new CategoryAxis();                        // X-Axis
         NumberAxis yAxis = new NumberAxis();                            // Y-Axis
-        BarChart<String, Number> bc = new BarChart<>(xAxis, yAxis);     // Create Bar Chart
-        bc.setTitle("Total Purchase Cost");                             // Title of Chart
+        BarChart<String, Number> bc = new BarChart<>(xAxis, yAxis);    // Create Bar Chart
+        bc.setTitle("Cost by Department");                             // Title of Chart
         xAxis.setLabel("Department");                                   // Title of X-Axis
-        yAxis.setLabel("Purchase Cost");                                // Title of Y-Axis
-        XYChart.Series series = new XYChart.Series<>();                 // The "Bars"
+        yAxis.setLabel("Total Cost");                                   // Title of Y-Axis
+        XYChart.Series<String, Number> series = new XYChart.Series<>(); // The Vertical "Bars"
 
         ResultSet depts = DBHandle.queryReturnResult("SELECT \"TBL_NAME\" FROM 'importedTables';");
         try {
@@ -112,13 +136,69 @@ public class graphPage {
                 depts.next(); names.next();
             }
             bc.getData().add(series);
-
-            AnchorPane.setTopAnchor(bc, 150.0);
-            AnchorPane.setRightAnchor(bc, 300.0);
-            anchor.getChildren().addAll(bc);
+            bc.setLegendVisible(false);
+            graphLayout.setCenter(bc);
         } catch (SQLException e) { e.printStackTrace(); }
     }
 
+    // Creates a horizontal bar graph
+    private static void createHorizontalGraph() {
+        CategoryAxis yAxis = new CategoryAxis();                        // X-Axis
+        NumberAxis xAxis = new NumberAxis();                            // Y-Axis
+        BarChart<Number, String> bc = new BarChart<>(xAxis, yAxis);     // Create Bar Chart
+        bc.setTitle("Cost by Department");                              // Title of Chart
+        xAxis.setLabel("Total Cost");                                   // Title of X-Axis
+        yAxis.setLabel("Department");                                   // Title of Y-Axis
+        XYChart.Series<Number, String> series = new XYChart.Series<>(); // The "Bars"
+
+        ResultSet depts = DBHandle.queryReturnResult("SELECT \"TBL_NAME\" FROM 'importedTables';");
+        try {
+            depts.next();
+            String str = format("SELECT \"Dept ID - Dept Description\" FROM '%s';", depts.getString(1));
+            ResultSet names = DBHandle.queryReturnResult(str);
+            depts.next(); names.next();
+            while (!depts.isClosed()) {
+                str = format("SELECT \"Purchase Cost\" FROM '%s';", depts.getString(1));
+                ResultSet costs = DBHandle.queryReturnResult(str);
+                double totalCost = getTotalCost(costs);
+                String deptName = names.getString(1);
+                deptName = deptName.substring(deptName.indexOf('-') + 2, deptName.length());
+                series.getData().add(new XYChart.Data<>(totalCost, deptName));
+                depts.next(); names.next();
+            }
+            bc.getData().add(series);
+            bc.setLegendVisible(false);
+            graphLayout.setCenter(bc);
+        } catch (SQLException e) { e.printStackTrace(); }
+    }
+
+    private static void createPieGraph() {
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+        ResultSet depts = DBHandle.queryReturnResult("SELECT \"TBL_NAME\" FROM 'importedTables';");
+        try {
+            depts.next();
+            String str = format("SELECT \"Dept ID - Dept Description\" FROM '%s';", depts.getString(1));
+            ResultSet names = DBHandle.queryReturnResult(str);
+            depts.next(); names.next();
+            while (!depts.isClosed()) {
+                str = format("SELECT \"Purchase Cost\" FROM '%s';", depts.getString(1));
+                ResultSet costs = DBHandle.queryReturnResult(str);
+                double totalCost = getTotalCost(costs);
+                String deptName = names.getString(1);
+                deptName = deptName.substring(deptName.indexOf('-') + 2, deptName.length());
+                pieChartData.add(new PieChart.Data(deptName, totalCost));
+                depts.next(); names.next();
+            }
+            PieChart pie = new PieChart(pieChartData);
+            pie.setTitle("Cost by Department");
+            graphLayout.setCenter(pie);
+
+            System.out.println(pie.legendSideProperty());
+        } catch (SQLException e) { e.printStackTrace(); }
+    }
+
+
+    // Generates total sum given a result set
     private static double getTotalCost(ResultSet costs) {
         double sum = 0.0;
         try {
