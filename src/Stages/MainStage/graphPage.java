@@ -1,7 +1,7 @@
 package Stages.MainStage;
 
 import database.DBHandle;
-import Stages.PageConnector;
+import Stages.mainWin;
 import javafx.scene.chart.*;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,7 +19,7 @@ public class graphPage {
     public static void open() {
         // Layout not created until first call
         if (anchor == null) { anchor = new AnchorPane(); }
-        PageConnector.changeRoot(anchor);
+        mainWin.changeCenter(anchor);
         create();
     }
 
@@ -151,5 +151,24 @@ public class graphPage {
             AnchorPane.setRightAnchor(bc, 300.0);
             anchor.getChildren().addAll(bc);
         });
+    }
+
+    private static double getTotalCost(String query) {
+        double sum = 0;
+        try {
+
+            ResultSet res = DBHandle.queryReturnResult("SELECT \"Purchase Cost\" FROM '8-152';");
+            sum = 0.0;
+            res.next();
+            while (!res.isClosed()) {
+                sum += res.getDouble(1);
+                res.next();
+            }
+            System.out.println(sum);
+
+        } catch (SQLException e1) {
+            e1.printStackTrace();
+        }
+        return sum;
     }
 }

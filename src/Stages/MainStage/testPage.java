@@ -4,7 +4,7 @@
 //
 
 package Stages.MainStage;
-import java.sql.ResultSet;
+
 import Stages.*;
 import Stages.LogStage.loggerPage;
 import database.DBHandle;
@@ -13,8 +13,6 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.*;
 import java.io.File;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class testPage {
     private static GridPane grid = null;
@@ -23,7 +21,7 @@ public class testPage {
     public static void open() {
         // Layout not created until first call
         if (grid == null) { grid = new GridPane(); }
-        PageConnector.changeRoot(grid);
+        mainWin.changeCenter(grid);
         create();
     }
 
@@ -60,7 +58,7 @@ public class testPage {
 
         // Close Window
         Button ExitBut = new Button("Close Window");
-        ExitBut.setPrefSize(100.0, 25.0);
+        ExitBut.setMinSize(100.0, 25.0);
         ExitBut.setPrefHeight(25.0);
         grid.add(ExitBut, 3, 1);
 
@@ -131,21 +129,7 @@ public class testPage {
         });
 
         // Exit Button
-        ExitBut.setOnAction(e -> PageConnector.closeWindow());
-
-        But3.setOnAction(e -> {
-            ResultSet res = DBHandle.queryReturnResult("SELECT \"Purchase Cost\" FROM '8-152';");
-            double sum = 0.0;
-            try {
-                res.next();
-                while (!res.isClosed()) {
-                    System.out.println(res.getDouble(1));
-                    //sum += res.getDouble(1);
-                    res.next();
-                }
-            } catch (SQLException ex) {ex.printStackTrace();}
-            System.out.println(sum);
-        });
+        ExitBut.setOnAction(e -> mainWin.closeWindow());
         //----------------------------------------------------------------------------
     }
 }
