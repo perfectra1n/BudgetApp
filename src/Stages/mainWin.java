@@ -23,6 +23,7 @@ import database.DBHandle;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -34,6 +35,7 @@ public class mainWin {
     public static void passMain(Stage window) {
         // Set global variable main, set window properties
         main = window; main.setTitle("Budget Application Program");
+        main.getIcons().add(new Image("images/icon.png"));
         main.setOnCloseRequest(e -> DBHandle.closeConnectionToDB());
         createMainWindowLayout();
         importPage.open();
