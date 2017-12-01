@@ -8,6 +8,7 @@ import javafx.geometry.Insets;
 import javafx.scene.chart.*;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.cell.CheckBoxListCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import java.sql.ResultSet;
@@ -79,7 +80,22 @@ public class graphPage {
 
         } catch (SQLException e) { e.printStackTrace(); }
 //--------------------------test------------------------------------//
-        checkBoxList.get(0).setOnAction(e ->{
+        int i = 0;
+        while(i < checkBoxList.size()){
+            if (checkBoxList.get(i).isSelected()){
+                checkBoxList.get(i).setOnAction(e ->{
+                    createVerticalGraph();
+                });
+                i++;
+            }
+            else if (!checkBoxList.get(i).isSelected()){
+                checkBoxList.get(i).setOnAction(e ->{
+                    createVerticalGraph();
+                });
+                i++;
+            }
+        }
+       /*checkBoxList.get(0).setOnAction(e ->{
             if (checkBoxList.get(0).isSelected()){
                 createVerticalGraph();
             }
@@ -94,7 +110,7 @@ public class graphPage {
             if (!checkBoxList.get(1).isSelected()){
                 createVerticalGraph();
             }
-        });
+        });*/
         //--------------------------------------------------//
         createVerticalGraph();
         leftPane.getChildren().addAll(comboBoxX, comboBoxY, boxlist);
@@ -143,8 +159,28 @@ public class graphPage {
             ResultSet depts = DBHandle.queryReturnResult("SELECT \"TBL_NAME\" FROM 'importedTables';");
 
             //-----------------Testing checkboxes - Jeric-------------------------------//
+        int i = 0;
 
-        if (checkBoxList.get(0).isSelected()) {
+        while (i < checkBoxList.size()) {
+            if (checkBoxList.get(i).isSelected()) {
+                try {
+                    depts.next();
+                    String str = format("SELECT \"Dept ID - Dept Description\" FROM '%s';", depts.getString(1));
+                    ResultSet names = DBHandle.queryReturnResult(str);
+                    ResultSet testCost = DBHandle.queryReturnResult("SELECT \"Purchase Cost\" FROM '1-653';");
+                    double totalCost = getTotalCost(testCost);
+                    series.getData().add(new XYChart.Data<>(str, totalCost));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                i++;
+            }
+            else if (!checkBoxList.get(i).isSelected()) {
+                i++;
+            }
+        }
+
+    /*  if (checkBoxList.get(0).isSelected()) {
             try {
             ResultSet test = DBHandle.queryReturnResult("SELECT \"Dept ID - Dept Description\" FROM 'College of E&CS';");
             ResultSet testCost = DBHandle.queryReturnResult("SELECT \"Purchase Cost\" FROM '1-653';");
@@ -161,12 +197,12 @@ public class graphPage {
                 double totalCost = getTotalCost(testCost);
                 series.getData().add(new XYChart.Data<>(test.getString(1), totalCost));
             }catch (SQLException e) { e.printStackTrace(); }
-        }
-        bc.getData().add(series);
+        }*/
+
 
 
         //---------------------------------------------------------------------------------//
-
+        bc.getData().add(series);
         bc.setLegendVisible(false);
         graphLayout.setCenter(bc);
 
