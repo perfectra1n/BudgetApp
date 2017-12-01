@@ -33,9 +33,14 @@ public class graphPage {
     // Scene layout and events
     private static void create() {
 
+        String cssStyle = "-fx-border-color: darkgrey ; \n" +
+                            "-fx-padding: 5 5 5 5; \n" +
+                            "-fx-border-width: 10 10 10 10";
+
         VBox leftPane = new VBox();
-        leftPane.setPadding(new Insets(10.0, 10.0, 10.0, 10.0));
+        //leftPane.setPadding(new Insets(100.0, 100.0, 100.0, 100.0));
         leftPane.setSpacing(100.0);
+        leftPane.setStyle(cssStyle);
 
 //-----------------------------------------------------------------//
         //-------------- DROP BOX "X" -----------------------//

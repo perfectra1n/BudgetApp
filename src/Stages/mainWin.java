@@ -88,6 +88,9 @@ public class mainWin {
         Menu menuGoto = new Menu("Goto");
 
                     /*                      The buttons on the drop down menu of goto                    */
+        MenuItem itemHome = new MenuItem("Home Page");
+        itemHome.setOnAction(e -> homePage.open());
+
         MenuItem itemImport = new MenuItem("Import...");
         itemImport.setOnAction(e -> importPage.open());
 
@@ -97,8 +100,10 @@ public class mainWin {
         MenuItem itemBarGraph = new MenuItem("Graph view");
         itemBarGraph.setOnAction(e -> graphPage.open());
 
+
+
                     /*                      Add all of the elements to the goto sub menu                 */
-        menuGoto.getItems().addAll(itemImport, itemBarGraph, itemLog);
+        menuGoto.getItems().addAll(itemImport, itemBarGraph, itemLog, itemHome);
 
 
 
