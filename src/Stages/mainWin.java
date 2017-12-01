@@ -36,7 +36,7 @@ public class mainWin {
         main = window; main.setTitle("Budget Application Program");
         main.setOnCloseRequest(e -> DBHandle.closeConnectionToDB());
         createMainWindowLayout();
-        testPage.open();
+        importPage.open();
         window.show();
     }
 
@@ -57,45 +57,70 @@ public class mainWin {
         main.setScene(new Scene(border));
         main.setHeight(700); main.setWidth(1000);
 
-        // Menu creation
-        MenuBar menuBar = new MenuBar();                       // Menu Bar
-        Menu menuFile = new Menu("File");                  // Sub Menu "File"
-        Menu menuView = new Menu("View");                  // Sub Menu "View"
-        Menu menuPages = new Menu("Pages");                // Sub Menu "Pages"
-        Menu menuGraph = new Menu("Graph");                // Sub Menu "Graph"
-        MenuItem itemImport = new MenuItem("Import...");   // Menu Item "Import..."
-        MenuItem itemSecret = new MenuItem("About");
-        MenuItem itemExit = new MenuItem("Exit");          // Menu Item "Exit"
-        MenuItem itemLog = new MenuItem("Data Log");       // Menu Item "Data Log"
-        MenuItem itemTest = new MenuItem("Test Page");     // Menu Item "Test Page"
-        MenuItem itemBarGraph = new MenuItem("Bar Graph"); // Menu Item "Graph Page"
 
-        // Add menu items to sub-menus
-        menuFile.getItems().addAll(itemImport, itemSecret, itemExit);
-        menuView.getItems().addAll(menuPages, itemLog);
-        menuPages.getItems().addAll(itemTest);
-        menuGraph.getItems().addAll(itemBarGraph);
 
-        // Add sub menus to menu bar
-        menuBar.getMenus().addAll(menuFile, menuView, menuGraph);
+                    /*                      Declare new menu bar                     */
+        MenuBar menuBar = new MenuBar();
 
-        // Add menu bar to top of window
+                    /*----------                      The File button on the menu bar                ----------*/
+        Menu menuFile = new Menu("File");
+
+                    /*                      The buttons on the drop down menu of file                    */
+        MenuItem itemExit = new MenuItem("Exit");
+        itemExit.setOnAction(e -> closeWindow());
+
+                    /*                      Add all of the elements to the goto sub menu                 */
+        menuFile.getItems().addAll(itemExit);
+
+
+                    /*----------                      The Edit button on the menu bar               ----------*/
+        Menu menuEdit = new Menu("Edit");
+
+                    /*                      The buttons on the drop down menu of edit                    */
+        MenuItem itemEditData = new MenuItem("Data");
+
+                    /*                      Add all of the elements to the goto sub menu                 */
+        menuEdit.getItems().addAll(itemEditData);
+
+
+
+                    /*----------                      The Goto button on the menu bar               ----------*/
+        Menu menuGoto = new Menu("Goto");
+
+                    /*                      The buttons on the drop down menu of goto                    */
+        MenuItem itemImport = new MenuItem("Import...");
+        itemImport.setOnAction(e -> importPage.open());
+
+        MenuItem itemLog = new MenuItem("Data Log");
+        itemLog.setOnAction(e -> loggerPage.open());
+
+        MenuItem itemBarGraph = new MenuItem("Graph view");
+        itemBarGraph.setOnAction(e -> graphPage.open());
+
+                    /*                      Add all of the elements to the goto sub menu                 */
+        menuGoto.getItems().addAll(itemImport, itemBarGraph, itemLog);
+
+
+
+                    /*----------                      The About button on the menu bar            ----------*/
+        Menu menuAbout = new Menu("About");
+
+        menuBar.getMenus().addAll(menuFile, menuEdit, menuGoto, menuAbout );
+
+                    /*                      Add all of the elements to the  menu                         */
         border.setTop(menuBar);
         border.getTop().setStyle("-fx-background-color: lightgrey");
 
-        //--------------------------------------EVENTS--------------------------------------
 
-        // Menu Item "Test Page"
-        itemTest.setOnAction(e -> testPage.open());
 
-        // Menu Item "Graph Page"
-        itemBarGraph.setOnAction(e -> graphPage.open());
 
-        // Menu Item "Data Log"
-        itemLog.setOnAction(e -> loggerPage.open());
 
-        // Menu Item "Exit"
-        itemExit.setOnAction(e -> closeWindow());
-        //----------------------------------------------------------------------------------
+
+
+
+
+
+
+
     }
 }
