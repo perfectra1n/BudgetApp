@@ -18,6 +18,7 @@ import java.util.List;
 import static java.lang.String.format;
 
 public class graphPage {
+    private static List<CheckBox> checkBoxList = new ArrayList<>();
     private static BorderPane graphLayout = null;
 
     // Opens this scene
@@ -61,20 +62,40 @@ public class graphPage {
 
         VBox boxlist = new VBox();
         ResultSet r = DBHandle.queryReturnResult("SELECT \"Dept ID - Dept Description\" FROM 'College of E&CS';");
-        List<CheckBox> checkBoxList = new ArrayList<>();
+        //List<CheckBox> checkBoxList = new ArrayList<>();
+        //CheckBox box = new CheckBox();
         try {
             r.next();
             while (!r.isClosed()) {
                 String str = r.getString(1);
                 str = str.substring(str.indexOf('-') + 2, str.length());
                 CheckBox box = new CheckBox(str);
+               // box = new CheckBox(str);
                 box.setSelected(true);
                 checkBoxList.add(box);
                 boxlist.getChildren().add(box);
                 r.next();
             }
-        } catch (SQLException e) { e.printStackTrace(); }
 
+        } catch (SQLException e) { e.printStackTrace(); }
+//--------------------------test------------------------------------//
+        checkBoxList.get(0).setOnAction(e ->{
+            if (checkBoxList.get(0).isSelected()){
+                createVerticalGraph();
+            }
+            if (!checkBoxList.get(0).isSelected()){
+                createVerticalGraph();
+            }
+        });
+        checkBoxList.get(1).setOnAction(e ->{
+            if (checkBoxList.get(1).isSelected()){
+                createVerticalGraph();
+            }
+            if (!checkBoxList.get(1).isSelected()){
+                createVerticalGraph();
+            }
+        });
+        //--------------------------------------------------//
         createVerticalGraph();
         leftPane.getChildren().addAll(comboBoxX, comboBoxY, boxlist);
         graphLayout.setLeft(leftPane);
@@ -119,9 +140,37 @@ public class graphPage {
         xAxis.setLabel("Department");                                   // Title of X-Axis
         yAxis.setLabel("Total Cost");                                   // Title of Y-Axis
         XYChart.Series<String, Number> series = new XYChart.Series<>(); // The Vertical "Bars"
+            ResultSet depts = DBHandle.queryReturnResult("SELECT \"TBL_NAME\" FROM 'importedTables';");
 
-        ResultSet depts = DBHandle.queryReturnResult("SELECT \"TBL_NAME\" FROM 'importedTables';");
-        try {
+            //-----------------Testing checkboxes - Jeric-------------------------------//
+
+        if (checkBoxList.get(0).isSelected()) {
+            try {
+            ResultSet test = DBHandle.queryReturnResult("SELECT \"Dept ID - Dept Description\" FROM 'College of E&CS';");
+            ResultSet testCost = DBHandle.queryReturnResult("SELECT \"Purchase Cost\" FROM '1-653';");
+            double totalCost = getTotalCost(testCost);
+            series.getData().add(new XYChart.Data<>(test.getString(1), totalCost));
+        }catch (SQLException e) { e.printStackTrace(); }
+        }
+       // bc.getData().add(series);
+
+        if (checkBoxList.get(1).isSelected()) {
+            try {
+                ResultSet test = DBHandle.queryReturnResult("SELECT \"Dept ID - Dept Description\" FROM 'College of E&CS' where rowid = 2;");
+                ResultSet testCost = DBHandle.queryReturnResult("SELECT \"Purchase Cost\" FROM '10-218';");
+                double totalCost = getTotalCost(testCost);
+                series.getData().add(new XYChart.Data<>(test.getString(1), totalCost));
+            }catch (SQLException e) { e.printStackTrace(); }
+        }
+        bc.getData().add(series);
+
+
+        //---------------------------------------------------------------------------------//
+
+        bc.setLegendVisible(false);
+        graphLayout.setCenter(bc);
+
+       /* try {
             depts.next();
             String str = format("SELECT \"Dept ID - Dept Description\" FROM '%s';", depts.getString(1));
             ResultSet names = DBHandle.queryReturnResult(str);
@@ -138,7 +187,8 @@ public class graphPage {
             bc.getData().add(series);
             bc.setLegendVisible(false);
             graphLayout.setCenter(bc);
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException e) { e.printStackTrace(); }*/
+        //}
     }
 
     // Creates a horizontal bar graph
