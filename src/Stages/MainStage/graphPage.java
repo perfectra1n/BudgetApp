@@ -1,22 +1,22 @@
 package Stages.MainStage;
 
-import database.DBHandle;
-import Stages.mainWin;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
-import javafx.scene.chart.*;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.cell.CheckBoxListCell;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+        import database.DBHandle;
+        import Stages.mainWin;
+        import javafx.collections.FXCollections;
+        import javafx.collections.ObservableList;
+        import javafx.geometry.Insets;
+        import javafx.scene.chart.*;
+        import javafx.scene.control.CheckBox;
+        import javafx.scene.control.ComboBox;
+        import javafx.scene.control.cell.CheckBoxListCell;
+        import javafx.scene.layout.BorderPane;
+        import javafx.scene.layout.VBox;
+        import java.sql.ResultSet;
+        import java.sql.SQLException;
+        import java.util.ArrayList;
+        import java.util.List;
 
-import static java.lang.String.format;
+        import static java.lang.String.format;
 
 public class graphPage {
     private static List<CheckBox> checkBoxList = new ArrayList<>();
@@ -36,8 +36,8 @@ public class graphPage {
     private static void create() {
 
         String cssStyle = "-fx-border-color: darkgrey ; \n" +
-                            "-fx-padding: 5 5 5 5; \n" +
-                            "-fx-border-width: 10 10 10 10";
+                "-fx-padding: 5 5 5 5; \n" +
+                "-fx-border-width: 10 10 10 10";
 
         VBox leftPane = new VBox();
         //leftPane.setPadding(new Insets(100.0, 100.0, 100.0, 100.0));
@@ -48,7 +48,7 @@ public class graphPage {
         //-------------- DROP BOX "X" -----------------------//
         ComboBox<String> comboBoxX = new ComboBox<>();
         comboBoxX.setPrefSize(150.0, 25.0); //Sets the default drop list size
-        
+
         //----------------POPULATE X OPTIONS-----------------//
         comboBoxX.getItems().addAll("Bar Graph", "Pie Graph"); //Populates the actual drop down menu
         comboBoxX.setValue("Bar Graph");
@@ -76,7 +76,7 @@ public class graphPage {
                 String str = r.getString(1);
                 str = str.substring(str.indexOf('-') + 2, str.length());
                 CheckBox box = new CheckBox(str);
-               // box = new CheckBox(str);
+                // box = new CheckBox(str);
                 box.setSelected(true);
                 checkBoxList.add(box);
                 boxlist.getChildren().add(box);
@@ -163,7 +163,7 @@ public class graphPage {
         XYChart.Series<String, Number> series = new XYChart.Series<>(); // The Vertical "Bars"
         ResultSet depts = DBHandle.queryReturnResult("SELECT \"TBL_NAME\" FROM 'importedTables';");
 
-            //-----------------Testing checkboxes - Jeric-------------------------------//
+        //-----------------Testing checkboxes - Jeric-------------------------------//
         int i = 0;
 
         try {
@@ -309,4 +309,5 @@ public class graphPage {
         return sum;
     }
 }
+
 

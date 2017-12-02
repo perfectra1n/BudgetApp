@@ -38,7 +38,7 @@ public class mainWin {
         //main.getIcons().add(new Image("images/icon.png"));
         main.setOnCloseRequest(e -> DBHandle.closeConnectionToDB());
         createMainWindowLayout();
-        importPage.open();
+        homePage.open();
         window.show();
     }
 
