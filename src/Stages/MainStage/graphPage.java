@@ -161,28 +161,35 @@ public class graphPage {
         xAxis.setLabel("Department");                                   // Title of X-Axis
         yAxis.setLabel("Total Cost");                                   // Title of Y-Axis
         XYChart.Series<String, Number> series = new XYChart.Series<>(); // The Vertical "Bars"
-            ResultSet depts = DBHandle.queryReturnResult("SELECT \"TBL_NAME\" FROM 'importedTables';");
+        ResultSet depts = DBHandle.queryReturnResult("SELECT \"TBL_NAME\" FROM 'importedTables';");
 
             //-----------------Testing checkboxes - Jeric-------------------------------//
         int i = 0;
 
-        while (i < checkBoxList.size()) {
-            if (checkBoxList.get(i).isSelected()) {
-                try {
-                    depts.next();
-                    String str = format("SELECT \"Dept ID - Dept Description\" FROM '%s';", depts.getString(1));
-                    ResultSet names = DBHandle.queryReturnResult(str);
-                    ResultSet testCost = DBHandle.queryReturnResult("SELECT \"Purchase Cost\" FROM '1-653';");
-                    double totalCost = getTotalCost(testCost);
-                    series.getData().add(new XYChart.Data<>(str, totalCost));
-                } catch (SQLException e) {
-                    e.printStackTrace();
+        try {
+            depts.next();
+            String str = format("SELECT \"Dept ID - Dept Description\" FROM '%s';", depts.getString(1));
+            ResultSet names = DBHandle.queryReturnResult(str);
+            depts.next(); names.next();
+            while (i < checkBoxList.size()) {
+                if (checkBoxList.get(i).isSelected()) {
+                    str = format("SELECT \"Purchase Cost\" FROM '%s';", depts.getString(1));
+                    ResultSet costs = DBHandle.queryReturnResult(str);
+                    double totalCost = getTotalCost(costs);
+                    String deptName = names.getString(1);
+                    deptName = deptName.substring(deptName.indexOf('-') + 2, deptName.length());
+                    series.getData().add(new XYChart.Data<>(deptName, totalCost));
+                    depts.next(); names.next();
+
+                    i++;
                 }
-                i++;
+                else if (!checkBoxList.get(i).isSelected()) {
+                    depts.next(); names.next();
+                    i++;
+                }
             }
-            else if (!checkBoxList.get(i).isSelected()) {
-                i++;
-            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
     /*  if (checkBoxList.get(0).isSelected()) {

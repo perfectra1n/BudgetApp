@@ -35,7 +35,7 @@ public class mainWin {
     public static void passMain(Stage window) {
         // Set global variable main, set window properties
         main = window; main.setTitle("Budget Application Program");
-        main.getIcons().add(new Image("images/icon.png"));
+        //main.getIcons().add(new Image("images/icon.png"));
         main.setOnCloseRequest(e -> DBHandle.closeConnectionToDB());
         createMainWindowLayout();
         importPage.open();
