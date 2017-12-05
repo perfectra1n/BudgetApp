@@ -22,9 +22,14 @@ import Stages.MainStage.*;
 import database.DBHandle;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class mainWin {
@@ -35,7 +40,9 @@ public class mainWin {
     public static void passMain(Stage window) {
         // Set global variable main, set window properties
         main = window; main.setTitle("Budget Application Program");
-        //main.getIcons().add(new Image("images/icon.png"));
+
+        /*          Set the icon of the program to the Sac State logo               */
+        main.getIcons().add(new Image("images/icon.png"));
         main.setOnCloseRequest(e -> DBHandle.closeConnectionToDB());
         createMainWindowLayout();
         homePage.open();
@@ -60,14 +67,13 @@ public class mainWin {
         main.setHeight(700); main.setWidth(1000);
 
 
-
                     /*                      Declare new menu bar                     */
         MenuBar menuBar = new MenuBar();
 
                     /*----------                      The File button on the menu bar                ----------*/
         Menu menuFile = new Menu("File");
 
-                    /*                      The buttons on the drop down menu of file                    */
+                    /*                      The buttons on the drop down menu of file and the action they perform                    */
         MenuItem itemExit = new MenuItem("Exit");
         itemExit.setOnAction(e -> closeWindow());
 
@@ -85,37 +91,53 @@ public class mainWin {
         menuEdit.getItems().addAll(itemEditData);
 
 
-
-                    /*----------                      The Goto button on the menu bar               ----------*/
-        Menu menuGoto = new Menu("Goto");
-
-                    /*                      The buttons on the drop down menu of goto                    */
-        MenuItem itemHome = new MenuItem("Home Page");
-        itemHome.setOnAction(e -> homePage.open());
-
-        MenuItem itemImport = new MenuItem("Import...");
-        itemImport.setOnAction(e -> importPage.open());
-
-        MenuItem itemLog = new MenuItem("Data Log");
-        itemLog.setOnAction(e -> loggerPage.open());
-
-        MenuItem itemBarGraph = new MenuItem("Graph view");
-        itemBarGraph.setOnAction(e -> graphPage.open());
-
-
-
-                    /*                      Add all of the elements to the goto sub menu                 */
-        menuGoto.getItems().addAll(itemImport, itemBarGraph, itemLog, itemHome);
-
-
-
                     /*----------                      The About button on the menu bar            ----------*/
         Menu menuAbout = new Menu("About");
 
-        menuBar.getMenus().addAll(menuFile, menuEdit, menuGoto, menuAbout );
+                    /*----------            Add all the menus (file, edit, about) to the menu bar    ---------*/
+        menuBar.getMenus().addAll(menuFile, menuEdit, menuAbout );
 
-                    /*                      Add all of the elements to the  menu                         */
-        border.setTop(menuBar);
+
+        /*        Initialize the toolbar, which will be located underneath the menu bar          */
+        HBox toolBar = new HBox(40);
+
+        /*        Create the button, set the max size for each, and then set the action that will be performed upon click       */
+        Button itemHome = new Button("Home");
+        itemHome.setMaxSize(70,40);
+        itemHome.setOnAction(e -> homePage.open());
+
+        Button itemImport = new Button("Import");
+        itemImport.setMaxSize(70,40);
+        itemImport.setOnAction(e -> importPage.open());
+
+
+        Button itemLog = new Button("Data Log");
+        itemLog.setMaxSize(70,40);
+        itemLog.setOnAction(e -> loggerPage.open());
+
+        Button itemBarGraph = new Button("Graphs");
+        itemBarGraph.setMaxSize(70,40);
+        itemBarGraph.setOnAction(e -> graphPage.open());
+
+
+        //toolBar.setStyle("-fx-padding: 0 0 0 0");
+
+
+        /*        Add all of the menus for the toolbar, to the toolbar                          */
+        toolBar.getChildren().addAll(itemImport,itemBarGraph,itemLog,itemHome);
+
+
+        /*          Created a new VBox named topContainer to hold the elements that
+                    will be located at the top of the page, so that we can simply
+                    set it at the top of the root at the end                         */
+        VBox topContainer = new VBox();
+        topContainer.getChildren().add(menuBar);
+        topContainer.getChildren().add(toolBar);
+
+        border.setTop(topContainer);
+
+        /*        Set the styling for what the menus will look like             */
+        /*        TODO make this look better                                    */
         border.getTop().setStyle("-fx-background-color: lightgrey");
 
 

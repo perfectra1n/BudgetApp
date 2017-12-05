@@ -43,7 +43,7 @@ private static TilePane homeLayout = null;
         Button but1 = new Button ("");
         but1.setPrefSize(10,10);
 
-            Image IM = new Image("resources/images/importIcon.png");
+            Image IM = new Image("images/importIcon.png");
             but1.setGraphic(new ImageView(IM));
             but1.setOnAction(e -> importPage.open());
 
@@ -52,14 +52,14 @@ private static TilePane homeLayout = null;
         Button but2 = new Button ("");
         but2.setPrefSize(10,10);
 
-            Image GU = new Image("resources/images/graphIcon.png");
+            Image GU = new Image("images/graphIcon.png");
             but2.setGraphic(new ImageView(GU));
             but2.setOnAction(e -> graphPage.open());
 
         Button but3 = new Button ("");
         but3.setPrefSize(10,10);
 
-            Image DL = new Image("resources/images/logIcon.png");
+            Image DL = new Image("images/logIcon.png");
             but3.setGraphic(new ImageView(DL));
             but3.setOnAction(e -> loggerPage.open());
 
@@ -67,7 +67,7 @@ private static TilePane homeLayout = null;
         Button but4 = new Button ("");
         but4.setPrefSize(10,10);
 
-            Image S = new Image("resources/images/searchIcon.png");
+            Image S = new Image("images/searchIcon.png");
             but4.setGraphic(new ImageView(S));
 
 
@@ -77,6 +77,8 @@ private static TilePane homeLayout = null;
 
         Button but6 = new Button ("NULL");
         but6.setPrefSize(10,10);
+
+
 
         homeLayout.getChildren().addAll(but1,but2,but3,but4,but5,but6);
        }
