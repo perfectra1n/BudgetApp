@@ -1,0 +1,6 @@
+#leftPane
+{
+    -fx-border-color: darkgrey;
+    -fx-padding: 5px;
+    -fx-border-width: 10 10 10 10;
+}

@@ -27,6 +27,10 @@ public class graphPage {
         // Layout not created until first call
         if (graphLayout == null) {
             graphLayout = new BorderPane();
+                            /*          Set the stylesheet graphPage.css to this scene        */
+            String graphPageCss = graphPage.class.getResource("/css/graphPage.css").toExternalForm();
+            graphLayout.getStylesheets().clear();
+            graphLayout.getStylesheets().add(graphPageCss);
         }
         mainWin.changeCenter(graphLayout);
         create();
@@ -35,14 +39,9 @@ public class graphPage {
     // Scene layout and events
     private static void create() {
 
-        String cssStyle = "-fx-border-color: darkgrey ; \n" +
-                "-fx-padding: 5 5 5 5; \n" +
-                "-fx-border-width: 10 10 10 10";
-
         VBox leftPane = new VBox();
-        //leftPane.setPadding(new Insets(100.0, 100.0, 100.0, 100.0));
-        leftPane.setSpacing(100.0);
-        leftPane.setStyle(cssStyle);
+        leftPane.setId("leftPane");
+        //leftPane.setSpacing(100.0);
 
 //-----------------------------------------------------------------//
         //-------------- DROP BOX "X" -----------------------//

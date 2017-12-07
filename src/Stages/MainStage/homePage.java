@@ -27,6 +27,10 @@ private static TilePane homeLayout = null;
         // Layout not created until first call
         if (homeLayout == null) {
             homeLayout = new TilePane(Orientation.VERTICAL);
+                            /*          Set the stylesheet homePage.css to this scene        */
+            String homePageCss = homePage.class.getResource("/css/homePage.css").toExternalForm();
+            homeLayout.getStylesheets().clear();
+            homeLayout.getStylesheets().add(homePageCss);
         }
         mainWin.changeCenter(homeLayout);
         create();
@@ -54,7 +58,7 @@ private static TilePane homeLayout = null;
 
             Image GU = new Image("images/graphIcon.png");
             but2.setGraphic(new ImageView(GU));
-            but2.setOnAction(e -> graphPage.open());
+            but2.setOnAction(e -> homePage.open());
 
         Button but3 = new Button ("");
         but3.setPrefSize(10,10);

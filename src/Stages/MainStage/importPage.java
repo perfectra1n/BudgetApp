@@ -22,6 +22,10 @@ public class importPage
     public static void open() {
         // Layout not created until first call
         if (grid == null) { grid = new GridPane(); }
+                /*          Set the stylesheet importPage.css to this scene        */
+        String importPageCss = importPage.class.getResource("/css/importPage.css").toExternalForm();
+        grid.getStylesheets().clear();
+        grid.getStylesheets().add(importPageCss);
         mainWin.changeCenter(grid);
         create();
     }

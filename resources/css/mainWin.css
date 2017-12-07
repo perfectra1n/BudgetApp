@@ -1,0 +1,9 @@
+.button
+{
+    -fx-font-size: 14px;
+}
+
+#topContainer
+{
+    -fx-background-color: lightgrey;
+}

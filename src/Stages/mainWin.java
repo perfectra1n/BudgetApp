@@ -39,11 +39,16 @@ public class mainWin {
     // Main stage passed from Main class
     public static void passMain(Stage window) {
         // Set global variable main, set window properties
-        main = window; main.setTitle("Budget Application Program");
+        main = window;
+        main.setTitle("Budget Application Program");
 
         /*          Set the icon of the program to the Sac State logo               */
         main.getIcons().add(new Image("images/icon.png"));
         main.setOnCloseRequest(e -> DBHandle.closeConnectionToDB());
+                /*          Set the stylesheet mainWin.css to this scene        */
+        String mainWinCss = mainWin.class.getResource("/css/mainWin.css").toExternalForm();
+        border.getStylesheets().clear();
+        border.getStylesheets().add(mainWinCss);
         createMainWindowLayout();
         homePage.open();
         window.show();
@@ -63,7 +68,14 @@ public class mainWin {
     // Main Window layout and Menu events
     private static void createMainWindowLayout() {
         border = new BorderPane();
+
+        /*          Set the ID for the pane, for usage within the CSS sheet         */
+        border.setId("border");
+
         main.setScene(new Scene(border));
+
+
+
         main.setHeight(700); main.setWidth(1000);
 
 
@@ -112,7 +124,8 @@ public class mainWin {
 
 
         Button itemLog = new Button("Data Log");
-        itemLog.setMaxSize(70,40);
+        //itemLog.setMaxSize(70,40);
+        itemLog.setId("itemLog");
         itemLog.setOnAction(e -> loggerPage.open());
 
         Button itemBarGraph = new Button("Graphs");
@@ -131,6 +144,7 @@ public class mainWin {
                     will be located at the top of the page, so that we can simply
                     set it at the top of the root at the end                         */
         VBox topContainer = new VBox();
+        topContainer.setId("topContainer");
         topContainer.getChildren().add(menuBar);
         topContainer.getChildren().add(toolBar);
 
@@ -138,7 +152,6 @@ public class mainWin {
 
         /*        Set the styling for what the menus will look like             */
         /*        TODO make this look better                                    */
-        border.getTop().setStyle("-fx-background-color: lightgrey");
 
 
 
