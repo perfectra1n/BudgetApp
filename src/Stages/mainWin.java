@@ -46,9 +46,6 @@ public class mainWin {
         main.getIcons().add(new Image("images/icon.png"));
         main.setOnCloseRequest(e -> DBHandle.closeConnectionToDB());
                 /*          Set the stylesheet mainWin.css to this scene        */
-        String mainWinCss = mainWin.class.getResource("/css/mainWin.css").toExternalForm();
-        border.getStylesheets().clear();
-        border.getStylesheets().add(mainWinCss);
         createMainWindowLayout();
         homePage.open();
         window.show();
@@ -68,6 +65,11 @@ public class mainWin {
     // Main Window layout and Menu events
     private static void createMainWindowLayout() {
         border = new BorderPane();
+
+                        /*          Set the stylesheet mainWin.css to this scene        */
+        String mainWinCss = mainWin.class.getResource("/css/mainWin.css").toExternalForm();
+        border.getStylesheets().clear();
+        border.getStylesheets().add(mainWinCss);
 
         /*          Set the ID for the pane, for usage within the CSS sheet         */
         border.setId("border");
