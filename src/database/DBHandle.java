@@ -30,24 +30,20 @@ public class DBHandle {
     // Close connection to database
     public static void closeConnectionToDB() {
         try { conn.close(); System.out.println("Connection closed."); }
-        catch (SQLException e) {e.printStackTrace();}
+        catch (SQLException e) { e.printStackTrace(); }
     }
 
     // Send a query to database
-    private static void sendQuery(String query) {
-        try {
-            Statement sql = conn.createStatement();
-            sql.execute(query);
-        } catch (SQLException e) {e.printStackTrace();}
+    public static void sendQuery(String query) {
+        try { conn.createStatement().execute(query); }
+        catch (SQLException e) { e.printStackTrace(); }
     }
 
-    // Send a query and return ResultSet
+    // Send a query and return a ResultSet
     public static ResultSet queryReturnResult(String query) {
         ResultSet result = null;
-        try {
-            Statement sql = conn.createStatement();
-            result = sql.executeQuery(query);
-        } catch (SQLException e) {e.printStackTrace();}
+        try { result = conn.createStatement().executeQuery(query); }
+        catch (SQLException e) { e.printStackTrace(); }
         return result;
     }
 
@@ -71,10 +67,8 @@ public class DBHandle {
     }
 
     // Delete all tables from a given list
-    private static void dropAllTables(List tables) {
-        for (int i = 0; i < tables.size(); i++) {
-            sendQuery(format("DROP TABLE IF EXISTS '%s';", tables.get(i)));
-        }
+    public static void dropAllTables(List<String> tables) {
+        for (String tbl : tables) { sendQuery(format("DROP TABLE IF EXISTS '%s';", tbl)); }
     }
 
     // Insert data into table
@@ -99,11 +93,44 @@ public class DBHandle {
         // Format and create the query
         String query = format("INSERT INTO '%s' %s\nVALUES (%s);", tableName, ColumnList, valueList);
         String logMSG = format("Data inserted into table '%s' %s\n          Data added (%s);\n", tableName, ColumnList, valueList);
-        // Edited by Allen
+        // Record to log
         logger.log.insert(logMSG);
 
         // return the query as a String.
         return query;
+    }
+
+    public static List<String> getColumnNames(String tableName) {
+        List<String> list = new ArrayList<>();
+        ResultSet r = queryReturnResult(format("PRAGMA table_info('%s');", tableName));
+        try {
+            for (r.next(); !r.isClosed(); r.next()) {
+                list.add(r.getString("name"));
+            }
+        } catch (SQLException e) {e.printStackTrace();}
+        return list;
+    }
+
+    public static List<String> getColumnTypes(String tableName) {
+        List<String> list = new ArrayList<>();
+        ResultSet r = queryReturnResult(format("PRAGMA table_info('%s');", tableName));
+        try {
+            for (r.next(); !r.isClosed(); r.next()) {
+                list.add(r.getString("type"));
+            }
+        } catch (SQLException e) {e.printStackTrace();}
+        return list;
+    }
+
+    public static List<String> getImportedTablesList() {
+        List<String> list = new ArrayList<>();
+        ResultSet r = queryReturnResult("SELECT \"TBL_NAME\" FROM 'importedTables';");
+        try {
+            for (r.next(); !r.isClosed(); r.next()) {
+                list.add(r.getString(1));
+            }
+        } catch (SQLException e) {e.printStackTrace();}
+        return list;
     }
 
     // Import Excel contents to database
@@ -115,11 +142,7 @@ public class DBHandle {
         try (Statement sql = conn.createStatement()){
             // First delete previously imported tables (if any)
             sendQuery("CREATE TABLE IF NOT EXISTS importedTables ('TBL_NAME' STRING);");
-            ResultSet res = queryReturnResult("SELECT TBL_NAME FROM importedTables;");
-            List<String> tblNames = new ArrayList<>();
-            res.next(); // start from first imported table name
-            while (!res.isClosed()) {tblNames.add(res.getString("TBL_NAME")); res.next();}
-            dropAllTables(tblNames);
+            dropAllTables(getImportedTablesList());
             sendQuery("DELETE FROM importedTables");
 
             // Next, load new tables

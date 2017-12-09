@@ -1,39 +1,32 @@
 
-package Stages.MainStage;
+package Pages.HomePage;
 
-import Stages.LogStage.loggerPage;
-import database.DBHandle;
-import Stages.mainWin;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.Insets;
+import Pages.TablePage.*;
+import Pages.GraphPage.*;
+import Pages.LogPage.*;
+import Pages.mainWin;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.TilePane;
-import javafx.scene.layout.VBox;
-import javafx.animation.Animation;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class homePage {
-private static TilePane homeLayout = null;
+    private static TilePane homeLayout = null;
 
     public static void open() {
         // Layout not created until first call
         if (homeLayout == null) {
             homeLayout = new TilePane(Orientation.VERTICAL);
                             /*          Set the stylesheet homePage.css to this scene        */
-            String homePageCss = homePage.class.getResource("/css/homePage.css").toExternalForm();
+            String homePageCss = homePage.class.getResource("/resources/css/homePage.css").toExternalForm();
             homeLayout.getStylesheets().clear();
             homeLayout.getStylesheets().add(homePageCss);
+            mainWin.changeCenter(homeLayout);
+            create();
         }
-        mainWin.changeCenter(homeLayout);
-        create();
+        else { mainWin.changeCenter(homeLayout); }
     }
     private static void create() {
         homeLayout.setTileAlignment(Pos.CENTER);
@@ -47,32 +40,32 @@ private static TilePane homeLayout = null;
         Button but1 = new Button ("");
         but1.setPrefSize(10,10);
 
-            Image IM = new Image("images/importIcon.png");
-            but1.setGraphic(new ImageView(IM));
-            but1.setOnAction(e -> importPage.open());
+        Image IM = new Image("resources/images/icons/importIcon.png");
+        but1.setGraphic(new ImageView(IM));
+        but1.setOnAction(e -> tablePage.open());
 
 
 
         Button but2 = new Button ("");
         but2.setPrefSize(10,10);
 
-            Image GU = new Image("images/graphIcon.png");
-            but2.setGraphic(new ImageView(GU));
-            but2.setOnAction(e -> homePage.open());
+        Image GU = new Image("resources/images/icons/graphIcon.png");
+        but2.setGraphic(new ImageView(GU));
+        but2.setOnAction(e -> graphPage.open());
 
         Button but3 = new Button ("");
         but3.setPrefSize(10,10);
 
-            Image DL = new Image("images/logIcon.png");
-            but3.setGraphic(new ImageView(DL));
-            but3.setOnAction(e -> loggerPage.open());
+        Image DL = new Image("resources/images/icons/logIcon.png");
+        but3.setGraphic(new ImageView(DL));
+        but3.setOnAction(e -> loggerPage.open());
 
 
         Button but4 = new Button ("");
         but4.setPrefSize(10,10);
 
-            Image S = new Image("images/searchIcon.png");
-            but4.setGraphic(new ImageView(S));
+        Image S = new Image("resources/images/icons/searchIcon.png");
+        but4.setGraphic(new ImageView(S));
 
 
         Button but5 = new Button ("NULL");
@@ -82,10 +75,7 @@ private static TilePane homeLayout = null;
         Button but6 = new Button ("NULL");
         but6.setPrefSize(10,10);
 
-
-
         homeLayout.getChildren().addAll(but1,but2,but3,but4,but5,but6);
-       }
-
     }
 
+}

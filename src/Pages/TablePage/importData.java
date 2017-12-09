@@ -3,10 +3,9 @@
 // May be reused for Home Screen
 //
 
-package Stages.MainStage;
+package Pages.TablePage;
 
-import Stages.*;
-import Stages.LogStage.loggerPage;
+import Pages.*;
 import database.DBHandle;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -14,7 +13,7 @@ import javafx.scene.layout.*;
 import javafx.stage.*;
 import java.io.File;
 
-public class importPage
+public class importData
 {
     private static GridPane grid = null;
 
@@ -22,10 +21,6 @@ public class importPage
     public static void open() {
         // Layout not created until first call
         if (grid == null) { grid = new GridPane(); }
-                /*          Set the stylesheet importPage.css to this scene        */
-        String importPageCss = importPage.class.getResource("/css/importPage.css").toExternalForm();
-        grid.getStylesheets().clear();
-        grid.getStylesheets().add(importPageCss);
         mainWin.changeCenter(grid);
         create();
     }

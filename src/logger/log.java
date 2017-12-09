@@ -2,7 +2,6 @@ package logger;
 
 import java.io.IOException;
 import java.util.logging.*;
-import Stages.MainStage.*;
 
 public class log {
 

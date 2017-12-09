@@ -15,17 +15,16 @@
 /* connect scenes between each other.                                       */
 /*--------------------------------------------------------------------------*/
 
-package Stages;
+package Pages;
 
-import Stages.LogStage.*;
-import Stages.MainStage.*;
+import Pages.GraphPage.graphPage;
+import Pages.HomePage.homePage;
+import Pages.LogPage.*;
+import Pages.TablePage.*;
 import database.DBHandle;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -39,22 +38,25 @@ public class mainWin {
     // Main stage passed from Main class
     public static void passMain(Stage window) {
         // Set global variable main, set window properties
-        main = window;
-        main.setTitle("Budget Application Program");
+        main = window; main.setTitle("Budget Application Program");
+        // Set the icon of the program to the Sac State logo
+        main.getIcons().add(new Image("resources/images/icons/icon.png"));
+        // Close window event handler
+        main.setOnCloseRequest(e -> {
+            confirmClose();
+            DBHandle.closeConnectionToDB();
+        });
 
-        /*          Set the icon of the program to the Sac State logo               */
-        main.getIcons().add(new Image("images/icon.png"));
-        main.setOnCloseRequest(e -> DBHandle.closeConnectionToDB());
-                /*          Set the stylesheet mainWin.css to this scene        */
         createMainWindowLayout();
         homePage.open();
         window.show();
     }
 
     // Changes to passed scene and retains size of window
-    public static void changeCenter(Parent layout) {
-        border.setCenter(layout);
-    }
+    public static void changeCenter(Parent layout) { border.setCenter(layout); }
+
+    // Confirm user wishes to close window
+    private static void confirmClose() {}
 
     // Close the Main Window
     public static void closeWindow() {
@@ -64,21 +66,19 @@ public class mainWin {
 
     // Main Window layout and Menu events
     private static void createMainWindowLayout() {
-        border = new BorderPane();
-
-                        /*          Set the stylesheet mainWin.css to this scene        */
-        String mainWinCss = mainWin.class.getResource("/css/mainWin.css").toExternalForm();
-        border.getStylesheets().clear();
-        border.getStylesheets().add(mainWinCss);
+        border = new BorderPane(); // Root layout of the stage
 
         /*          Set the ID for the pane, for usage within the CSS sheet         */
         border.setId("border");
+        /*          Set the stylesheet mainWin.css to this scene        */
+        String mainWinCss = mainWin.class.getResource("/resources/css/mainWin.css").toExternalForm();
+        border.getStylesheets().clear();
+        border.getStylesheets().add(mainWinCss);
 
+        // Set scene to main stage
         main.setScene(new Scene(border));
-
-
-
         main.setHeight(700); main.setWidth(1000);
+
 
 
                     /*                      Declare new menu bar                     */
@@ -120,9 +120,9 @@ public class mainWin {
         itemHome.setMaxSize(70,40);
         itemHome.setOnAction(e -> homePage.open());
 
-        Button itemImport = new Button("Import");
+        Button itemImport = new Button("Table");
         itemImport.setMaxSize(70,40);
-        itemImport.setOnAction(e -> importPage.open());
+        itemImport.setOnAction(e -> tablePage.open());
 
 
         Button itemLog = new Button("Data Log");
@@ -154,17 +154,5 @@ public class mainWin {
 
         /*        Set the styling for what the menus will look like             */
         /*        TODO make this look better                                    */
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

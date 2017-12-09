@@ -1,8 +1,7 @@
-package Stages.LogStage;
+package Pages.LogPage;
 
 import java.io.*;
 
-import Stages.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;

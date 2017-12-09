@@ -1,22 +1,19 @@
-package Stages.MainStage;
+package Pages.GraphPage;
 
-        import database.DBHandle;
-        import Stages.mainWin;
-        import javafx.collections.FXCollections;
-        import javafx.collections.ObservableList;
-        import javafx.geometry.Insets;
-        import javafx.scene.chart.*;
-        import javafx.scene.control.CheckBox;
-        import javafx.scene.control.ComboBox;
-        import javafx.scene.control.cell.CheckBoxListCell;
-        import javafx.scene.layout.BorderPane;
-        import javafx.scene.layout.VBox;
-        import java.sql.ResultSet;
-        import java.sql.SQLException;
-        import java.util.ArrayList;
-        import java.util.List;
-
-        import static java.lang.String.format;
+import Pages.mainWin;
+import database.DBHandle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.chart.*;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import static java.lang.String.format;
 
 public class graphPage {
     private static List<CheckBox> checkBoxList = new ArrayList<>();
@@ -28,20 +25,19 @@ public class graphPage {
         if (graphLayout == null) {
             graphLayout = new BorderPane();
                             /*          Set the stylesheet graphPage.css to this scene        */
-            String graphPageCss = graphPage.class.getResource("/css/graphPage.css").toExternalForm();
+            String graphPageCss = graphPage.class.getResource("/resources/css/graphPage.css").toExternalForm();
             graphLayout.getStylesheets().clear();
             graphLayout.getStylesheets().add(graphPageCss);
+            mainWin.changeCenter(graphLayout);
+            create();
         }
-        mainWin.changeCenter(graphLayout);
-        create();
+        else { mainWin.changeCenter(graphLayout); }
     }
 
     // Scene layout and events
     private static void create() {
-
         VBox leftPane = new VBox();
         leftPane.setId("leftPane");
-        //leftPane.setSpacing(100.0);
 
 //-----------------------------------------------------------------//
         //-------------- DROP BOX "X" -----------------------//

@@ -11,7 +11,7 @@
 // Handles creation of Main Window.
 //
 
-import Stages.mainWin;
+import Pages.mainWin;
 import database.DBHandle;
 import javafx.application.Application;
 import javafx.stage.Stage;
