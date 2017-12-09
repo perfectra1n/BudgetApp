@@ -29,6 +29,8 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.QuadCurve;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class mainWin {
@@ -69,7 +71,7 @@ public class mainWin {
         border = new BorderPane(); // Root layout of the stage
 
         /*          Set the ID for the pane, for usage within the CSS sheet         */
-        border.setId("border");
+        border.setId("MainWindow");
         /*          Set the stylesheet mainWin.css to this scene        */
         String mainWinCss = mainWin.class.getResource("/resources/css/mainWin.css").toExternalForm();
         border.getStylesheets().clear();
@@ -78,39 +80,18 @@ public class mainWin {
         // Set scene to main stage
         main.setScene(new Scene(border));
         main.setHeight(700); main.setWidth(1000);
-
-
-
-                    /*                      Declare new menu bar                     */
+        /*
         MenuBar menuBar = new MenuBar();
-
-                    /*----------                      The File button on the menu bar                ----------*/
         Menu menuFile = new Menu("File");
-
-                    /*                      The buttons on the drop down menu of file and the action they perform                    */
         MenuItem itemExit = new MenuItem("Exit");
         itemExit.setOnAction(e -> closeWindow());
-
-                    /*                      Add all of the elements to the goto sub menu                 */
         menuFile.getItems().addAll(itemExit);
-
-
-                    /*----------                      The Edit button on the menu bar               ----------*/
         Menu menuEdit = new Menu("Edit");
-
-                    /*                      The buttons on the drop down menu of edit                    */
         MenuItem itemEditData = new MenuItem("Data");
-
-                    /*                      Add all of the elements to the goto sub menu                 */
         menuEdit.getItems().addAll(itemEditData);
-
-
-                    /*----------                      The About button on the menu bar            ----------*/
         Menu menuAbout = new Menu("About");
-
-                    /*----------            Add all the menus (file, edit, about) to the menu bar    ---------*/
         menuBar.getMenus().addAll(menuFile, menuEdit, menuAbout );
-
+        */
 
         /*        Initialize the toolbar, which will be located underneath the menu bar          */
         HBox toolBar = new HBox(40);
@@ -147,7 +128,6 @@ public class mainWin {
                     set it at the top of the root at the end                         */
         VBox topContainer = new VBox();
         topContainer.setId("topContainer");
-        topContainer.getChildren().add(menuBar);
         topContainer.getChildren().add(toolBar);
 
         border.setTop(topContainer);

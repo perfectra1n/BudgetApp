@@ -5,12 +5,15 @@ import Pages.TablePage.*;
 import Pages.GraphPage.*;
 import Pages.LogPage.*;
 import Pages.mainWin;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.text.TextAlignment;
 
 public class homePage {
     private static TilePane homeLayout = null;
@@ -18,64 +21,81 @@ public class homePage {
     public static void open() {
         // Layout not created until first call
         if (homeLayout == null) {
-            homeLayout = new TilePane(Orientation.VERTICAL);
+            homeLayout = new TilePane();
+            /*-------------- Layout settings --------------*/
+            homeLayout.setId("HomePage");
+            homeLayout.setPrefTileWidth(180);
+            homeLayout.setPrefTileHeight(180);
+            homeLayout.setHgap(40); homeLayout.setVgap(35);
+            homeLayout.setAlignment(Pos.CENTER);
+            homeLayout.setPrefColumns(3);
+            /* ******************************************* */
                             /*          Set the stylesheet homePage.css to this scene        */
-            String homePageCss = homePage.class.getResource("/resources/css/homePage.css").toExternalForm();
-            homeLayout.getStylesheets().clear();
-            homeLayout.getStylesheets().add(homePageCss);
+            homeLayout.getStylesheets().add(
+                    homePage.class.getResource("/resources/css/homePage.css").toExternalForm());
+            // Display layout
             mainWin.changeCenter(homeLayout);
             create();
         }
         else { mainWin.changeCenter(homeLayout); }
     }
     private static void create() {
-        homeLayout.setTileAlignment(Pos.CENTER);
-        homeLayout.setPrefRows(2);
-        homeLayout.setPrefColumns(3);
-        homeLayout.setPrefTileHeight(300);
-        homeLayout.setPrefTileWidth(300);
-        homeLayout.setHgap(30);
-        homeLayout.setVgap(30);
-        //-----------------Adding place holder buttons-----------------//
-        Button but1 = new Button ("");
-        but1.setPrefSize(10,10);
+        /*------------------ Add buttons ------------------*/
 
-        Image IM = new Image("resources/images/icons/importIcon.png");
-        but1.setGraphic(new ImageView(IM));
-        but1.setOnAction(e -> tablePage.open());
+        Button TablePageButton = new Button ("Table");
+        TablePageButton.setId("TablePageButton");
+        TablePageButton.prefHeightProperty().bind(homeLayout.prefTileHeightProperty());
+        TablePageButton.prefWidthProperty().bind(homeLayout.prefTileWidthProperty());
+        TablePageButton.setOnAction(e -> tablePage.open());
 
+        GridPane graphButtons = new GridPane();
+        graphButtons.setId("graphButtons");
+        graphButtons.setHgap(3); graphButtons.setVgap(3);
+        graphButtons.prefHeightProperty().bind(homeLayout.prefTileHeightProperty());
+        graphButtons.prefWidthProperty().bind(homeLayout.prefTileWidthProperty());
 
+        Button BarGraphButton = new Button ("Bar Graph");
+        BarGraphButton.setId("BarGraphButton");
+        BarGraphButton.prefHeightProperty().bind(graphButtons.prefHeightProperty());
+        BarGraphButton.prefWidthProperty().bind(graphButtons.prefWidthProperty());
+        //Image GU = new Image("resources/images/icons/graphIcon.png");
+        //BarGraphButton.setGraphic(new ImageView(GU));
+        BarGraphButton.setOnAction(e -> graphPage.open());
 
-        Button but2 = new Button ("");
-        but2.setPrefSize(10,10);
+        Button PieGraphButton = new Button ("Pie Graph");
+        PieGraphButton.setId("PieGraphButton");
+        PieGraphButton.prefHeightProperty().bind(graphButtons.prefHeightProperty());
+        PieGraphButton.prefWidthProperty().bind(graphButtons.prefWidthProperty());
 
-        Image GU = new Image("resources/images/icons/graphIcon.png");
-        but2.setGraphic(new ImageView(GU));
-        but2.setOnAction(e -> graphPage.open());
+        Button LineGraphButton = new Button ("Line Graph");
+        LineGraphButton.setId("LineGraphButton");
+        LineGraphButton.prefHeightProperty().bind(graphButtons.prefHeightProperty());
+        LineGraphButton.prefWidthProperty().bind(graphButtons.prefWidthProperty());
+        
+        Button TableGraphButton = new Button ("Table Graph");
+        TableGraphButton.setId("TableGraphButton");
+        TableGraphButton.prefHeightProperty().bind(graphButtons.prefHeightProperty());
+        TableGraphButton.prefWidthProperty().bind(graphButtons.prefWidthProperty());
 
-        Button but3 = new Button ("");
-        but3.setPrefSize(10,10);
+        Button BudgetButton = new Button ("Budget Analyzing");
+        BudgetButton.setId("BudgetButton");
+        BudgetButton.prefHeightProperty().bind(homeLayout.prefTileHeightProperty());
+        BudgetButton.prefWidthProperty().bind(homeLayout.prefTileWidthProperty());
 
-        Image DL = new Image("resources/images/icons/logIcon.png");
-        but3.setGraphic(new ImageView(DL));
-        but3.setOnAction(e -> loggerPage.open());
+        Button LogButton = new Button ("View Data Log");
+        LogButton.setId("LogButton");
+        System.out.println(LogButton.getBackground());
+        LogButton.prefHeightProperty().bind(homeLayout.prefTileHeightProperty());
+        LogButton.prefWidthProperty().bind(homeLayout.prefTileWidthProperty());
+        LogButton.setOnAction(e -> loggerPage.open());
+        
+        graphButtons.add(BarGraphButton,0,0);
+        graphButtons.add(PieGraphButton,1,0);
+        graphButtons.add(LineGraphButton,0,1);
+        graphButtons.add(TableGraphButton,1,1);
 
-
-        Button but4 = new Button ("");
-        but4.setPrefSize(10,10);
-
-        Image S = new Image("resources/images/icons/searchIcon.png");
-        but4.setGraphic(new ImageView(S));
-
-
-        Button but5 = new Button ("NULL");
-        but5.setPrefSize(10,10);
-
-
-        Button but6 = new Button ("NULL");
-        but6.setPrefSize(10,10);
-
-        homeLayout.getChildren().addAll(but1,but2,but3,but4,but5,but6);
+        homeLayout.getChildren().addAll(
+                TablePageButton, graphButtons, BudgetButton, LogButton);
     }
 
 }

@@ -1,0 +1,116 @@
+#HomePage
+{
+    -fx-padding: 20 20 20 20;
+}
+
+#TablePageButton
+{
+    -fx-font-weight: bolder;
+    -fx-font-size: 16;
+    -fx-wrap-text: true;
+    -fx-text-alignment: center;
+    -fx-background-color:
+            #c3c4c4,
+            linear-gradient(#d6d6d6 50%, white 100%),
+            radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+}
+
+#graphButtons
+{
+
+}
+
+#BarGraphButton
+{
+    -fx-font-weight: bolder;
+    -fx-font-size: 16;
+    -fx-wrap-text: true;
+    -fx-text-alignment: center;
+    -fx-background-color:
+            #c3c4c4,
+            linear-gradient(#d6d6d6 50%, white 100%),
+            radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 15;
+    -fx-background-insets: 0,1,1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+}
+#PieGraphButton
+{
+    -fx-font-weight: bolder;
+    -fx-font-size: 16;
+    -fx-wrap-text: true;
+    -fx-text-alignment: center;
+    -fx-background-color:
+            #c3c4c4,
+            linear-gradient(#d6d6d6 50%, white 100%),
+            radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 15;
+    -fx-background-insets: 0,1,1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+}
+#LineGraphButton
+{
+    -fx-font-weight: bolder;
+    -fx-font-size: 16;
+    -fx-wrap-text: true;
+    -fx-text-alignment: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-color:
+            #c3c4c4,
+            linear-gradient(#d6d6d6 50%, white 100%),
+            radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 15;
+    -fx-background-insets: 0,1,1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+}
+#TableGraphButton
+{
+    -fx-font-weight: bolder;
+    -fx-font-size: 16;
+    -fx-wrap-text: true;
+    -fx-text-alignment: center;
+    -fx-background-color:
+            #c3c4c4,
+            linear-gradient(#d6d6d6 50%, white 100%),
+            radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 15;
+    -fx-background-insets: 0,1,1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+}
+
+
+#BudgetButton
+{
+    -fx-font-weight: bolder;
+    -fx-font-size: 16;
+    -fx-wrap-text: true;
+    -fx-text-alignment: center;
+    -fx-background-color:
+            #c3c4c4,
+            linear-gradient(#d6d6d6 50%, white 100%),
+            radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+}
+
+#LogButton
+{
+    -fx-font-weight: bolder;
+    -fx-font-size: 16;
+    -fx-wrap-text: true;
+    -fx-text-alignment: center;
+    -fx-background-repeat: no-repeat;
+    -fx-background-image: url("../images/icons/logIcon.png");
+    -fx-background-size: contain;
+    -fx-background-color:
+            #c3c4c4,
+            linear-gradient(#d6d6d6 50%, white 100%),
+            radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0,1,1;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+}
