@@ -4,6 +4,7 @@ import Pages.mainWin;
 import database.DBHandle;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -99,6 +100,17 @@ public class tablePage {
 
         /*-------------------- EVENTS -------------------*/
         importButton.setOnAction(e -> importData.open());
+
+        searchTable.setOnMouseClicked(e -> {
+            int clicks = e.getClickCount();
+            if (clicks == 2) {
+                if (e.getButton().equals(MouseButton.PRIMARY)) {
+                    tableDataObj obj = (tableDataObj) searchTable.getSelectionModel().getSelectedItem();
+                    tablePageTab tab = new tablePageTab(obj);
+                    tableLayout.getTabs().add(tab.getItemTab());
+                }
+            }
+        });
 
         resetButton.setOnAction(e -> {
             for (int i = 0; i < 5; i++) { textField[i].clear(); }

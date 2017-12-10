@@ -104,7 +104,6 @@
     -fx-wrap-text: true;
     -fx-text-alignment: center;
     -fx-background-repeat: no-repeat;
-    -fx-background-image: url("../images/icons/logIcon.png");
     -fx-background-size: contain;
     -fx-background-color:
             #c3c4c4,

@@ -35,9 +35,13 @@ class tableClass {
     private static ObservableList<TableColumn<tableDataObj, Object>> createTblColumns(List<String> inColumns) {
         // Create columns and references, set types. Return column list.
         ObservableList<TableColumn<tableDataObj, Object>> columns = FXCollections.observableArrayList();
+        TableColumn<tableDataObj, Object> keyCol = new TableColumn<>("Asset Tag");
+        keyCol.setCellValueFactory(p -> p.getValue().getName());
+        columns.add(keyCol);
+        inColumns.remove(keyCol.getText());
         for (String col : inColumns) {
             TableColumn<tableDataObj, Object> newCol = new TableColumn<>(col);
-            newCol.setCellValueFactory(param -> param.getValue().getProperties(col));
+            newCol.setCellValueFactory(p -> p.getValue().getProperty(col));
             columns.add(newCol);
         }
         return columns;
@@ -54,8 +58,10 @@ class tableClass {
             try {
                 for (r.next(); !r.isClosed(); r.next()) {
                     tableDataObj newData = new tableDataObj();
+                    newData.setName(r.getObject("Asset Tag"));
                     for (String col : columns) {
-                        newData.setProperties(col, r.getObject(col));
+                        if (col.equals("Asset Tag")) continue; //skip asset tag
+                        newData.setProperty(col, r.getObject(col));
                     }
                     data.add(newData);
                 }

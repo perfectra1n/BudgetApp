@@ -7,13 +7,8 @@ import Pages.LogPage.*;
 import Pages.mainWin;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
-import javafx.scene.text.TextAlignment;
 
 public class homePage {
     private static TilePane homeLayout = null;
@@ -84,7 +79,6 @@ public class homePage {
 
         Button LogButton = new Button ("View Data Log");
         LogButton.setId("LogButton");
-        System.out.println(LogButton.getBackground());
         LogButton.prefHeightProperty().bind(homeLayout.prefTileHeightProperty());
         LogButton.prefWidthProperty().bind(homeLayout.prefTileWidthProperty());
         LogButton.setOnAction(e -> loggerPage.open());
