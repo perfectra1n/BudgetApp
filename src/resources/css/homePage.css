@@ -1,10 +1,6 @@
 #HomePage
 {
     -fx-padding: 20 20 20 20;
-    -fx-background-color: dimgrey;
-    -fx-background-radius: 40;
-    -fx-background-insets: 30;
-    -fx-blend-mode: color-dodge;
 }
 
 #TablePageButton
