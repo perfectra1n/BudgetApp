@@ -22,6 +22,7 @@ import Pages.HomePage.homePage;
 import Pages.LogPage.*;
 import Pages.TablePage.*;
 import database.DBHandle;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -98,21 +99,20 @@ public class mainWin {
 
         /*        Create the button, set the max size for each, and then set the action that will be performed upon click       */
         Button itemHome = new Button("Home");
-        itemHome.setMaxSize(70,40);
+        itemHome.setId("toolBarButton");
         itemHome.setOnAction(e -> homePage.open());
 
         Button itemImport = new Button("Table");
-        itemImport.setMaxSize(70,40);
+        itemImport.setId("toolBarButton");
         itemImport.setOnAction(e -> tablePage.open());
 
 
         Button itemLog = new Button("Data Log");
-        //itemLog.setMaxSize(70,40);
-        itemLog.setId("itemLog");
+        itemLog.setId("toolBarButton");
         itemLog.setOnAction(e -> loggerPage.open());
 
         Button itemBarGraph = new Button("Graphs");
-        itemBarGraph.setMaxSize(70,40);
+        itemBarGraph.setId("toolBarButton");
         itemBarGraph.setOnAction(e -> graphPage.open());
 
 
@@ -129,6 +129,7 @@ public class mainWin {
         VBox topContainer = new VBox();
         topContainer.setId("topContainer");
         topContainer.getChildren().add(toolBar);
+        toolBar.setAlignment(Pos.CENTER);
 
         border.setTop(topContainer);
 
