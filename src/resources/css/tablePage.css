@@ -1,0 +1,18 @@
+#TablePage
+{
+    -fx-padding: 6;
+    -fx-background-insets: 15;
+    -fx-background-radius: 25;
+    -fx-background-color: white;
+    -fx-border-color: linear-gradient(#0b431a,darkgreen);
+    -fx-border-width: 8;
+    -fx-border-radius: 15;
+    -fx-border-insets: 13;
+}
+
+#SearchBox
+{
+    -fx-padding: 5;
+    -fx-background-color: lightgrey;
+    -fx-background-radius: 10;
+}

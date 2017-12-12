@@ -1,6 +1,13 @@
 #HomePage
 {
     -fx-padding: 20 20 20 20;
+    -fx-background-insets: 15;
+    -fx-background-radius: 25;
+    -fx-background-color: white;
+    -fx-border-color: linear-gradient(#0b431a,darkgreen);
+    -fx-border-width: 8;
+    -fx-border-radius: 15;
+    -fx-border-insets: 13;
 }
 
 #TablePageButton
@@ -17,10 +24,13 @@
     -fx-background-insets: 0,1,1;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
 }
-
-#graphButtons
+#TablePageButton:hover
 {
-
+    -fx-background-color: linear-gradient(darkgrey, white);
+}
+#TablePageButton:pressed
+{
+    -fx-background-color: linear-gradient(grey, lightgrey 60%);
 }
 
 #BarGraphButton
@@ -37,6 +47,15 @@
     -fx-background-insets: 0,1,1;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
 }
+#BarGraphButton:hover
+{
+    -fx-background-color: linear-gradient(darkgrey, white);
+}
+#BarGraphButton:pressed
+{
+    -fx-background-color: linear-gradient(grey, lightgrey 60%);
+}
+
 #PieGraphButton
 {
     -fx-font-weight: bolder;
@@ -51,6 +70,15 @@
     -fx-background-insets: 0,1,1;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
 }
+#PieGraphButton:hover
+{
+    -fx-background-color: linear-gradient(darkgrey, white);
+}
+#PieGraphButton:pressed
+{
+    -fx-background-color: linear-gradient(grey, lightgrey 60%);
+}
+
 #LineGraphButton
 {
     -fx-font-weight: bolder;
@@ -66,6 +94,15 @@
     -fx-background-insets: 0,1,1;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
 }
+#LineGraphButton:hover
+{
+    -fx-background-color: linear-gradient(darkgrey, white);
+}
+#LineGraphButton:pressed
+{
+    -fx-background-color: linear-gradient(grey, lightgrey 60%);
+}
+
 #TableGraphButton
 {
     -fx-font-weight: bolder;
@@ -80,10 +117,13 @@
     -fx-background-insets: 0,1,1;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
 }
-
 #TableGraphButton:hover
 {
-
+    -fx-background-color: linear-gradient(darkgrey, white);
+}
+#TableGraphButton:pressed
+{
+    -fx-background-color: linear-gradient(grey, lightgrey 60%);
 }
 
 #BudgetButton
@@ -99,6 +139,14 @@
     -fx-background-radius: 30;
     -fx-background-insets: 0,1,1;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+}
+#BudgetButton:hover
+{
+    -fx-background-color: linear-gradient(darkgrey, white);
+}
+#BudgetButton:pressed
+{
+    -fx-background-color: linear-gradient(grey, lightgrey 60%);
 }
 
 #LogButton
@@ -116,4 +164,12 @@
     -fx-background-radius: 30;
     -fx-background-insets: 0,1,1;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+}
+#LogButton:hover
+{
+    -fx-background-color: linear-gradient(darkgrey, white);
+}
+#LogButton:pressed
+{
+    -fx-background-color: linear-gradient(grey, lightgrey 60%);
 }

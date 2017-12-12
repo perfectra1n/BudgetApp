@@ -25,6 +25,7 @@ public class graphPage {
         // Layout not created until first call
         if (graphLayout == null) {
             graphLayout = new BorderPane();
+            graphLayout.setId("GraphPage");
                             /*          Set the stylesheet graphPage.css to this scene        */
             String graphPageCss = graphPage.class.getResource("/resources/css/graphPage.css").toExternalForm();
             graphLayout.getStylesheets().clear();

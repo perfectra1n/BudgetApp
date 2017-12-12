@@ -26,10 +26,17 @@ public class tablePage {
     public static void open() {
         if (tableLayout == null) {
             tableLayout = new TabPane();
+            tableLayout.setId("TablePage");
+            String tablePageCss = tablePage.class.getResource("/resources/css/tablePage.css").toExternalForm();
+            tableLayout.getStylesheets().clear();
+            tableLayout.getStylesheets().add(tablePageCss);
             mainWin.changeCenter(tableLayout);
             create();
         }
-        else { mainWin.changeCenter(tableLayout); }
+        else {
+            updateTable();
+            mainWin.changeCenter(tableLayout);
+        }
     }
 
     private static void create() {
@@ -49,15 +56,12 @@ public class tablePage {
         List<String> columns = allColumns(importedTbls);
         // Create and retrieve table
         searchTable = createTable(importedTbls, columns);
-        // Display table
-        searchTable.setStyle("-fx-padding: 5 5 5 5;");
         // Place table on layout
         border.setCenter(searchTable);
         /* ********************************************* */
         /*---------------- Search Layout ----------------*/
         GridPane grid = new GridPane();
-        grid.setStyle("-fx-padding: 10 10 10 10;"
-                + "-fx-background-color: lightgrey;");
+        grid.setId("SearchBox");
         grid.setHgap(20.0);
         // Search Labels
         Label[] label = new Label[6];

@@ -1,6 +1,16 @@
+#GraphPage
+{
+    -fx-padding: 20 20 20 20;
+    -fx-background-insets: 15;
+    -fx-background-radius: 25;
+    -fx-background-color: white;
+    -fx-border-color: linear-gradient(#0b431a,darkgreen);
+    -fx-border-width: 8;
+    -fx-border-radius: 15;
+    -fx-border-insets: 13;
+}
+
 #leftPane
 {
-    -fx-border-color: darkgrey;
-    -fx-padding: 5px;
-    -fx-border-width: 10 10 10 10;
+
 }

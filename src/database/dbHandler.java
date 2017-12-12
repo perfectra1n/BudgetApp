@@ -7,12 +7,17 @@ package database;
 
 import javafx.concurrent.Task;
 import javafx.util.Pair;
+import org.apache.log4j.lf5.util.DateFormatManager;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.DateFormatConverter;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.sqlite.date.DateFormatUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import static database.dbOperations.*;
@@ -166,22 +171,19 @@ public class dbHandler {
                                         break;
                                     case NUMERIC:
                                         if (DateUtil.isCellDateFormatted(cell)) {
-                                            values.append(format("'%s',", cell.getDateCellValue()));
-                                        } else {
-                                            values.append(format("%f,", cell.getNumericCellValue()));
-                                        }
+                                            values.append(format("'%s',",
+                                                    DateFormatUtils.format(
+                                                            cell.getDateCellValue(), "MM/dd/yyyy")));
+                                        } else { values.append(format("%f,", cell.getNumericCellValue())); }
                                         rowIsEmpty = false;
-                                        //values.add(format("%f", cell.getNumericCellValue()));
                                         break;
                                     case BOOLEAN:
                                         values.append(format("%b,", cell.getBooleanCellValue()));
                                         rowIsEmpty = false;
-                                        //values.add(format("%b", cell.getBooleanCellValue()));
                                         break;
                                     case ERROR:
                                         values.append(format("%s,", cell.getErrorCellValue()));
                                         rowIsEmpty = false;
-                                        //values.add(format("%s", cell.getErrorCellValue()));
                                         break;
                                     case BLANK:
                                         values.append("'',");
