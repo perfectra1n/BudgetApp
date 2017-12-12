@@ -4,20 +4,19 @@ import javafx.scene.control.Tab;
 
 import java.util.List;
 
-public class tablePageTab {
+class tablePageTab {
+
     private final Tab itemTab;
     private final tableDataObj tableItem;
 
-    tablePageTab(tableDataObj inData) {
+    tablePageTab(tableDataObj inData, String title) {
         this.tableItem = inData;
-        this.itemTab = new Tab(inData.getName().get().toString());
+        this.itemTab = new Tab(title);
         createTabLayout();
     }
 
-    public Tab getItemTab() { return itemTab; }
+    Tab getItemTab() { return itemTab; }
 
     private void createTabLayout() {
-        List<String> properties = tableItem.getPropertyNames();
-        System.out.println(properties);
     }
 }

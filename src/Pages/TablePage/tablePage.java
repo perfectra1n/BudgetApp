@@ -2,8 +2,6 @@ package Pages.TablePage;
 
 import Pages.mainWin;
 import database.dbHandler;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -15,8 +13,6 @@ import javafx.stage.FileChooser;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import static Pages.TablePage.tableClass.createTable;
 
 public class tablePage {
     private static TabPane tableLayout = null;
@@ -55,7 +51,8 @@ public class tablePage {
         // Retrieve list of column names
         List<String> columns = allColumns(importedTbls);
         // Create and retrieve table
-        searchTable = createTable(importedTbls, columns);
+        tableClass activeTable = new tableClass(columns, importedTbls);
+        searchTable = activeTable.getTable();
         // Place table on layout
         border.setCenter(searchTable);
         /* ********************************************* */
@@ -131,8 +128,8 @@ public class tablePage {
                     new FileChooser.ExtensionFilter(
                             "Excel Files \"*.xlsx or\", \"*.xls\"",
                             "*.xlsx", "*.xls"));
-            File chosenFile = fileChooser.showOpenDialog(null);
-            if (!chosenFile.getPath().isEmpty()) {
+            File chosenFile = fileChooser.showOpenDialog(tableLayout.getScene().getWindow());
+            if (chosenFile != null) {
                 border.setCenter(pind);
                 Task task = dbHandler.loadExcelToDB(chosenFile.getPath());
                 pind.progressProperty().unbind();
@@ -145,9 +142,11 @@ public class tablePage {
             int clicks = e.getClickCount();
             if (clicks == 2) {
                 if (e.getButton().equals(MouseButton.PRIMARY)) {
-                    tableDataObj obj = (tableDataObj) searchTable.getSelectionModel().getSelectedItem();
-                    tablePageTab tab = new tablePageTab(obj);
+                    tableDataObj obj = (tableDataObj)searchTable.getSelectionModel().getSelectedItem();
+                    tablePageTab tab = new tablePageTab(
+                            obj, obj.getProperty(activeTable.getKeyColumn()).get().toString());
                     tableLayout.getTabs().add(tab.getItemTab());
+                    tableLayout.getSelectionModel().select(tab.getItemTab());
                 }
             }
         });
@@ -172,10 +171,10 @@ public class tablePage {
         return columns;
     }
 
-    public static void updateTable() {
+    private static void updateTable() {
         List<String> importedTbls = dbHandler.getImportedTablesList();
         List<String> columns = allColumns(importedTbls);
-        searchTable = createTable(importedTbls, columns);
+        searchTable = new tableClass(columns, importedTbls).getTable();
         border.setCenter(searchTable);
     }
 }

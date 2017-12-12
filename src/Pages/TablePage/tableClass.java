@@ -1,44 +1,38 @@
 package Pages.TablePage;
 
 import database.dbHandler;
-import database.dbOperations;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
-import static java.lang.String.format;
 
 class tableClass {
+    private final TableView<tableDataObj> table;
+    private final ObservableList<TableColumn<tableDataObj, Object>> tableColumns;
+    private final ObservableList<tableDataObj> masterTableData;
+    private String keyColumn;
 
-    // Create Table for viewing all data
-    // This function is specifically programmed for this application
-    static TableView<tableDataObj> createTable(List<String> inData, List<String> inColumns) {
-
-        // Initialize Table
-        TableView<tableDataObj> table = new TableView<>();
-        // Add columns to table
-        ObservableList<TableColumn<tableDataObj, Object>> columns = createTblColumns(inColumns);
-        for (TableColumn<tableDataObj, Object> col : columns) {
-            table.getColumns().add(col);
-        }
-        // Add data to table
-        ObservableList<tableDataObj> data = createData(inData);
-        table.setItems(data);
-        return table;
+    tableClass(List<String> inColumns, List<String> inDataTables) {
+        this.table = new TableView<>();
+        this.keyColumn = inColumns.get(0);
+        this.tableColumns = createTblColumns(inColumns);
+        this.masterTableData = createData(inDataTables);
+        table.getColumns().addAll(tableColumns);
+        table.setItems(masterTableData);
     }
 
+    TableView<tableDataObj> getTable() { return table; }
+    ObservableList<TableColumn<tableDataObj, Object>> getTableColumns() { return tableColumns; }
+    ObservableList<tableDataObj> getMasterTableData() { return masterTableData; }
+    String getKeyColumn() { return keyColumn; }
+
+    void setKeyColumn(String key) { keyColumn = key; }
+
     // Creates and returns table columns
-    private static ObservableList<TableColumn<tableDataObj, Object>> createTblColumns(List<String> inColumns) {
+    private ObservableList<TableColumn<tableDataObj, Object>> createTblColumns(List<String> inColumns) {
         // Create columns and references, set types. Return column list.
         ObservableList<TableColumn<tableDataObj, Object>> columns = FXCollections.observableArrayList();
-        TableColumn<tableDataObj, Object> keyCol = new TableColumn<>("Asset Tag");
-        keyCol.setCellValueFactory(p -> p.getValue().getName());
-        columns.add(keyCol);
-        inColumns.remove(keyCol.getText());
         for (String col : inColumns) {
             TableColumn<tableDataObj, Object> newCol = new TableColumn<>(col);
             newCol.setCellValueFactory(p -> p.getValue().getProperty(col));
@@ -49,23 +43,11 @@ class tableClass {
 
     // Creates an ObservableList of data for table
     // Uses database functions
-    private static ObservableList<tableDataObj> createData(List<String> inData) {
+    private ObservableList<tableDataObj> createData(List<String> inDataTables) {
         ObservableList<tableDataObj> data = FXCollections.observableArrayList();
-        for (String tbl : inData) {
-            if (!Character.isDigit(tbl.charAt(0))) continue; //skip unwanted tables
-            ResultSet r = dbOperations.queryReturnResult(format("SELECT * FROM '%s';", tbl));
-            List<String> columns = dbHandler.getColumnNames(tbl);
-            try {
-                for (r.next(); !r.isClosed(); r.next()) {
-                    tableDataObj newData = new tableDataObj();
-                    newData.setName(r.getObject("Asset Tag"));
-                    for (String col : columns) {
-                        if (col.equals("Asset Tag")) continue; //skip asset tag
-                        newData.setProperty(col, r.getObject(col));
-                    }
-                    data.add(newData);
-                }
-            } catch (SQLException e) {e.printStackTrace();}
+        for (String tbl : inDataTables) {
+            if (!Character.isDigit(tbl.charAt(0))) continue;
+            data.addAll(dbHandler.getTableDataObjects(tbl));
         }
         return data;
     }

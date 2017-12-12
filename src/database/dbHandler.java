@@ -5,19 +5,18 @@
 
 package database;
 
+import Pages.TablePage.tableDataObj;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.util.Pair;
-import org.apache.log4j.lf5.util.DateFormatManager;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.util.DateFormatConverter;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.sqlite.date.DateFormatUtils;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import static database.dbOperations.*;
@@ -100,6 +99,46 @@ public class dbHandler {
         return list;
     }
 
+    // delete all imported tables
+    private static void deleteAllImportedTables() {
+        dropAllTables(getImportedTablesList());
+        sendQuery("DELETE FROM importedTables");
+    }
+
+    // Create set of Table Data Objects
+    public static ObservableList<tableDataObj> getTableDataObjects(String tableName) {
+        ObservableList<tableDataObj> dataObjects = FXCollections.observableArrayList();
+        ResultSet r = queryReturnResult(format("SELECT * FROM '%s';", tableName));
+        List<String> columnNames = getColumnNames(tableName);
+        try {
+            while (r.next()) {
+                tableDataObj newObj = new tableDataObj(tableName);
+                for (String col : columnNames) {
+                    newObj.setProperty(col, r.getObject(col));
+                }
+                dataObjects.add(newObj);
+            }
+        } catch (SQLException e) { e.printStackTrace(); }
+        return dataObjects;
+    }
+
+    // Create set of Graph Data Objects - NEED TO CREATE CLASS IN GRAPHPAGE PACKAGE
+    /*public static ObservableList<graphDataObject> getGraphDataObjects(String tableName) {
+        ObservableList<graphDataObj> dataObjects = FXCollections.observableArrayList();
+        ResultSet r = queryReturnResult(format("SELECT * FROM '%s';", tableName));
+        List<String> columnNames = getColumnNames(tableName);
+        try {
+            while (r.next()) {
+                graphDataObj newObj = new graphDataObj(tableName);
+                for (String col : columnNames) {
+                    newObj.setProperty(col, r.getObject(col));
+                }
+                dataObjects.add(newObj);
+            }
+        } catch (SQLException e) { e.printStackTrace(); }
+        return dataObjects;
+    }*/
+
     // Import Excel contents to database
     // This function will delete all tables then create new ones
     // Use of this function is intended for a directly mirrored import
@@ -110,8 +149,9 @@ public class dbHandler {
 
                 // First delete previously imported tables (if any)
                 sendQuery("CREATE TABLE IF NOT EXISTS importedTables ('TBL_NAME' STRING);");
-                dropAllTables(getImportedTablesList());
-                sendQuery("DELETE FROM importedTables");
+                boolean deleteLastImport = true;
+                // TEMPORARILY ALWAYS TRUE
+                if (deleteLastImport) { deleteAllImportedTables(); }
 
                 // Next, load an excel file
                 try {
