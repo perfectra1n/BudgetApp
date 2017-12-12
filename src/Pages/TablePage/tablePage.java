@@ -2,18 +2,26 @@ package Pages.TablePage;
 
 import Pages.mainWin;
 import database.dbHandler;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-
+import javafx.stage.FileChooser;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static Pages.TablePage.tableClass.createTable;
+
 public class tablePage {
     private static TabPane tableLayout = null;
+    private static TableView searchTable;
+    private static BorderPane border;
 
     public static void open() {
         if (tableLayout == null) {
@@ -31,8 +39,20 @@ public class tablePage {
         tableLayout.getTabs().add(searchTab);
         /* ********************************************* */
         /*--------------- Create Border Pane ------------*/
-        BorderPane border = new BorderPane();
+        border = new BorderPane();
         searchTab.setContent(border);
+        /* ********************************************* */
+        /*---------------- Search Table -----------------*/
+        // Retrieve list of imported tables
+        List<String> importedTbls = dbHandler.getImportedTablesList();
+        // Retrieve list of column names
+        List<String> columns = allColumns(importedTbls);
+        // Create and retrieve table
+        searchTable = createTable(importedTbls, columns);
+        // Display table
+        searchTable.setStyle("-fx-padding: 5 5 5 5;");
+        // Place table on layout
+        border.setCenter(searchTable);
         /* ********************************************* */
         /*---------------- Search Layout ----------------*/
         GridPane grid = new GridPane();
@@ -56,9 +76,11 @@ public class tablePage {
         textField[3].setMinSize(40.0,27.0);
         textField[4] = new TextField(); // Purchase Order
         textField[4].setMinSize(120.0,27.0);
-        textField[5] = new TextField("min"); // min
+        textField[5] = new TextField(); // min
+        textField[5].setPromptText("min");
         textField[5].setMaxSize(60.0, 27.0);
-        textField[6] = new TextField("max"); // max
+        textField[6] = new TextField(); // max
+        textField[6].setPromptText("max");
         textField[6].setMaxSize(60.0,27.0);
         // Add to grid
         grid.add(label[0], 0, 0);       // Asset Tag
@@ -78,28 +100,42 @@ public class tablePage {
         Button searchButton = new Button("Search"); searchButton.setPrefSize(70.0, 30.0);
         Button resetButton = new Button("Reset"); resetButton.setPrefSize(70.0, 30.0);
         Button importButton = new Button(("Import...")); importButton.setPrefSize(100.0,25.0);
+        ProgressIndicator pind = new ProgressIndicator(0);
+        pind.setMaxSize(100,100);
+        pind.progressProperty().addListener((observable, old, done) -> {
+            if (done.doubleValue()==1) {
+                updateTable();
+            }
+        });
         HBox twoButtons = new HBox(searchButton, resetButton); twoButtons.setSpacing(50.0);
         twoButtons.setAlignment(Pos.CENTER);
         grid.add(twoButtons, 2, 3, 3, 1);
-        grid.add(importButton, 8,2);
+        grid.add(importButton, 8,1);
         // Place search area on layout
         border.setTop(grid);
         /* ********************************************* */
-        /*---------------- Search Table -----------------*/
-        // Retrieve list of imported tables
-        List<String> importedTbls = dbHandler.getImportedTablesList();
-        // Retrieve list of column names
-        List<String> columns = allColumns(importedTbls);
-        // Create and retrieve table
-        TableView searchTable = tableClass.createTable(importedTbls, columns);
-        // Display table
-        searchTable.setStyle("-fx-padding: 5 5 5 5;");
-        // Place table on layout
-        border.setCenter(searchTable);
-        /* ********************************************* */
 
         /*-------------------- EVENTS -------------------*/
-        importButton.setOnAction(e -> importData.open());
+        searchButton.setOnAction(e -> {
+
+        });
+
+        importButton.setOnAction(e -> {
+            FileChooser fileChooser = new FileChooser(); // Create new File Chooser
+            fileChooser.setTitle("Open Excel File");     // Title of File Chooser Window
+            fileChooser.getExtensionFilters().addAll(    // Accepted file formats
+                    new FileChooser.ExtensionFilter(
+                            "Excel Files \"*.xlsx or\", \"*.xls\"",
+                            "*.xlsx", "*.xls"));
+            File chosenFile = fileChooser.showOpenDialog(null);
+            if (!chosenFile.getPath().isEmpty()) {
+                border.setCenter(pind);
+                Task task = dbHandler.loadExcelToDB(chosenFile.getPath());
+                pind.progressProperty().unbind();
+                pind.progressProperty().bind(task.progressProperty());
+                new Thread(task).start();
+            }
+        });
 
         searchTable.setOnMouseClicked(e -> {
             int clicks = e.getClickCount();
@@ -114,7 +150,7 @@ public class tablePage {
 
         resetButton.setOnAction(e -> {
             for (int i = 0; i < 5; i++) { textField[i].clear(); }
-            textField[5].setText("min"); textField[6].setText("max");
+            textField[5].setPromptText("min"); textField[6].setPromptText("max");
         });
         /* ********************************************* */
     }
@@ -130,5 +166,12 @@ public class tablePage {
             }
         }
         return columns;
+    }
+
+    public static void updateTable() {
+        List<String> importedTbls = dbHandler.getImportedTablesList();
+        List<String> columns = allColumns(importedTbls);
+        searchTable = createTable(importedTbls, columns);
+        border.setCenter(searchTable);
     }
 }
