@@ -1,7 +1,8 @@
 package Pages.GraphPage;
 
 import Pages.mainWin;
-import database.DBHandle;
+import database.dbHandler;
+import database.dbOperations;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.*;
@@ -62,7 +63,7 @@ public class graphPage {
         // This is the list of the boxlist and their formatting.//
 
         VBox boxlist = new VBox();
-        ResultSet r = DBHandle.queryReturnResult("SELECT \"Dept ID - Dept Description\" FROM 'College of E&CS';");
+        ResultSet r = dbOperations.queryReturnResult("SELECT \"Dept ID - Dept Description\" FROM 'College of E&CS';");
         //List<CheckBox> checkBoxList = new ArrayList<>();
         //CheckBox box = new CheckBox();
         try {
@@ -156,7 +157,7 @@ public class graphPage {
         xAxis.setLabel("Department");                                   // Title of X-Axis
         yAxis.setLabel("Total Cost");                                   // Title of Y-Axis
         XYChart.Series<String, Number> series = new XYChart.Series<>(); // The Vertical "Bars"
-        ResultSet depts = DBHandle.queryReturnResult("SELECT \"TBL_NAME\" FROM 'importedTables';");
+        ResultSet depts = dbOperations.queryReturnResult("SELECT \"TBL_NAME\" FROM 'importedTables';");
 
         //-----------------Testing checkboxes - Jeric-------------------------------//
         int i = 0;
@@ -164,12 +165,12 @@ public class graphPage {
         try {
             depts.next();
             String str = format("SELECT \"Dept ID - Dept Description\" FROM '%s';", depts.getString(1));
-            ResultSet names = DBHandle.queryReturnResult(str);
+            ResultSet names = dbOperations.queryReturnResult(str);
             depts.next(); names.next();
             while (i < checkBoxList.size()) {
                 if (checkBoxList.get(i).isSelected()) {
                     str = format("SELECT \"Purchase Cost\" FROM '%s';", depts.getString(1));
-                    ResultSet costs = DBHandle.queryReturnResult(str);
+                    ResultSet costs = dbOperations.queryReturnResult(str);
                     double totalCost = getTotalCost(costs);
                     String deptName = names.getString(1);
                     deptName = deptName.substring(deptName.indexOf('-') + 2, deptName.length());
@@ -189,8 +190,8 @@ public class graphPage {
 
     /*  if (checkBoxList.get(0).isSelected()) {
             try {
-            ResultSet test = DBHandle.queryReturnResult("SELECT \"Dept ID - Dept Description\" FROM 'College of E&CS';");
-            ResultSet testCost = DBHandle.queryReturnResult("SELECT \"Purchase Cost\" FROM '1-653';");
+            ResultSet test = dbHandler.queryReturnResult("SELECT \"Dept ID - Dept Description\" FROM 'College of E&CS';");
+            ResultSet testCost = dbHandler.queryReturnResult("SELECT \"Purchase Cost\" FROM '1-653';");
             double totalCost = getTotalCost(testCost);
             series.getData().add(new XYChart.Data<>(test.getString(1), totalCost));
         }catch (SQLException e) { e.printStackTrace(); }
@@ -199,8 +200,8 @@ public class graphPage {
 
         if (checkBoxList.get(1).isSelected()) {
             try {
-                ResultSet test = DBHandle.queryReturnResult("SELECT \"Dept ID - Dept Description\" FROM 'College of E&CS' where rowid = 2;");
-                ResultSet testCost = DBHandle.queryReturnResult("SELECT \"Purchase Cost\" FROM '10-218';");
+                ResultSet test = dbHandler.queryReturnResult("SELECT \"Dept ID - Dept Description\" FROM 'College of E&CS' where rowid = 2;");
+                ResultSet testCost = dbHandler.queryReturnResult("SELECT \"Purchase Cost\" FROM '10-218';");
                 double totalCost = getTotalCost(testCost);
                 series.getData().add(new XYChart.Data<>(test.getString(1), totalCost));
             }catch (SQLException e) { e.printStackTrace(); }
@@ -216,11 +217,11 @@ public class graphPage {
        /* try {
             depts.next();
             String str = format("SELECT \"Dept ID - Dept Description\" FROM '%s';", depts.getString(1));
-            ResultSet names = DBHandle.queryReturnResult(str);
+            ResultSet names = dbHandler.queryReturnResult(str);
             depts.next(); names.next();
             while (!depts.isClosed()) {
                 str = format("SELECT \"Purchase Cost\" FROM '%s';", depts.getString(1));
-                ResultSet costs = DBHandle.queryReturnResult(str);
+                ResultSet costs = dbHandler.queryReturnResult(str);
                 double totalCost = getTotalCost(costs);
                 String deptName = names.getString(1);
                 deptName = deptName.substring(deptName.indexOf('-') + 2, deptName.length());
@@ -244,15 +245,15 @@ public class graphPage {
         yAxis.setLabel("Department");                                   // Title of Y-Axis
         XYChart.Series<Number, String> series = new XYChart.Series<>(); // The "Bars"
 
-        ResultSet depts = DBHandle.queryReturnResult("SELECT \"TBL_NAME\" FROM 'importedTables';");
+        ResultSet depts = dbOperations.queryReturnResult("SELECT \"TBL_NAME\" FROM 'importedTables';");
         try {
             depts.next();
             String str = format("SELECT \"Dept ID - Dept Description\" FROM '%s';", depts.getString(1));
-            ResultSet names = DBHandle.queryReturnResult(str);
+            ResultSet names = dbOperations.queryReturnResult(str);
             depts.next(); names.next();
             while (!depts.isClosed()) {
                 str = format("SELECT \"Purchase Cost\" FROM '%s';", depts.getString(1));
-                ResultSet costs = DBHandle.queryReturnResult(str);
+                ResultSet costs = dbOperations.queryReturnResult(str);
                 double totalCost = getTotalCost(costs);
                 String deptName = names.getString(1);
                 deptName = deptName.substring(deptName.indexOf('-') + 2, deptName.length());
@@ -267,15 +268,15 @@ public class graphPage {
 
     private static void createPieGraph() {
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
-        ResultSet depts = DBHandle.queryReturnResult("SELECT \"TBL_NAME\" FROM 'importedTables';");
+        ResultSet depts = dbOperations.queryReturnResult("SELECT \"TBL_NAME\" FROM 'importedTables';");
         try {
             depts.next();
             String str = format("SELECT \"Dept ID - Dept Description\" FROM '%s';", depts.getString(1));
-            ResultSet names = DBHandle.queryReturnResult(str);
+            ResultSet names = dbOperations.queryReturnResult(str);
             depts.next(); names.next();
             while (!depts.isClosed()) {
                 str = format("SELECT \"Purchase Cost\" FROM '%s';", depts.getString(1));
-                ResultSet costs = DBHandle.queryReturnResult(str);
+                ResultSet costs = dbOperations.queryReturnResult(str);
                 double totalCost = getTotalCost(costs);
                 String deptName = names.getString(1);
                 deptName = deptName.substring(deptName.indexOf('-') + 2, deptName.length());

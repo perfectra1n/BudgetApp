@@ -1,7 +1,7 @@
 package Pages.TablePage;
 
 import Pages.mainWin;
-import database.DBHandle;
+import database.dbHandler;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
@@ -87,7 +87,7 @@ public class tablePage {
         /* ********************************************* */
         /*---------------- Search Table -----------------*/
         // Retrieve list of imported tables
-        List<String> importedTbls = DBHandle.getImportedTablesList();
+        List<String> importedTbls = dbHandler.getImportedTablesList();
         // Retrieve list of column names
         List<String> columns = allColumns(importedTbls);
         // Create and retrieve table
@@ -123,7 +123,7 @@ public class tablePage {
         List<String> columns = new ArrayList<>();
         for (String tbl : importedTables) {
             if (!Character.isDigit(tbl.charAt(0))) continue; //skip unwanted tables
-            List<String> inColumns = DBHandle.getColumnNames(tbl);
+            List<String> inColumns = dbHandler.getColumnNames(tbl);
             for (String col : inColumns) {
                 if (columns.contains(col) || col.contains("No Assets")) continue; //skip columns already included
                 columns.add(col);

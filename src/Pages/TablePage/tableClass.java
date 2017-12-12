@@ -1,12 +1,12 @@
 package Pages.TablePage;
 
-import database.DBHandle;
-import javafx.beans.value.ObservableValue;
+import database.dbHandler;
+import database.dbOperations;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.util.Callback;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -53,8 +53,8 @@ class tableClass {
         ObservableList<tableDataObj> data = FXCollections.observableArrayList();
         for (String tbl : inData) {
             if (!Character.isDigit(tbl.charAt(0))) continue; //skip unwanted tables
-            ResultSet r = DBHandle.queryReturnResult(format("SELECT * FROM '%s';", tbl));
-            List<String> columns = DBHandle.getColumnNames(tbl);
+            ResultSet r = dbOperations.queryReturnResult(format("SELECT * FROM '%s';", tbl));
+            List<String> columns = dbHandler.getColumnNames(tbl);
             try {
                 for (r.next(); !r.isClosed(); r.next()) {
                     tableDataObj newData = new tableDataObj();

@@ -6,7 +6,10 @@
 package Pages.TablePage;
 
 import Pages.*;
-import database.DBHandle;
+import database.dbHandler;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -62,7 +65,9 @@ public class importData
         ExitBut.setPrefHeight(25.0);
         grid.add(ExitBut, 3, 1);
 
-
+        // Progress Indicator
+        ProgressIndicator pbar = new ProgressIndicator(0);
+        grid.add(pbar,0,2);
 
         //---------------------------------- EVENTS ----------------------------------
         // Select File Button
@@ -80,7 +85,13 @@ public class importData
         // Upload File Button
         UploadFileBut.setOnAction(e -> {
             String path = FileSel.getText();
-            if (!path.isEmpty()) { DBHandle.loadExcelToDB(path); } // If file chosen
+            if (!path.isEmpty()) { // If file chosen
+                Task task = dbHandler.loadExcelToDB(path);
+                pbar.progressProperty().unbind();
+                pbar.progressProperty().bind(task.progressProperty());
+                new Thread(task).start();
+                FileSel.clear();
+            }
         });
 
         // Exit Button

@@ -21,7 +21,7 @@ import Pages.GraphPage.graphPage;
 import Pages.HomePage.homePage;
 import Pages.LogPage.*;
 import Pages.TablePage.*;
-import database.DBHandle;
+import database.dbHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -30,8 +30,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.QuadCurve;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class mainWin {
@@ -40,19 +38,23 @@ public class mainWin {
 
     // Main stage passed from Main class
     public static void passMain(Stage window) {
-        // Set global variable main, set window properties
-        main = window; main.setTitle("Budget Application Program");
-        // Set the icon of the program to the Sac State logo
-        main.getIcons().add(new Image("resources/images/icons/icon.png"));
-        // Close window event handler
-        main.setOnCloseRequest(e -> {
-            confirmClose();
-            DBHandle.closeConnectionToDB();
-        });
+        if (main == null) {
+            // Set global variable main, set window properties
+            main = window; main.setTitle("Budget Application Program");
+            // Set the icon of the program to the Sac State logo
+            main.getIcons().add(new Image("resources/images/icons/icon.png"));
+            // Connect to database
+            dbHandler.connectToDB();
+            // Close window event handler
+            main.setOnCloseRequest(e -> {
+                confirmClose();
+                dbHandler.closeConnectionToDB();
+            });
 
-        createMainWindowLayout();
-        homePage.open();
-        window.show();
+            createMainWindowLayout();
+            homePage.open();
+            window.show();
+        }
     }
 
     // Changes to passed scene and retains size of window
@@ -63,7 +65,7 @@ public class mainWin {
 
     // Close the Main Window
     public static void closeWindow() {
-        DBHandle.closeConnectionToDB(); // Prevent memory leaks
+        dbHandler.closeConnectionToDB(); // Prevent memory leaks
         main.close();
     }
 
