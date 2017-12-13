@@ -96,6 +96,9 @@ public class graphPage {
                     if (comboBoxX.getValue().equals(("Pie Graph"))) {
                         createPieGraph();
                     }
+                    if (comboBoxX.getValue().equals(("Line Chart"))) {
+                        createLineChart();
+                    }
                 });
                 i++;
             }
@@ -122,7 +125,8 @@ public class graphPage {
         //--------------------------- EVENTS ---------------------------
         comboBoxX.setOnAction(e -> {
             if (comboBoxX.getValue().equals("Bar Graph")) {
-                //leftPane.getChildren().addAll(comboBoxY);
+                //leftPane.getChildren().addAll(comboBoxY,comboBoxX);
+               // leftPane.getChildren().removeAll(comboBoxY,comboBoxX);
                 graphLayout.setCenter(null);
                 if (comboBoxY.getValue().equals("Vertical")) {
                     createVerticalGraph();
@@ -132,12 +136,20 @@ public class graphPage {
                 }
             }
             else if (comboBoxX.getValue().equals("Pie Graph")) {
-               // leftPane.getChildren().removeAll(comboBoxY);
+                if (leftPane.getChildren().contains(comboBoxY)){
+                    leftPane.getChildren().removeAll(comboBoxY);
+                }
+               // leftPane.getChildren().addAll(comboBoxY,comboBoxX);
+              //  leftPane.getChildren().removeAll(comboBoxY);
                 graphLayout.setCenter(null);
                 createPieGraph();
             }
             else if (comboBoxX.getValue().equals("Line Chart")) {
-               // leftPane.getChildren().removeAll(comboBoxY);
+                if (leftPane.getChildren().contains(comboBoxY)){
+                    leftPane.getChildren().removeAll(comboBoxY);
+                }
+                //leftPane.getChildren().addAll(comboBoxY,comboBoxX);
+                //leftPane.getChildren().removeAll(comboBoxY,comboBoxX);
                 graphLayout.setCenter(null);
                 createLineChart();
             }
