@@ -3,14 +3,18 @@ package Pages.TablePage;
 import database.dbHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseButton;
+
 import java.util.List;
 
 class tableClass {
     private final TableView<tableDataObj> table;
     private final ObservableList<TableColumn<tableDataObj, Object>> tableColumns;
     private final ObservableList<tableDataObj> masterTableData;
+    private ObservableList<tableDataObj> activeData;
     private String keyColumn;
 
     tableClass(List<String> inColumns, List<String> inDataTables) {
@@ -18,13 +22,17 @@ class tableClass {
         this.keyColumn = inColumns.get(0);
         this.tableColumns = createTblColumns(inColumns);
         this.masterTableData = createData(inDataTables);
+        activeData = masterTableData;
         table.getColumns().addAll(tableColumns);
-        table.setItems(masterTableData);
+        table.setItems(activeData);
+        setProperties();
     }
 
     TableView<tableDataObj> getTable() { return table; }
     ObservableList<TableColumn<tableDataObj, Object>> getTableColumns() { return tableColumns; }
     ObservableList<tableDataObj> getMasterTableData() { return masterTableData; }
+    ObservableList<tableDataObj> getActiveData() { return activeData; }
+    void setActiveData(FilteredList<tableDataObj> data) { activeData = data; }
     String getKeyColumn() { return keyColumn; }
     void setKeyColumn(String key) { keyColumn = key; }
 
@@ -49,5 +57,19 @@ class tableClass {
             data.addAll(dbHandler.getTableDataObjects(tbl));
         }
         return data;
+    }
+
+    private void setProperties() {
+        table.setOnMouseClicked(e -> {
+            int clicks = e.getClickCount();
+            if (clicks == 2) {
+                if (e.getButton().equals(MouseButton.PRIMARY)) {
+                    tableDataObj obj = table.getSelectionModel().getSelectedItem();
+                    tablePageTab tab = new tablePageTab(
+                            obj, obj.getProperty(keyColumn).get().toString());
+                    tablePage.openNewTab(tab.getItemTab());
+                }
+            }
+        });
     }
 }

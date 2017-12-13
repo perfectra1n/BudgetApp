@@ -11,8 +11,6 @@
 
 .tab-pane {
     -fx-tab-min-width: 80px;
-    -fx-background-color: lightgrey;
-
 }
 .tab-header-area {
     -fx-background-insets: 0;
@@ -28,15 +26,32 @@
     -fx-font-weight: bolder;
     -fx-stroke: red;
     -fx-stroke-width: 2;
+    -fx-font-size: 120%;
+    -fx-tab-min-height: 120%;
 }
 .tab-label {
     -fx-alignment: center;
 }
 
-#SearchBox
-{
-    -fx-padding: 5;
+BorderPane {
     -fx-background-color: white;
+}
+GridPane {
+    -fx-padding: 8;
+    -fx-background-color: white;
+    -fx-min-height: 80;
+}
+
+#SearchButton {
+    -fx-min-width: 50;
+}
+#ResetButton {
+    -fx-min-width: 40;
+}
+
+.progress-indicator {
+    -fx-max-width: 80;
+    -fx-max-height: 80;
 }
 
 .table-row-cell {

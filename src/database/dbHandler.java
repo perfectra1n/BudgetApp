@@ -29,6 +29,7 @@ public class dbHandler {
     // Connect to specified URL, creates file if non-existent
     public static void connectToDB() {
         connect(dbURL);
+        sendQuery("CREATE TABLE IF NOT EXISTS importedTables ('TBL_NAME' STRING);");
     }
 
     // Change dbURL
@@ -148,7 +149,6 @@ public class dbHandler {
             protected Object call() throws Exception {
 
                 // First delete previously imported tables (if any)
-                sendQuery("CREATE TABLE IF NOT EXISTS importedTables ('TBL_NAME' STRING);");
                 boolean deleteLastImport = true;
                 // TEMPORARILY ALWAYS TRUE
                 if (deleteLastImport) { deleteAllImportedTables(); }
