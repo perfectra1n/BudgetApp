@@ -86,33 +86,28 @@ public class graphPage {
         while(i < checkBoxList.size()){
             if (checkBoxList.get(i).isSelected()){
                 checkBoxList.get(i).setOnAction(e ->{
-                    createVerticalGraph();
+                    if (comboBoxY.getValue().equals("Vertical")) {
+                        createVerticalGraph();
+                    }
+                    else if (comboBoxY.getValue().equals("Horizontal")){
+                        createHorizontalGraph();
+                    }
                 });
                 i++;
             }
             else if (!checkBoxList.get(i).isSelected()){
                 checkBoxList.get(i).setOnAction(e ->{
-                    createVerticalGraph();
+                    if (comboBoxY.getValue().equals("Vertical")) {
+                        createVerticalGraph();
+                    }
+                    else if (comboBoxY.getValue().equals("Horizontal")){
+                        createHorizontalGraph();
+                    }
                 });
                 i++;
             }
         }
-       /*checkBoxList.get(0).setOnAction(e ->{
-            if (checkBoxList.get(0).isSelected()){
-                createVerticalGraph();
-            }
-            if (!checkBoxList.get(0).isSelected()){
-                createVerticalGraph();
-            }
-        });
-        checkBoxList.get(1).setOnAction(e ->{
-            if (checkBoxList.get(1).isSelected()){
-                createVerticalGraph();
-            }
-            if (!checkBoxList.get(1).isSelected()){
-                createVerticalGraph();
-            }
-        });*/
+
         //--------------------------------------------------//
         createVerticalGraph();
         leftPane.getChildren().addAll(comboBoxX, comboBoxY, boxlist);
@@ -189,51 +184,10 @@ public class graphPage {
             e.printStackTrace();
         }
 
-    /*  if (checkBoxList.get(0).isSelected()) {
-            try {
-            ResultSet test = dbHandler.queryReturnResult("SELECT \"Dept ID - Dept Description\" FROM 'College of E&CS';");
-            ResultSet testCost = dbHandler.queryReturnResult("SELECT \"Purchase Cost\" FROM '1-653';");
-            double totalCost = getTotalCost(testCost);
-            series.getData().add(new XYChart.Data<>(test.getString(1), totalCost));
-        }catch (SQLException e) { e.printStackTrace(); }
-        }
-       // bc.getData().add(series);
-
-        if (checkBoxList.get(1).isSelected()) {
-            try {
-                ResultSet test = dbHandler.queryReturnResult("SELECT \"Dept ID - Dept Description\" FROM 'College of E&CS' where rowid = 2;");
-                ResultSet testCost = dbHandler.queryReturnResult("SELECT \"Purchase Cost\" FROM '10-218';");
-                double totalCost = getTotalCost(testCost);
-                series.getData().add(new XYChart.Data<>(test.getString(1), totalCost));
-            }catch (SQLException e) { e.printStackTrace(); }
-        }*/
-
-
-
         //---------------------------------------------------------------------------------//
         bc.getData().add(series);
         bc.setLegendVisible(false);
         graphLayout.setCenter(bc);
-
-       /* try {
-            depts.next();
-            String str = format("SELECT \"Dept ID - Dept Description\" FROM '%s';", depts.getString(1));
-            ResultSet names = dbHandler.queryReturnResult(str);
-            depts.next(); names.next();
-            while (!depts.isClosed()) {
-                str = format("SELECT \"Purchase Cost\" FROM '%s';", depts.getString(1));
-                ResultSet costs = dbHandler.queryReturnResult(str);
-                double totalCost = getTotalCost(costs);
-                String deptName = names.getString(1);
-                deptName = deptName.substring(deptName.indexOf('-') + 2, deptName.length());
-                series.getData().add(new XYChart.Data<>(deptName, totalCost));
-                depts.next(); names.next();
-            }
-            bc.getData().add(series);
-            bc.setLegendVisible(false);
-            graphLayout.setCenter(bc);
-        } catch (SQLException e) { e.printStackTrace(); }*/
-        //}
     }
 
     // Creates a horizontal bar graph
@@ -247,19 +201,29 @@ public class graphPage {
         XYChart.Series<Number, String> series = new XYChart.Series<>(); // The "Bars"
 
         ResultSet depts = dbOperations.queryReturnResult("SELECT \"TBL_NAME\" FROM 'importedTables';");
+        int i = 0;
+
         try {
             depts.next();
             String str = format("SELECT \"Dept ID - Dept Description\" FROM '%s';", depts.getString(1));
             ResultSet names = dbOperations.queryReturnResult(str);
             depts.next(); names.next();
-            while (!depts.isClosed()) {
-                str = format("SELECT \"Purchase Cost\" FROM '%s';", depts.getString(1));
-                ResultSet costs = dbOperations.queryReturnResult(str);
-                double totalCost = getTotalCost(costs);
-                String deptName = names.getString(1);
-                deptName = deptName.substring(deptName.indexOf('-') + 2, deptName.length());
-                series.getData().add(new XYChart.Data<>(totalCost, deptName));
-                depts.next(); names.next();
+            while (i < checkBoxList.size()) {
+                if (checkBoxList.get(i).isSelected()) {
+                    str = format("SELECT \"Purchase Cost\" FROM '%s';", depts.getString(1));
+                    ResultSet costs = dbOperations.queryReturnResult(str);
+                    double totalCost = getTotalCost(costs);
+                    String deptName = names.getString(1);
+                    deptName = deptName.substring(deptName.indexOf('-') + 2, deptName.length());
+                    series.getData().add(new XYChart.Data<>(totalCost, deptName));
+                    depts.next(); names.next();
+
+                    i++;
+                }
+                else if (!checkBoxList.get(i).isSelected()) {
+                    depts.next(); names.next();
+                    i++;
+                }
             }
             bc.getData().add(series);
             bc.setLegendVisible(false);
