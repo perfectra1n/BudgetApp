@@ -96,33 +96,36 @@ public class mainWin {
         menuBar.getMenus().addAll(menuFile, menuEdit, menuAbout );
         */
 
+        ToggleGroup group = new ToggleGroup();
+
         /*        Initialize the toolbar, which will be located underneath the menu bar          */
         HBox toolBar = new HBox(40);
 
         /*        Create the button, set the max size for each, and then set the action that will be performed upon click       */
-        Button itemHome = new Button("Home");
+        ToggleButton itemHome = new ToggleButton("Home");
+        itemHome.setToggleGroup(group);
         itemHome.setId("toolBarButton");
         itemHome.setOnAction(e -> homePage.open());
+        itemHome.setSelected(true);
+        //itemHome.setOnAction(itemHome.());
 
-        Button itemImport = new Button("Table");
+        ToggleButton itemImport = new ToggleButton("Table");
+        itemImport.setToggleGroup(group);
         itemImport.setId("toolBarButton");
         itemImport.setOnAction(e -> tablePage.open());
 
 
-        Button itemLog = new Button("Data Log");
+        ToggleButton itemLog = new ToggleButton("Data Log");
+        itemLog.setToggleGroup(group);
         itemLog.setId("toolBarButton");
         itemLog.setOnAction(e -> loggerPage.open());
 
-        Button itemBarGraph = new Button("Graphs");
+        ToggleButton itemBarGraph = new ToggleButton("Graphs");
+        itemBarGraph.setToggleGroup(group);
         itemBarGraph.setId("toolBarButton");
         itemBarGraph.setOnAction(e -> graphPage.open());
 
-
-        //toolBar.setStyle("-fx-padding: 0 0 0 0");
-
-
-        /*        Add all of the menus for the toolbar, to the toolbar                          */
-        toolBar.getChildren().addAll(itemImport,itemBarGraph,itemLog,itemHome);
+        toolBar.getChildren().addAll(itemHome, itemImport, itemLog, itemBarGraph);
 
 
         /*          Created a new VBox named topContainer to hold the elements that

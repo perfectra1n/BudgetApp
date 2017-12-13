@@ -5,29 +5,28 @@
 
 #toolBarButton
 {
-    -fx-background-color:
-            #707070,
-            linear-gradient(#fcfcfc, #f3f3f3),
-            linear-gradient(#f2f2f2 0%, #ebebeb 49%, #dddddd 50%, #cfcfcf 100%);
-    -fx-background-insets: 0,1,2;
+    -fx-fit-to-height: 100%;
+    -fx-background-color: #3C3F41;
+    -fx-background-insets: 3,3,3;
     -fx-background-radius: 3,2,1;
-    -fx-padding: 3 20 3 20;
-    -fx-text-fill: black;
-    -fx-font-size: 12px;
+    -fx-padding: 15 25 15 25;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
 }
 
 #toolBarButton:hover
 {
-    -fx-background-color: linear-gradient(#6E6D6B, #A6AA9F);
+    -fx-background-color: #3E86A0;
 }
 
-#toolBarButton:pressed
+#toolBarButton:selected
 {
-
+    -fx-background-color: #3E86A0;
 }
 
 
 #topContainer
 {
-    -fx-background-color: lightgrey;
+    -fx-background-color: #3C3F41;
+    -fx-padding: 0 10 0 10;
 }
