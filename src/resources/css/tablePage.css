@@ -3,16 +3,45 @@
     -fx-padding: 6;
     -fx-background-insets: 15;
     -fx-background-radius: 25;
-    -fx-background-color: white;
     -fx-border-color: linear-gradient(#0b431a,darkgreen);
     -fx-border-width: 8;
     -fx-border-radius: 15;
     -fx-border-insets: 13;
 }
 
+.tab-pane {
+    -fx-tab-min-width: 80px;
+    -fx-background-color: lightgrey;
+
+}
+.tab-header-area {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+.tab-header-background {
+    -fx-opacity: 0;
+}
+.tab {
+    -fx-background-radius: 12 12 0 0;
+}
+.tab:selected {
+    -fx-font-weight: bolder;
+    -fx-stroke: red;
+    -fx-stroke-width: 2;
+}
+.tab-label {
+    -fx-alignment: center;
+}
+
 #SearchBox
 {
     -fx-padding: 5;
-    -fx-background-color: lightgrey;
-    -fx-background-radius: 10;
+    -fx-background-color: white;
+}
+
+.table-row-cell {
+    -fx-font-size: 13;
+}
+.table-row-cell:selected{
+    -fx-background-color: #8ed6e9;
 }

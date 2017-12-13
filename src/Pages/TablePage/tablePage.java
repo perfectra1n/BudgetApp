@@ -23,14 +23,14 @@ public class tablePage {
         if (tableLayout == null) {
             tableLayout = new TabPane();
             tableLayout.setId("TablePage");
-            String tablePageCss = tablePage.class.getResource("/resources/css/tablePage.css").toExternalForm();
+            String tablePageCss = tablePage.class.getResource(
+                    "/resources/css/tablePage.css").toExternalForm();
             tableLayout.getStylesheets().clear();
             tableLayout.getStylesheets().add(tablePageCss);
             mainWin.changeCenter(tableLayout);
             create();
         }
         else {
-            updateTable();
             mainWin.changeCenter(tableLayout);
         }
     }

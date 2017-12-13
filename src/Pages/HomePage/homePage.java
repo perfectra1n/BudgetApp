@@ -26,8 +26,8 @@ public class homePage {
             homeLayout.setPrefColumns(3);
             /* ******************************************* */
                             /*          Set the stylesheet homePage.css to this scene        */
-            homeLayout.getStylesheets().add(
-                    homePage.class.getResource("/resources/css/homePage.css").toExternalForm());
+            homeLayout.getStylesheets().add(homePage.class.getResource(
+                    "/resources/css/homePage.css").toExternalForm());
             // Display layout
             mainWin.changeCenter(homeLayout);
             create();
@@ -53,8 +53,6 @@ public class homePage {
         BarGraphButton.setId("BarGraphButton");
         BarGraphButton.prefHeightProperty().bind(graphButtons.prefHeightProperty());
         BarGraphButton.prefWidthProperty().bind(graphButtons.prefWidthProperty());
-        //Image GU = new Image("resources/images/icons/graphIcon.png");
-        //BarGraphButton.setGraphic(new ImageView(GU));
         BarGraphButton.setOnAction(e -> graphPage.open());
 
         Button PieGraphButton = new Button ("Pie Graph");

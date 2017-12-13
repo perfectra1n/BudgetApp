@@ -23,6 +23,7 @@
     -fx-background-radius: 30;
     -fx-background-insets: 0,1,1;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+    -fx-content-display: bottom;
 }
 #TablePageButton:hover
 {

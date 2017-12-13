@@ -26,7 +26,6 @@ class tableClass {
     ObservableList<TableColumn<tableDataObj, Object>> getTableColumns() { return tableColumns; }
     ObservableList<tableDataObj> getMasterTableData() { return masterTableData; }
     String getKeyColumn() { return keyColumn; }
-
     void setKeyColumn(String key) { keyColumn = key; }
 
     // Creates and returns table columns
