@@ -47,7 +47,7 @@ public class graphPage {
         comboBoxX.setPrefSize(150.0, 25.0); //Sets the default drop list size
 
         //----------------POPULATE X OPTIONS-----------------//
-        comboBoxX.getItems().addAll("Bar Graph", "Pie Graph"); //Populates the actual drop down menu
+        comboBoxX.getItems().addAll("Bar Graph", "Pie Graph", "Line Chart"); //Populates the actual drop down menu
         comboBoxX.setValue("Bar Graph");
 //-----------------------------------------------------------------//
 
@@ -86,16 +86,21 @@ public class graphPage {
         while(i < checkBoxList.size()){
             if (checkBoxList.get(i).isSelected()){
                 checkBoxList.get(i).setOnAction(e ->{
-                    if (comboBoxY.getValue().equals("Vertical")) {
-                        createVerticalGraph();
+                    if (comboBoxX.getValue().equals(("Bar Graph"))) {
+                            if (comboBoxY.getValue().equals("Vertical")) {
+                                createVerticalGraph();
+                            } else if (comboBoxY.getValue().equals("Horizontal")) {
+                                createHorizontalGraph();
+                            }
                     }
-                    else if (comboBoxY.getValue().equals("Horizontal")){
-                        createHorizontalGraph();
+                    if (comboBoxX.getValue().equals(("Pie Graph"))) {
+                        createPieGraph();
                     }
                 });
                 i++;
             }
-            else if (!checkBoxList.get(i).isSelected()){
+
+       /*     else if (!checkBoxList.get(i).isSelected()){
                 checkBoxList.get(i).setOnAction(e ->{
                     if (comboBoxY.getValue().equals("Vertical")) {
                         createVerticalGraph();
@@ -105,7 +110,7 @@ public class graphPage {
                     }
                 });
                 i++;
-            }
+            }*/
         }
 
         //--------------------------------------------------//
@@ -117,7 +122,7 @@ public class graphPage {
         //--------------------------- EVENTS ---------------------------
         comboBoxX.setOnAction(e -> {
             if (comboBoxX.getValue().equals("Bar Graph")) {
-                leftPane.getChildren().addAll(comboBoxY, boxlist);
+                //leftPane.getChildren().addAll(comboBoxY);
                 graphLayout.setCenter(null);
                 if (comboBoxY.getValue().equals("Vertical")) {
                     createVerticalGraph();
@@ -127,9 +132,14 @@ public class graphPage {
                 }
             }
             else if (comboBoxX.getValue().equals("Pie Graph")) {
-                leftPane.getChildren().removeAll(comboBoxY, boxlist);
+               // leftPane.getChildren().removeAll(comboBoxY);
                 graphLayout.setCenter(null);
                 createPieGraph();
+            }
+            else if (comboBoxX.getValue().equals("Line Chart")) {
+               // leftPane.getChildren().removeAll(comboBoxY);
+                graphLayout.setCenter(null);
+                createLineChart();
             }
         });
 
@@ -155,7 +165,6 @@ public class graphPage {
         XYChart.Series<String, Number> series = new XYChart.Series<>(); // The Vertical "Bars"
         ResultSet depts = dbOperations.queryReturnResult("SELECT \"TBL_NAME\" FROM 'importedTables';");
 
-        //-----------------Testing checkboxes - Jeric-------------------------------//
         int i = 0;
 
         try {
@@ -233,29 +242,82 @@ public class graphPage {
 
     private static void createPieGraph() {
         ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+        int i = 0;
         ResultSet depts = dbOperations.queryReturnResult("SELECT \"TBL_NAME\" FROM 'importedTables';");
         try {
             depts.next();
             String str = format("SELECT \"Dept ID - Dept Description\" FROM '%s';", depts.getString(1));
             ResultSet names = dbOperations.queryReturnResult(str);
             depts.next(); names.next();
-            while (!depts.isClosed()) {
-                str = format("SELECT \"Purchase Cost\" FROM '%s';", depts.getString(1));
-                ResultSet costs = dbOperations.queryReturnResult(str);
-                double totalCost = getTotalCost(costs);
-                String deptName = names.getString(1);
-                deptName = deptName.substring(deptName.indexOf('-') + 2, deptName.length());
-                pieChartData.add(new PieChart.Data(deptName, totalCost));
-                depts.next(); names.next();
+            while (i < checkBoxList.size()) {
+                if (checkBoxList.get(i).isSelected()) {
+                    str = format("SELECT \"Purchase Cost\" FROM '%s';", depts.getString(1));
+                    ResultSet costs = dbOperations.queryReturnResult(str);
+                    double totalCost = getTotalCost(costs);
+                    String deptName = names.getString(1);
+                    deptName = deptName.substring(deptName.indexOf('-') + 2, deptName.length());
+                    pieChartData.add(new PieChart.Data(deptName, totalCost));
+                    depts.next();
+                    names.next();
+                    i++;
+                }
+                else if (!checkBoxList.get(i).isSelected()) {
+                    depts.next(); names.next();
+                    i++;
+                }
             }
             PieChart pie = new PieChart(pieChartData);
             pie.setTitle("Cost by Department");
             graphLayout.setCenter(pie);
 
-            System.out.println(pie.legendSideProperty());
+           // System.out.println(pie.legendSideProperty());
         } catch (SQLException e) { e.printStackTrace(); }
     }
 
+    public static void createLineChart(){
+        CategoryAxis xAxis = new CategoryAxis();
+        NumberAxis yAxis = new NumberAxis();
+        xAxis.setLabel("Department");
+        yAxis.setLabel("Total Cost");
+        LineChart<String,Number> lc = new LineChart<String,Number>(xAxis,yAxis);
+        lc.setTitle("Cost by Department");
+
+        XYChart.Series<String,Number> series = new XYChart.Series<>();
+
+        ResultSet depts = dbOperations.queryReturnResult("SELECT \"TBL_NAME\" FROM 'importedTables';");
+
+        int i = 0;
+
+        try {
+            depts.next();
+            String str = format("SELECT \"Dept ID - Dept Description\" FROM '%s';", depts.getString(1));
+            ResultSet names = dbOperations.queryReturnResult(str);
+            depts.next(); names.next();
+            while (i < checkBoxList.size()) {
+                if (checkBoxList.get(i).isSelected()) {
+                    str = format("SELECT \"Purchase Cost\" FROM '%s';", depts.getString(1));
+                    ResultSet costs = dbOperations.queryReturnResult(str);
+                    double totalCost = getTotalCost(costs);
+                    String deptName = names.getString(1);
+                    deptName = deptName.substring(deptName.indexOf('-') + 2, deptName.length());
+                    series.getData().add(new XYChart.Data<>(deptName, totalCost));
+                    depts.next(); names.next();
+
+                    i++;
+                }
+                else if (!checkBoxList.get(i).isSelected()) {
+                    depts.next(); names.next();
+                    i++;
+                }
+            }
+            lc.getData().add(series);
+            lc.setLegendVisible(false);
+            graphLayout.setCenter(lc);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     // Generates total sum given a result set
     private static double getTotalCost(ResultSet costs) {
