@@ -32,11 +32,11 @@
 }
 #TablePageButton:hover
 {
-    -fx-background-color: #3E86A0;
+    -fx-background-color: linear-gradient(darkgrey, white);
 }
 #TablePageButton:pressed
 {
-    -fx-background-color: #808080;
+    -fx-background-color: linear-gradient(grey, lightgrey 60%);
 }
 
 #BarGraphButton

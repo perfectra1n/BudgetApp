@@ -1,10 +1,15 @@
+.root
+{
+    -fx-background-color: #192231;
+}
+
 #GraphPage
 {
     -fx-padding: 20 20 20 20;
     -fx-background-insets: 15;
     -fx-background-radius: 25;
     -fx-background-color: white;
-    -fx-border-color: linear-gradient(#0b431a,darkgreen);
+    -fx-border-color: #192231;
     -fx-border-width: 8;
     -fx-border-radius: 15;
     -fx-border-insets: 13;

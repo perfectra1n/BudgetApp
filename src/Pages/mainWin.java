@@ -109,8 +109,7 @@ public class mainWin {
         itemData.setOnAction(e -> tablePage.open());
 
 
-        ToggleButton itemLog = new ToggleButton("Data Log");
-        itemLog.setToggleGroup(group);
+        Button itemLog = new Button("Data Log");
         itemLog.setId("toolBarButton");
         itemLog.setOnAction(e -> loggerPage.open());
 

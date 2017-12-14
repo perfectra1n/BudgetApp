@@ -1,6 +1,6 @@
 .root
 {
-    -fx-background-color: #494E6B;
+    -fx-background-color: #192231;
 }
 
 #toolBarButton
@@ -28,7 +28,7 @@
 {
     -fx-border-style: solid;
     -fx-border-width: 2px;
-    -fx-border-color: #272822;
+    -fx-border-color: #494E6B;
 }
 
 #toolBarSeparator

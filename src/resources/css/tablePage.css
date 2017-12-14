@@ -1,9 +1,15 @@
+.root
+{
+    -fx-background-color: #192231;
+}
+
 #TablePage
 {
     -fx-padding: 6;
     -fx-background-insets: 15;
     -fx-background-radius: 25;
-    -fx-border-color: linear-gradient(#0b431a,darkgreen);
+    -fx-background-color: #192231;
+    -fx-border-color: #192231;
     -fx-border-width: 8;
     -fx-border-radius: 15;
     -fx-border-insets: 13;

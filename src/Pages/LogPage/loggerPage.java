@@ -24,6 +24,12 @@ public class loggerPage {
         }
         logWindow.show();
         create();
+        logWindow.setOnHidden
+                (e ->
+                    {
+
+                    }
+                  );
     }
 
     private static void create() {
