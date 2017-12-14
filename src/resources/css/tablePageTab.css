@@ -1,3 +1,17 @@
 FlowPane {
-    -fx-background-color: white;
+    -fx-padding: 10;
+    -fx-background-color: lightgrey;
+    -fx-border-color: darkblue;
+    -fx-border-width: 3;
+}
+FlowPane .text-field {
+    -fx-min-width: 100;
+}
+FlowPane .label {
+    -fx-font-weight: bolder;
+}
+
+#SaveButton {
+    -fx-min-width: 80;
+    -fx-padding: 8;
 }

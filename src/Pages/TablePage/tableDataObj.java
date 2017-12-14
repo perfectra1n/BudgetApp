@@ -23,4 +23,8 @@ public class tableDataObj {
     SimpleObjectProperty getProperty(String name) {
         return objectProperties.get(name);
     }
+
+    HashMap<String, SimpleObjectProperty> getAllProperties() {
+        return objectProperties;
+    }
 }

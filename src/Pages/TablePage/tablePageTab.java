@@ -1,9 +1,10 @@
 package Pages.TablePage;
 
-import javafx.scene.control.Tab;
+import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
-
-import java.util.List;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 class tablePageTab {
 
@@ -20,12 +21,32 @@ class tablePageTab {
 
     private void createTabLayout() {
         /*------------------ Tab Layout Settings -------------------*/
-        FlowPane tabLayout = new FlowPane();
+        BorderPane tabLayout = new BorderPane();
         String tablePageTabCss = tablePageTab.class.getResource(
                 "/resources/css/tablePageTab.css").toExternalForm();
         tabLayout.getStylesheets().clear();
         tabLayout.getStylesheets().add(tablePageTabCss);
         itemTab.setContent(tabLayout);
         /* ******************************************************** */
+        FlowPane leftSide = new FlowPane();
+        leftSide.setHgap(18);
+
+        tableItem.getAllProperties().forEach((n,v) -> {
+            leftSide.getChildren().add(new VBox(
+                    new Label(n), new TextField(v.get().toString())));
+        });
+
+        Button saveButton = new Button("Save");
+        saveButton.setId("SaveButton");
+
+        BorderPane rightSide = new BorderPane();
+        rightSide.setId("RightSide");
+        ScrollPane rightCenter = new ScrollPane();
+
+        rightSide.setTop(saveButton);
+        rightSide.setCenter(rightCenter);
+
+        tabLayout.setLeft(leftSide);
+        tabLayout.setCenter(rightSide);
     }
 }

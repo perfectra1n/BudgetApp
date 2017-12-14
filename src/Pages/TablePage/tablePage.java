@@ -2,7 +2,6 @@ package Pages.TablePage;
 
 import Pages.mainWin;
 import database.dbHandler;
-import javafx.collections.transformation.FilteredList;
 import javafx.concurrent.Task;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
@@ -90,25 +89,21 @@ public class tablePage {
                 updateTable();
             }
         });
-        // Filtered List
-
 
         // Place search area on layout
         border.setTop(searchArea);
         /* ********************************************* */
         /*-------------------- EVENTS -------------------*/
-        searchButton.setOnAction(e -> {
-            searchTable.getActiveData().setPredicate(obj -> {
-                if (keyTextField.getText().isEmpty() && pOrder.getText().isEmpty()) return true;
-                String keyProp = obj.getProperty(keyLabel.getText()).get().toString();
-                String objProp = obj.getProperty(PurchaseOrder.getText()).get().toString();
-                if (keyProp.startsWith(keyTextField.getText()) &&
-                        objProp.contains(pOrder.getText())) return true;
-                return false;
-            });
-        });
+        searchButton.setOnAction(e -> searchTable.getActiveData().setPredicate(obj -> {
+            if (keyTextField.getText().isEmpty() && pOrder.getText().isEmpty()) return true;
+            String keyProp = obj.getProperty(keyLabel.getText()).get().toString();
+            String objProp = obj.getProperty(PurchaseOrder.getText()).get().toString();
+            if (keyProp.startsWith(keyTextField.getText()) &&
+                    objProp.contains(pOrder.getText())) return true;
+            return false;
+        }));
         
-        advSearch.setOnAction(e -> searchTab.setContent(advancedSearch.open()));
+        advSearch.setOnAction(e -> searchTab.setContent(advancedSearch.open(searchTable)));
 
         resetButton.setOnAction(e -> {
             keyTextField.clear(); pOrder.clear();
