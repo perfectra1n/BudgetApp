@@ -14,3 +14,30 @@
 {
 
 }
+
+.separator *.line
+{
+    -fx-border-style: solid;
+    -fx-border-width: 3 0 0 0;
+    -fx-border-color: white;
+}
+
+#separator
+{
+
+}
+
+#checkBox
+{
+    -fx-padding: 3 0 3 0;
+}
+
+#comboBoxX
+{
+    -fx-padding: 3 0 3 0;
+}
+
+#comboBoxY
+{
+    -fx-padding: 3 0 3 0;
+}

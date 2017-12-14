@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.chart.*;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Separator;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import java.sql.ResultSet;
@@ -38,6 +39,9 @@ public class graphPage {
 
     // Scene layout and events
     private static void create() {
+        Separator separator1 = new Separator();
+        separator1.setId("separator");
+
         VBox leftPane = new VBox();
         leftPane.setId("leftPane");
 
@@ -48,15 +52,17 @@ public class graphPage {
 
         //----------------POPULATE X OPTIONS-----------------//
         comboBoxX.getItems().addAll("Bar Graph", "Pie Graph", "Line Chart"); //Populates the actual drop down menu
+        comboBoxX.setId("comboBoxX");
         comboBoxX.setValue("Bar Graph");
 //-----------------------------------------------------------------//
 
 //-----------------------------------------------------------------//
         //-------------- DROP BOX "Y" -----------------------//
         ComboBox<String> comboBoxY = new ComboBox<>();
-        comboBoxY.setPrefSize(150.0, 25.0);                   //Sets the default drop list size
+        comboBoxY.setPrefSize(150.0, 25.0);//Sets the default drop list size
         //----------------POPULATE Y OPTIONS-----------------//
         comboBoxY.getItems().addAll("Vertical", "Horizontal"); // Populates the actual drop down menu
+        comboBoxY.setId("comboBoxY");
         comboBoxY.setValue("Vertical");
 
 //-----------------------------------------------------------------//
@@ -73,6 +79,7 @@ public class graphPage {
                 String str = r.getString(1);
                 str = str.substring(str.indexOf('-') + 2, str.length());
                 CheckBox box = new CheckBox(str);
+                box.setId("checkBox");
                 // box = new CheckBox(str);
                 box.setSelected(true);
                 checkBoxList.add(box);
@@ -118,7 +125,7 @@ public class graphPage {
 
         //--------------------------------------------------//
         createVerticalGraph();
-        leftPane.getChildren().addAll(comboBoxX, comboBoxY, boxlist);
+        leftPane.getChildren().addAll(comboBoxX, separator1, comboBoxY, boxlist);
         graphLayout.setLeft(leftPane);
 
 
@@ -179,6 +186,7 @@ public class graphPage {
 
         int i = 0;
 
+        //TODO might want to make this its own function and simply call it
         try {
             depts.next();
             String str = format("SELECT \"Dept ID - Dept Description\" FROM '%s';", depts.getString(1));

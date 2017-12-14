@@ -1,29 +1,31 @@
+.root
+{
+    -fx-font-family: "Droid Sans";
+}
+
 #HomePage
 {
     -fx-padding: 20 20 20 20;
-    -fx-background-insets: 15;
-    -fx-background-radius: 25;
-    -fx-background-color: #3C3F41;
-    -fx-border-width: 8;
-    -fx-border-radius: 15;
-    -fx-border-insets: 13;
+    -fx-background-color: #192231;
 }
 
 #TablePageButton
 {
-    -fx-padding: 0 0 60 0;
     -fx-max-height: 200;
     -fx-max-width: 200;
-    -fx-font-weight: bolder;
+    -fx-font-weight: 500;
     -fx-font-size: 16;
     -fx-wrap-text: true;
-    -fx-text-fill: white;
+    -fx-text-fill: black;
     -fx-text-alignment: center;
-    -fx-background-color: #808080;
+    -fx-background-color:
+            #c3c4c4,
+            linear-gradient(#d6d6d6 50%, white 100%),
+            radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
     -fx-background-radius: 30;
     -fx-background-insets: 0,1,1;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
-    -fx-background-image: url("../images/homePageIcons/spreadsheet.png");
+
     -fx-background-repeat: no-repeat;
     -fx-background-size: 100px 100px;
     -fx-background-position: bottom;
@@ -39,7 +41,7 @@
 
 #BarGraphButton
 {
-    -fx-font-weight: bolder;
+    -fx-font-weight: 500;
     -fx-font-size: 16;
     -fx-wrap-text: true;
     -fx-text-alignment: center;
@@ -50,8 +52,6 @@
     -fx-background-radius: 15;
     -fx-background-insets: 0,1,1;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
-    -fx-padding: 0 0 20 0;
-    -fx-background-image: url("../images/homePageIcons/barGraphClipart.png");
     -fx-background-size: 40px 40px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: bottom;
@@ -67,7 +67,7 @@
 
 #PieGraphButton
 {
-    -fx-font-weight: bolder;
+    -fx-font-weight: 500;
     -fx-font-size: 16;
     -fx-wrap-text: true;
     -fx-text-alignment: center;
@@ -78,8 +78,6 @@
     -fx-background-radius: 15;
     -fx-background-insets: 0,1,1;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
-    -fx-padding: 0 0 20 0;
-    -fx-background-image: url("../images/homePageIcons/pieGraphClipart.png");
     -fx-background-size: 40px 40px;
     -fx-background-repeat: no-repeat;
     -fx-background-position: bottom;
@@ -96,7 +94,7 @@
 
 #LineGraphButton
 {
-    -fx-font-weight: bolder;
+    -fx-font-weight: 500;
     -fx-font-size: 16;
     -fx-wrap-text: true;
     -fx-text-alignment: center;
@@ -108,11 +106,8 @@
     -fx-background-radius: 15;
     -fx-background-insets: 0,1,1;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
-    -fx-padding: 0 0 20 0;
-    -fx-background-image: url("../images/homePageIcons/lineGraphClipart3.png");
     -fx-background-size: 40px 40px;
     -fx-background-repeat: no-repeat;
-    -fx-background-position: bottom;
 }
 #LineGraphButton:hover
 {
@@ -125,7 +120,7 @@
 
 #TableGraphButton
 {
-    -fx-font-weight: bolder;
+    -fx-font-weight: 500;
     -fx-font-size: 16;
     -fx-wrap-text: true;
     -fx-text-alignment: center;
@@ -136,11 +131,8 @@
     -fx-background-radius: 15;
     -fx-background-insets: 0,1,1;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
-    -fx-padding: 0 0 20 0;
-    -fx-background-image: url("../images/homePageIcons/barGraphClipart.png");
     -fx-background-size: 40px 40px;
     -fx-background-repeat: no-repeat;
-    -fx-background-position: bottom;
 }
 #TableGraphButton:hover
 {
@@ -153,7 +145,7 @@
 
 #BudgetButton
 {
-    -fx-font-weight: bolder;
+    -fx-font-weight: 500;
     -fx-font-size: 16;
     -fx-wrap-text: true;
     -fx-text-alignment: center;
@@ -176,7 +168,8 @@
 
 #LogButton
 {
-    -fx-font-weight: bolder;
+    -fx-padding: 10 0 10 0;
+    -fx-font-weight: 500;
     -fx-font-size: 16;
     -fx-wrap-text: true;
     -fx-text-alignment: center;
@@ -189,11 +182,8 @@
     -fx-background-radius: 30;
     -fx-background-insets: 0,1,1;
     -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
-    -fx-padding: 0 0 60 0;
-    -fx-background-image: url("../images/homePageIcons/logClipart2.png");
     -fx-background-repeat: no-repeat;
     -fx-background-size: 100px 100px;
-    -fx-background-position: bottom;
 }
 #LogButton:hover
 {

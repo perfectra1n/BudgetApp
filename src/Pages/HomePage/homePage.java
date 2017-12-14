@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.TilePane;
+import javafx.scene.layout.VBox;
 
 public class homePage {
     private static TilePane homeLayout = null;
@@ -19,8 +20,8 @@ public class homePage {
             homeLayout = new TilePane();
             /*-------------- Layout settings --------------*/
             homeLayout.setId("HomePage");
-            homeLayout.setPrefTileWidth(180);
-            homeLayout.setPrefTileHeight(180);
+            homeLayout.setPrefTileWidth(150);
+            homeLayout.setPrefTileHeight(100);
             homeLayout.setHgap(40); homeLayout.setVgap(35);
             homeLayout.setAlignment(Pos.CENTER);
             homeLayout.setPrefColumns(3);
@@ -43,9 +44,9 @@ public class homePage {
         TablePageButton.prefWidthProperty().bind(homeLayout.prefTileWidthProperty());
         TablePageButton.setOnAction(e -> tablePage.open());
 
-        GridPane graphButtons = new GridPane();
-        graphButtons.setId("graphButtons");
-        graphButtons.setHgap(3); graphButtons.setVgap(3);
+        VBox graphButtons = new VBox();
+        graphButtons.setSpacing(5);
+        graphButtons.setId("VboxOfGraphButtons");
         graphButtons.prefHeightProperty().bind(homeLayout.prefTileHeightProperty());
         graphButtons.prefWidthProperty().bind(homeLayout.prefTileWidthProperty());
 
@@ -64,7 +65,7 @@ public class homePage {
         LineGraphButton.setId("LineGraphButton");
         LineGraphButton.prefHeightProperty().bind(graphButtons.prefHeightProperty());
         LineGraphButton.prefWidthProperty().bind(graphButtons.prefWidthProperty());
-        
+
         Button TableGraphButton = new Button ("Table Graph");
         TableGraphButton.setId("TableGraphButton");
         TableGraphButton.prefHeightProperty().bind(graphButtons.prefHeightProperty());
@@ -81,10 +82,7 @@ public class homePage {
         LogButton.prefWidthProperty().bind(homeLayout.prefTileWidthProperty());
         LogButton.setOnAction(e -> loggerPage.open());
         
-        graphButtons.add(BarGraphButton,0,0);
-        graphButtons.add(PieGraphButton,1,0);
-        graphButtons.add(LineGraphButton,0,1);
-        graphButtons.add(TableGraphButton,1,1);
+        graphButtons.getChildren().addAll(BarGraphButton,PieGraphButton, LineGraphButton, TableGraphButton);
 
         homeLayout.getChildren().addAll(
                 TablePageButton, graphButtons, BudgetButton, LogButton);
