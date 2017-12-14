@@ -94,11 +94,11 @@ public class graphPage {
             if (checkBoxList.get(i).isSelected()){
                 checkBoxList.get(i).setOnAction(e ->{
                     if (comboBoxX.getValue().equals(("Bar Graph"))) {
-                            if (comboBoxY.getValue().equals("Vertical")) {
-                                createVerticalGraph();
-                            } else if (comboBoxY.getValue().equals("Horizontal")) {
-                                createHorizontalGraph();
-                            }
+                        if (comboBoxY.getValue().equals("Vertical")) {
+                            createVerticalGraph();
+                        } else if (comboBoxY.getValue().equals("Horizontal")) {
+                            createHorizontalGraph();
+                        }
                     }
                     if (comboBoxX.getValue().equals(("Pie Graph"))) {
                         createPieGraph();
@@ -132,8 +132,9 @@ public class graphPage {
         //--------------------------- EVENTS ---------------------------
         comboBoxX.setOnAction(e -> {
             if (comboBoxX.getValue().equals("Bar Graph")) {
-                //leftPane.getChildren().addAll(comboBoxY,comboBoxX);
-               // leftPane.getChildren().removeAll(comboBoxY,comboBoxX);
+                leftPane.getChildren().removeAll(boxlist);
+                leftPane.getChildren().addAll(comboBoxY,boxlist);
+                // leftPane.getChildren().removeAll(comboBoxY,comboBoxX);
                 graphLayout.setCenter(null);
                 if (comboBoxY.getValue().equals("Vertical")) {
                     createVerticalGraph();
@@ -146,8 +147,8 @@ public class graphPage {
                 if (leftPane.getChildren().contains(comboBoxY)){
                     leftPane.getChildren().removeAll(comboBoxY);
                 }
-               // leftPane.getChildren().addAll(comboBoxY,comboBoxX);
-              //  leftPane.getChildren().removeAll(comboBoxY);
+                // leftPane.getChildren().addAll(comboBoxY,comboBoxX);
+                //  leftPane.getChildren().removeAll(comboBoxY);
                 graphLayout.setCenter(null);
                 createPieGraph();
             }
@@ -170,6 +171,13 @@ public class graphPage {
                 createHorizontalGraph();
             }
         });
+
+     /*   comboBoxZ.setOnAction(e -> {
+            if (comboBoxZ.getValue().equals("Each Asset Cost of a Department")) {
+                createVerticalAssetGraph();
+            }
+        });*/
+
         //--------------------------------------------------------------
     }
 
@@ -290,7 +298,7 @@ public class graphPage {
             pie.setTitle("Cost by Department");
             graphLayout.setCenter(pie);
 
-           // System.out.println(pie.legendSideProperty());
+            // System.out.println(pie.legendSideProperty());
         } catch (SQLException e) { e.printStackTrace(); }
     }
 
@@ -336,7 +344,6 @@ public class graphPage {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
     }
 
     // Generates total sum given a result set
@@ -347,6 +354,16 @@ public class graphPage {
             while (!costs.isClosed()) {
                 sum += costs.getDouble(1);
                 costs.next();
+            }
+        } catch (SQLException e) { e.printStackTrace(); }
+        return sum;
+    }
+    private static double getAssetNames(ResultSet assetName) {
+        double sum = 0.0;
+        try {
+            assetName.next();
+            while (!assetName.isClosed()) {
+                assetName.next();
             }
         } catch (SQLException e) { e.printStackTrace(); }
         return sum;
