@@ -1,14 +1,12 @@
 .root
 {
-    -fx-background-image: url("../images/background/background.gif");
+    -fx-background-color: #3C3F41;
 }
 
 #toolBarButton
 {
     -fx-fit-to-height: 100%;
     -fx-background-color: #3C3F41;
-    -fx-background-insets: 3,3,3;
-    -fx-background-radius: 3,2,1;
     -fx-padding: 15 25 15 25;
     -fx-text-fill: white;
     -fx-font-size: 14px;
@@ -17,6 +15,8 @@
 #toolBarButton:hover
 {
     -fx-background-color: #3E86A0;
+    -fx-background-insets: 3, 3, 3;
+    -fx-background-radius: 3, 2, 1;
 }
 
 #toolBarButton:selected
@@ -24,9 +24,20 @@
     -fx-background-color: #3E86A0;
 }
 
+.separator *.line
+{
+    -fx-border-style: solid;
+    -fx-border-width: 2px;
+    -fx-border-color: #272822;
+}
+
+#toolBarSeparator
+{
+    -fx-padding: 5 0 0 0;
+}
 
 #topContainer
 {
     -fx-background-color: #3C3F41;
-    -fx-padding: 0 10 0 10;
+    -fx-padding: 5 10 0 10;
 }

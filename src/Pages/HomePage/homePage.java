@@ -37,7 +37,7 @@ public class homePage {
     private static void create() {
         /*------------------ Add buttons ------------------*/
 
-        Button TablePageButton = new Button ("Table");
+        Button TablePageButton = new Button ("Data");
         TablePageButton.setId("TablePageButton");
         TablePageButton.prefHeightProperty().bind(homeLayout.prefTileHeightProperty());
         TablePageButton.prefWidthProperty().bind(homeLayout.prefTileWidthProperty());

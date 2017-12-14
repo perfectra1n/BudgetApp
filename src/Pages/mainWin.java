@@ -22,6 +22,7 @@ import Pages.HomePage.homePage;
 import Pages.LogPage.*;
 import Pages.TablePage.*;
 import database.dbHandler;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -80,21 +81,14 @@ public class mainWin {
         border.getStylesheets().clear();
         border.getStylesheets().add(mainWinCss);
 
+        Separator separator1 = new Separator();
+        separator1.setOrientation(Orientation.HORIZONTAL);
+        separator1.setId("toolBarSeparator");
+
+
         // Set scene to main stage
         main.setScene(new Scene(border));
         main.setHeight(700); main.setWidth(1000);
-        /*
-        MenuBar menuBar = new MenuBar();
-        Menu menuFile = new Menu("File");
-        MenuItem itemExit = new MenuItem("Exit");
-        itemExit.setOnAction(e -> closeWindow());
-        menuFile.getItems().addAll(itemExit);
-        Menu menuEdit = new Menu("Edit");
-        MenuItem itemEditData = new MenuItem("Data");
-        menuEdit.getItems().addAll(itemEditData);
-        Menu menuAbout = new Menu("About");
-        menuBar.getMenus().addAll(menuFile, menuEdit, menuAbout );
-        */
 
         ToggleGroup group = new ToggleGroup();
 
@@ -109,10 +103,10 @@ public class mainWin {
         itemHome.setSelected(true);
         //itemHome.setOnAction(itemHome.());
 
-        ToggleButton itemImport = new ToggleButton("Table");
-        itemImport.setToggleGroup(group);
-        itemImport.setId("toolBarButton");
-        itemImport.setOnAction(e -> tablePage.open());
+        ToggleButton itemData = new ToggleButton("Data");
+        itemData.setToggleGroup(group);
+        itemData.setId("toolBarButton");
+        itemData.setOnAction(e -> tablePage.open());
 
 
         ToggleButton itemLog = new ToggleButton("Data Log");
@@ -125,7 +119,7 @@ public class mainWin {
         itemBarGraph.setId("toolBarButton");
         itemBarGraph.setOnAction(e -> graphPage.open());
 
-        toolBar.getChildren().addAll(itemHome, itemImport, itemLog, itemBarGraph);
+        toolBar.getChildren().addAll(itemHome, itemData, itemLog, itemBarGraph, separator1);
 
 
         /*          Created a new VBox named topContainer to hold the elements that
@@ -133,12 +127,9 @@ public class mainWin {
                     set it at the top of the root at the end                         */
         VBox topContainer = new VBox();
         topContainer.setId("topContainer");
-        topContainer.getChildren().add(toolBar);
+        topContainer.getChildren().addAll(toolBar, separator1);
         toolBar.setAlignment(Pos.CENTER);
 
         border.setTop(topContainer);
-
-        /*        Set the styling for what the menus will look like             */
-        /*        TODO make this look better                                    */
     }
 }
