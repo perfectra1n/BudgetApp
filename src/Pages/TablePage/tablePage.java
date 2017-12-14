@@ -65,14 +65,10 @@ public class tablePage {
         searchArea.add(keyLabel,0,0);
         searchArea.add(keyTextField,0,1);
         // Purchase Cost Search Field
-        Label PurchaseCost = new Label("Purchase Cost");
-        TextField minCost = new TextField();
-        minCost.setPromptText("min"); minCost.setMaxWidth(60);
-        TextField maxCost = new TextField();
-        maxCost.setPromptText("max"); maxCost.setMaxWidth(60);
-        searchArea.add(PurchaseCost,1,0);
-        HBox cost = new HBox(minCost, maxCost); cost.setSpacing(5);
-        searchArea.add(cost,1,1);
+        Label PurchaseOrder = new Label("Purchase Order");
+        TextField pOrder = new TextField();
+        searchArea.add(PurchaseOrder,1,0);
+        searchArea.add(pOrder,1,1);
         // Search Button
         MenuItem advSearch = new MenuItem("Advanced Search");
         SplitMenuButton searchButton = new SplitMenuButton(advSearch);
@@ -94,22 +90,29 @@ public class tablePage {
                 updateTable();
             }
         });
+        // Filtered List
+
 
         // Place search area on layout
         border.setTop(searchArea);
         /* ********************************************* */
         /*-------------------- EVENTS -------------------*/
         searchButton.setOnAction(e -> {
-            FilteredList<tableDataObj> filteredDataList =
-                    new FilteredList<tableDataObj>(
-                            searchTable.getActiveData(), cond -> true);
-
-            searchTable.setActiveData(filteredDataList);
+            searchTable.getActiveData().setPredicate(obj -> {
+                if (keyTextField.getText().isEmpty() && pOrder.getText().isEmpty()) return true;
+                String keyProp = obj.getProperty(keyLabel.getText()).get().toString();
+                String objProp = obj.getProperty(PurchaseOrder.getText()).get().toString();
+                if (keyProp.startsWith(keyTextField.getText()) &&
+                        objProp.contains(pOrder.getText())) return true;
+                return false;
+            });
         });
         
         advSearch.setOnAction(e -> searchTab.setContent(advancedSearch.open()));
 
-
+        resetButton.setOnAction(e -> {
+            keyTextField.clear(); pOrder.clear();
+        });
 
         importButton.setOnAction(e -> {
             FileChooser fileChooser = new FileChooser(); // Create new File Chooser
