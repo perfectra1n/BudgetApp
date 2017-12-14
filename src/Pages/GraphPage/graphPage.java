@@ -5,12 +5,18 @@ import database.dbHandler;
 import database.dbOperations;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Pos;
+import javafx.print.*;
 import javafx.scene.chart.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.print.Printer;
+import javafx.scene.transform.Scale;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -45,6 +51,11 @@ public class graphPage {
         VBox leftPane = new VBox();
         leftPane.setId("leftPane");
 
+
+        Button printButton = new Button ("Print");
+        printButton.setId("printButton");
+        printButton.setPrefSize(150.0, 25.0);
+        printButton.setAlignment(Pos.BASELINE_LEFT);
 //-----------------------------------------------------------------//
         //-------------- DROP BOX "X" -----------------------//
         ComboBox<String> comboBoxX = new ComboBox<>();
@@ -125,11 +136,28 @@ public class graphPage {
 
         //--------------------------------------------------//
         createVerticalGraph();
-        leftPane.getChildren().addAll(comboBoxX, separator1, comboBoxY, boxlist);
+        leftPane.getChildren().addAll(printButton, comboBoxX, separator1, comboBoxY, boxlist);
         graphLayout.setLeft(leftPane);
 
 
+
         //--------------------------- EVENTS ---------------------------
+        printButton.setOnAction(e -> {
+            PrinterJob job = PrinterJob.createPrinterJob();
+            if (job != null) {
+                PageLayout pageLayout = job.getPrinter().createPageLayout(Paper.A4, PageOrientation.LANDSCAPE, Printer.MarginType.HARDWARE_MINIMUM);
+                double scaleX = pageLayout.getPrintableWidth() / graphLayout.getBoundsInParent().getWidth();
+                double scaleY = pageLayout.getPrintableHeight() / graphLayout.getBoundsInParent().getHeight();
+                Scale scale = new Scale(scaleX, scaleY);
+                graphLayout.getCenter().getTransforms().add(scale);
+                boolean success = job.printPage(pageLayout,graphLayout.getCenter());
+                if (success) {
+                    job.endJob();
+                }
+                graphLayout.getCenter().getTransforms().remove(scale);
+            }
+        });
+
         comboBoxX.setOnAction(e -> {
             if (comboBoxX.getValue().equals("Bar Graph")) {
                 leftPane.getChildren().removeAll(boxlist);
@@ -171,12 +199,6 @@ public class graphPage {
                 createHorizontalGraph();
             }
         });
-
-     /*   comboBoxZ.setOnAction(e -> {
-            if (comboBoxZ.getValue().equals("Each Asset Cost of a Department")) {
-                createVerticalAssetGraph();
-            }
-        });*/
 
         //--------------------------------------------------------------
     }
