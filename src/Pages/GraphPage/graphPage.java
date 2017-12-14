@@ -48,6 +48,9 @@ public class graphPage {
         Separator separator1 = new Separator();
         separator1.setId("separator");
 
+        Separator separator2 = new Separator();
+        separator2.setId("separator");
+
         VBox leftPane = new VBox();
         leftPane.setId("leftPane");
 
@@ -82,8 +85,6 @@ public class graphPage {
 
         VBox boxlist = new VBox();
         ResultSet r = dbOperations.queryReturnResult("SELECT \"Dept ID - Dept Description\" FROM 'College of E&CS';");
-        //List<CheckBox> checkBoxList = new ArrayList<>();
-        //CheckBox box = new CheckBox();
         try {
             r.next();
             while (!r.isClosed()) {
@@ -91,7 +92,6 @@ public class graphPage {
                 str = str.substring(str.indexOf('-') + 2, str.length());
                 CheckBox box = new CheckBox(str);
                 box.setId("checkBox");
-                // box = new CheckBox(str);
                 box.setSelected(true);
                 checkBoxList.add(box);
                 boxlist.getChildren().add(box);
@@ -121,22 +121,11 @@ public class graphPage {
                 i++;
             }
 
-       /*     else if (!checkBoxList.get(i).isSelected()){
-                checkBoxList.get(i).setOnAction(e ->{
-                    if (comboBoxY.getValue().equals("Vertical")) {
-                        createVerticalGraph();
-                    }
-                    else if (comboBoxY.getValue().equals("Horizontal")){
-                        createHorizontalGraph();
-                    }
-                });
-                i++;
-            }*/
         }
 
         //--------------------------------------------------//
         createVerticalGraph();
-        leftPane.getChildren().addAll(printButton, comboBoxX, separator1, comboBoxY, boxlist);
+        leftPane.getChildren().addAll(printButton,separator2, comboBoxX, separator1, comboBoxY, boxlist);
         graphLayout.setLeft(leftPane);
 
 
