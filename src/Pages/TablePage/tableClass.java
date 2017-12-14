@@ -14,15 +14,15 @@ class tableClass {
     private final TableView<tableDataObj> table;
     private final ObservableList<TableColumn<tableDataObj, Object>> tableColumns;
     private final ObservableList<tableDataObj> masterTableData;
-    private ObservableList<tableDataObj> activeData;
+    private FilteredList<tableDataObj> activeData;
     private String keyColumn;
 
     tableClass(List<String> inColumns, List<String> inDataTables) {
         this.table = new TableView<>();
-        this.keyColumn = inColumns.get(0);
+        if (!inColumns.isEmpty()) keyColumn = inColumns.get(0);
         this.tableColumns = createTblColumns(inColumns);
         this.masterTableData = createData(inDataTables);
-        activeData = masterTableData;
+        activeData = new FilteredList<>(masterTableData, p -> true);
         table.getColumns().addAll(tableColumns);
         table.setItems(activeData);
         setProperties();
@@ -31,10 +31,9 @@ class tableClass {
     TableView<tableDataObj> getTable() { return table; }
     ObservableList<TableColumn<tableDataObj, Object>> getTableColumns() { return tableColumns; }
     ObservableList<tableDataObj> getMasterTableData() { return masterTableData; }
-    ObservableList<tableDataObj> getActiveData() { return activeData; }
-    void setActiveData(FilteredList<tableDataObj> data) { activeData = data; }
     String getKeyColumn() { return keyColumn; }
     void setKeyColumn(String key) { keyColumn = key; }
+    FilteredList<tableDataObj> getActiveData() { return activeData; }
 
     // Creates and returns table columns
     private ObservableList<TableColumn<tableDataObj, Object>> createTblColumns(List<String> inColumns) {
